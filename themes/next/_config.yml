@@ -1,4 +1,4 @@
-# ===============================================================
+﻿# ===============================================================
 # ========================= ATTENTION! ==========================
 # ===============================================================
 # NexT repository is moving here: https://github.com/theme-next
@@ -93,9 +93,9 @@ index_with_subtitle: false
 # Value after `||` delimeter is the name of FontAwesome icon. If icon (with or without delimeter) is not specified, question icon will be loaded.
 menu:
   home: / || home
-  #about: /about/ || user
-  #tags: /tags/ || tags
-  #categories: /categories/ || th
+  about: /about/ || user
+  tags: /tags/ || tags
+  categories: /categories/ || th
   archives: /archives/ || archive
   #schedule: /schedule/ || calendar
   #sitemap: /sitemap.xml || sitemap
@@ -111,9 +111,9 @@ menu_icons:
 # ---------------------------------------------------------------
 
 # Schemes
-scheme: Muse
+#scheme: Muse
 #scheme: Mist
-#scheme: Pisces
+scheme: Pisces
 #scheme: Gemini
 
 
@@ -127,8 +127,8 @@ scheme: Muse
 # Value before `||` delimeter is the target permalink.
 # Value after `||` delimeter is the name of FontAwesome icon. If icon (with or without delimeter) is not specified, globe icon will be loaded.
 #social:
-  #GitHub: https://github.com/yourname || github
-  #E-Mail: mailto:yourname@gmail.com || envelope
+  GitHub: https://github.com/heclam || github
+  E-Mail: mailto:1455082745@qq.com || envelope
   #Google: https://plus.google.com/yourname || google
   #Twitter: https://twitter.com/yourname || twitter
   #FB Page: https://www.facebook.com/yourname || facebook
@@ -137,7 +137,7 @@ scheme: Muse
   #YouTube: https://youtube.com/yourname || youtube
   #Instagram: https://instagram.com/yourname || instagram
   #Skype: skype:yourname?call|chat || skype
-
+  Wechat: /wechat
 social_icons:
   enable: true
   icons_only: false
@@ -148,7 +148,8 @@ links_icon: link
 links_title: Links
 links_layout: block
 #links_layout: inline
-#links:
+links:
+  wistbean: https://wistbean.github.io/
   #Title: http://example.com/
 
 # Sidebar Avatar
@@ -369,9 +370,9 @@ disqus:
 
 # changyan
 changyan:
-  enable: false
-  appid:
-  appkey:
+  enable: true
+  appid: cyufU86pC
+  appkey: 1788c6218073f9f8d00912d8164cae66
 
 
 # Valine.
@@ -425,7 +426,7 @@ gitment:
 # This plugin is more useful in China, make sure you known how to use it.
 # And you can find the use guide at official webiste: http://www.jiathis.com/.
 # Warning: JiaThis does not support https.
-#jiathis:
+jiathis: true
   ##uid: Get this uid from http://www.jiathis.com/
 #add_this_id:
 

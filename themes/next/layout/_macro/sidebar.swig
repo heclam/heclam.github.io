@@ -1,4 +1,4 @@
-{% macro render(is_post) %}
+﻿{% macro render(is_post) %}
   <div class="sidebar-toggle">
     <div class="sidebar-toggle-line-wrap">
       <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
@@ -134,6 +134,8 @@
               </ul>
             </div>
           {% endif %}
+
+		<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1346472029&auto=1&height=66"></iframe>
 
           {% include '../_custom/sidebar.swig' %}
         </div>
