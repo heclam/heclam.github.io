@@ -12,7 +12,7 @@ tags:
 
 > 搭建完基本的博客时，实现多终端操作博客需要注意的点：
 >
-> ​	1.本地博客的配置文件(\_config.yml)中的deply:  branch:master(必须为主分支，因为master就是用来部署上去的     hexo g -d）
+> ​	1.本地博客的配置文件(\_config.yml)中的deply:  branch:master(必须为主分支，因为master就是用来部署上去的     hexo g -d）<!--more-->
 >
 > ​	2.需要在github上新建一个分支（比如 hexo）,这时候master分支与hexo分支的内容是一样的（为什么需要新建分支呢？ hexo用来存放原来博客的配置文件，这样才能实现多终端的操作而master分支用来存放静态文件的展示）
 >
