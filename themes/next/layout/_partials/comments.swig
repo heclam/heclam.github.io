@@ -1,4 +1,4 @@
-{% if page.comments %}
+﻿{% if page.comments %}
 
   {% if (theme.duoshuo and theme.duoshuo.shortname) or theme.duoshuo_shortname %}
     <div class="comments" id="comments">
@@ -68,5 +68,8 @@
   {% endif %}
 
 {% endif %}
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 5285f4813a77064b58c485ac23f8ac2abf0d3bb2
