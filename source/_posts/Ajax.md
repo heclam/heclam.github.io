@@ -1,0 +1,119 @@
+---
+layout: article
+title: Ajax
+date: 2019-06-26 11:19:37
+tags:
+	- ajax
+---
+
+>当我们使用AJAX之后，浏览器是先把请求发送到XMLHttpRequest异步对象之中，异步对象对请求进行封装，然后再与发送给服务器。服务器并不是以转发的方式响应，而是以流的方式把数据返回给浏览器
+>
+>XMLHttpRequest异步对象会不停监听服务器状态的变化，得到服务器返回的数据，就写到浏览器上【因为不是转发的方式，所以是无刷新就能够获取服务器端的数据】<!--more-->
+
+##### XMLHttpRequest对象
+
+```
+function getXHR() {
+    //根据对象判断浏览器
+    if(window.XMLHttpRequest) {
+        //不是IE
+        return new XMLHttpRequest();
+    }else{
+        //IE
+        return new ActiveXObject("Microsoft.XMLHttp");
+    }
+}
+var xhr = getXHR();
+```
+
+##### get方式请求
+
+```
+//参数解析：
+	第一个参数：表示请求的方式
+	第二个参数：表示请求的地址
+	第三个参数：表示是否为异步请求（true表示发送异步请求）
+xhr.open("get", url, true);
+```
+
+##### 发送请求
+
+```
+xhr.send(null);
+```
+
+##### 回调函数
+
+XHR 对象的`readyState` 属性可取的值：
+
+0：未初始化。尚未调用open()方法。
+
+1：启动。已经调用open()方法，但尚未调用send()方法。
+
+2：发送。已经调用send()方法，但尚未接收到响应。
+
+3：接收。已经接收到部分响应数据。
+
+4：完成。已经接收到全部响应数据，而且已经可以在客户端使用了。
+
+只要readyState 属性的值由一个值变成另一个值，都会触发一次readystatechange 事件。可以利用这个事件来检测每次状态变化后readyState 的值。
+
+````
+xhr.onreadystatechange = function(){
+	 //当请求结束且没报错时
+     if(xhr.readyState==4 && xhr.status==200) {
+         var txt = xhr.responseText;
+         console.log(txt);
+     }
+};
+
+````
+
+responseText:作为响应主体被返回的文本
+
+responseXML：如果响应的内容类型是”text/xml”或”application/xml”，这个属性中将保存包含着响应数据的XML DOM 文档。
+
+##### post请求
+
+```
+xhr.open("post",url, true);
+//设置请求头
+xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+//发送form表单数据
+var form = document.getElementById("form");
+//发送序列化的表单
+xhr.send(serialize(form));
+
+//发送普通数据
+xhr.send("name = abc");
+xhr.send("book = JavaScript");
+```
+
+
+
+##### $.ajax()
+
+语法：
+
+$.ajax({key:value,key:value})
+
+例如：
+
+```
+$.ajax({
+
+	async: true,  //表示为异步请求
+
+	cache: boolean,  //是否设置缓存
+
+	contentType: xxx, //发送信息至服务器时内容编码类型
+
+	data: String , //表示发送带的参数
+
+	success: function(reponseText){ //回调的函数
+
+	}
+
+});
+```
