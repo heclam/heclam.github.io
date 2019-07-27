@@ -10,6 +10,8 @@ tags:
 
 ##### 经过两天的搭建终于搭成了  在多终端操作博客的搭建中遇到的坑比较多
 
+[hexo文档](https://hexo.io/zh-cn/docs/)
+
 > 搭建完基本的博客时，实现多终端操作博客需要注意的点：
 >
 > ​	1.本地博客的配置文件(\_config.yml)中的deply:  branch:master(必须为主分支，因为master就是用来部署上去的     hexo g -d）<!--more-->
