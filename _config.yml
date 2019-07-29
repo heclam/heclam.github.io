@@ -3,13 +3,13 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: heclam
+title: heclam's blog
 subtitle: Nothing can stop me,just coding
-description: heclam的个人博客，主要涉及到编程、学习心得，个人提升学习
+description: heclam的个人博客，主要涉及到编程、学习心得，个人提升
 keywords: heclam,just conding,java,linux,教程
 author: heclam
-avatar: /head.jpg
-language: zh-Hans
+avatar: /head.jpg #侧边栏头像
+language: en
 timezone:
 
 # URL
