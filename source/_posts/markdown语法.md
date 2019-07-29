@@ -10,7 +10,7 @@ categories:
 
 嗯，下面记录一下markdown的语法
 
-![](http://ptulp7849.bkt.clouddn.com/markdown.jpg)
+![markdown.png](https://i.loli.net/2019/07/29/5d3e68a10cbc652794.png)
 
 #### 1.斜体和粗体<!--more-->
 

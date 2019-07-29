@@ -2,8 +2,7 @@
 title: java集合总结
 date: 2019-06-29 11:52:00
 categories:
-	- java基础
-	- java集合
+	- java
 tags:
 	- java
 ---
