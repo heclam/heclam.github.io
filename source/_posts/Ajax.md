@@ -102,18 +102,23 @@ $.ajax({key:value,key:value})
 
 ```
 $.ajax({
+	type: "GET", //String类型参数，请求方式POST或GET,默认为GET,请求方式
 
-	async: true,  //表示为异步请求
+	url: "xxx", //String类型参数，发送请求的地址
+	
+	async: true,  //Boolean类型参数，表示为异步请求，默认为true
 
-	cache: boolean,  //是否设置缓存
+	cache: false,  //Boolean类型参数，是否设置缓存,默认为false
 
 	contentType: xxx, //发送信息至服务器时内容编码类型
 
-	data: String , //表示发送带的参数
+	data: String , //Object或String类型参数，发送到服务器的数据，比如为"json"
+	
+	dataType: String, //String类型参数，服务器返回的数据类型
 
-	success: function(reponseText){ //回调的函数
-
-	}
+	success: function(data){}//成功回调的函数
+	
+	error:function(data){} //失败回调函数
 
 });
 ```
