@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+<script>
+    (function(){
+        if(''){
+            if (prompt('请输入密码') !== ''){
+                alert('密码错误');
+                history.back();
+            }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|STXihei:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="java,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="heclam's blog" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="动态代理技术是整个java技术中最重要的一个技术，它是学java框架的基础，在Spring框架中广泛使用 动态代理技术就是用来产生一个对象的代理对象">
+<meta name="keywords" content="java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="代理（Proxy）">
+<meta property="og:url" content="http://yoursite.com/2019/07/15/代理(Proxy)/index.html">
+<meta property="og:site_name" content="heclam&#39;s blog">
+<meta property="og:description" content="动态代理技术是整个java技术中最重要的一个技术，它是学java框架的基础，在Spring框架中广泛使用 动态代理技术就是用来产生一个对象的代理对象">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-08-18T06:43:39.520Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="代理（Proxy）">
+<meta name="twitter:description" content="动态代理技术是整个java技术中最重要的一个技术，它是学java框架的基础，在Spring框架中广泛使用 动态代理技术就是用来产生一个对象的代理对象">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/07/15/代理(Proxy)/">
+
+
+
+
+
+  <title>代理（Proxy） | heclam's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">heclam's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Nothing can stop me,just coding</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/15/代理(Proxy)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="heclam">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="heclam's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">代理（Proxy）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-15T15:01:21+08:00">
+                2019-07-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2019/07/15/代理(Proxy)/#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2019/07/15/代理(Proxy)/" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </span></div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>动态代理技术是整个java技术中最重要的一个技术，它是学java框架的基础，在Spring框架中广泛使用</p>
+<p>动态代理技术就是用来产生一个对象的代理对象<a id="more"></a></p>
+<pre><code>1. 代理对象存在的价值主要用于拦截对真实业务对象的访问
+2. 代理对象应该具有和目标对象（真实业务对象）相同的方法</code></pre><h5 id="java中的代理"><a href="#java中的代理" class="headerlink" title="java中的代理"></a>java中的代理</h5><h6 id="通过java-lang-reflect-Proxy-类提供的一个newProxyInstance方法来串讲一个对象的代理对象"><a href="#通过java-lang-reflect-Proxy-类提供的一个newProxyInstance方法来串讲一个对象的代理对象" class="headerlink" title="通过java.lang.reflect.Proxy 类提供的一个newProxyInstance方法来串讲一个对象的代理对象"></a>通过java.lang.reflect.Proxy 类提供的一个newProxyInstance方法来串讲一个对象的代理对象</h6><p>想要生成某一个对象的代理对象，这个代理对象也要编写一个类来生成</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">参数解析：</span><br><span class="line">	first arg:ClassLoader loader用来指明生成代理对象使用哪个类加载器</span><br><span class="line">	second arg:Class&lt;?&gt;[] interfaces用来指明生成哪个对象的代理对象，通过接口指定</span><br><span class="line">	third arg:InvocationHandler h用来指明产生的这个dialing对象要做什么事情</span><br><span class="line">static Object newProxyInstance(ClassLoader loader,class&lt;?&gt;[] interfaces,InvocationHandler h)</span><br></pre></td></tr></table></figure>
+
+<h6 id="编写生成代理对象的类"><a href="#编写生成代理对象的类" class="headerlink" title="编写生成代理对象的类"></a>编写生成代理对象的类</h6><p>在java中规定，要想产生一个对象的代理对象，那么这个对象必须要有一个接口</p>
+<p>例子：(要想为一个类生成一个代理对象，前提是这个类必须要有一个接口，比如下面的AbcMan就有一个Person接口)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public interface Person&#123;</span><br><span class="line">    String sing(String name);</span><br><span class="line">    String dance(String name);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public class AbcMan implements Person&#123;</span><br><span class="line">    public String sing(String name)&#123;</span><br><span class="line">        return &quot;sing a&quot;+name+&quot;song&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public String dance(String name)&#123;</span><br><span class="line">        return &quot;dance&quot;+name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h6 id="创建生成代理对象的代理类"><a href="#创建生成代理对象的代理类" class="headerlink" title="创建生成代理对象的代理类"></a>创建生成代理对象的代理类</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">public class AbcManProxy&#123;</span><br><span class="line">	//设计一个类变量记住代理类要代理的目标对象</span><br><span class="line">    private Person abc = new AbcMan();</span><br><span class="line">    </span><br><span class="line">    //设计一个方法生成代理对象</span><br><span class="line">    public Person getProxy()&#123;</span><br><span class="line">        return (Person)Proxy.newProxyInstance(AbcManProxy.class.getClassLoader(),abc.getClass().getInterfaces(),new InvocationHandler()&#123;</span><br><span class="line">        	/*</span><br><span class="line">        		参数解析：</span><br><span class="line">        			first arg:把代理对象自己传递进来</span><br><span class="line">        			second arg:把代理对象当前调用的方法传递进来</span><br><span class="line">        			third arg:把方法参数传递进来</span><br><span class="line">        	/*</span><br><span class="line">            @Override</span><br><span class="line">            public Object invoke(Object proxy,Method method,Object[] args) throws Throwable&#123;</span><br><span class="line">                //如果调用的是代理对象的sing方法</span><br><span class="line">                if(method.getName().equals(&quot;sing&quot;))&#123;</span><br><span class="line">                    System.out.println(&quot;这里由代理类做一些操作sing&quot;);</span><br><span class="line">                    return method.invoke(abc,args);//代理对象调用真实目标对象的sing方法去处理用户请求</span><br><span class="line">                &#125;</span><br><span class="line">                if(method.getName().equals(&quot;dance&quot;))&#123;</span><br><span class="line">                    System.out.println(&quot;由代理类做一些操作dance&quot;);</span><br><span class="line">                    return method.invoke(abc,args);</span><br><span class="line">                &#125;</span><br><span class="line">                return null；</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)；</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>测试：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">public Class Test&#123;</span><br><span class="line">    public static void main(String[] args)&#123;</span><br><span class="line">        AbcManProxy proxy = new AbcManProxy();</span><br><span class="line">        //获取代理对象</span><br><span class="line">        Person p = proxy.getProxy();</span><br><span class="line">        //调用代理对象的sing方法</span><br><span class="line">        String singstr = p.sing(&quot;aaa&quot;);</span><br><span class="line">        System.out.println(singstr);</span><br><span class="line">        //调用代理对象的dance方法</span><br><span class="line">        String dancestr = p.dance(&quot;bbb&quot;);</span><br><span class="line">        System.out.println(dancestr);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">-----</span><br><span class="line">输出的结果为：</span><br><span class="line">这里由代理类做一些操作sing</span><br><span class="line">sing a aaa song  //目标方法执行</span><br><span class="line">由代理类做一些操作dance</span><br><span class="line">dance bbb</span><br></pre></td></tr></table></figure>
+
+<h5 id="静态代理模式"><a href="#静态代理模式" class="headerlink" title="静态代理模式"></a>静态代理模式</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public interface Person&#123;</span><br><span class="line">    void sing();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>静态代理需要创建接口实现类和代理类，这两个类分别实现这个接口</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public class Abc implements Person&#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void sing()&#123;</span><br><span class="line">        System.out.println(&quot;Abc高歌一曲&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public class ProxyAbc implements Person&#123;</span><br><span class="line">    //接收实现类对象</span><br><span class="line">    private Person p;</span><br><span class="line">    //通过构造方法传进来实现类对象</span><br><span class="line">    public ProxyAbc(Person p)&#123;</span><br><span class="line">        this.p = p;</span><br><span class="line">    &#125;</span><br><span class="line">     @Override</span><br><span class="line">    public void sing()&#123;</span><br><span class="line">        System.out.println(&quot;代理类做的操作&quot;);</span><br><span class="line">        this.p.sing();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>静态代理测试：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public class Test&#123;</span><br><span class="line">    public static void main(String [] args)&#123;</span><br><span class="line">        Person abc = new Abc();</span><br><span class="line">        Person proxy = new ProxyAbc(abc);</span><br><span class="line">        proxy.sing();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="JDK动态代理"><a href="#JDK动态代理" class="headerlink" title="JDK动态代理"></a>JDK动态代理</h5><ul>
+<li>动态代理不需要创建代理类，只需要编写一个动态处理器即可</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">public class JdkProxyHandler&#123;</span><br><span class="line">	//用来接收实现类对象</span><br><span class="line">    private Object abc;</span><br><span class="line">    </span><br><span class="line">    //通过构造方法传进来实现类对象</span><br><span class="line">    public JdkProxyHandler(Person p)&#123;</span><br><span class="line">        super();</span><br><span class="line">        this.abc = p;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    //为实现类对象创建一个代理对象的实例</span><br><span class="line">    public Object getProxyInstance()&#123;</span><br><span class="line">    		/*</span><br><span class="line">        		参数解析：</span><br><span class="line">        		first arg:指定当前目标对象使用的类加载器</span><br><span class="line">        		second arg: 指定目标对象实现的接口的类型</span><br><span class="line">        		third arg: 指定动态处理器</span><br><span class="line">        	/*</span><br><span class="line">        return Proxy.newProxyInstance(abc.getClass().getClassLoader(),abc.getClass().getInterfaces(),new InvocationHandler()&#123;</span><br><span class="line">            @Override</span><br><span class="line">            public Object invoke(Object proxy,Method method,Object[] args) throws Throwable&#123;</span><br><span class="line">               System.out.printn(&quot;代理做一些相应的操作&quot;);</span><br><span class="line">               Object object = method.invoke(abc,args);</span><br><span class="line">                return obejct；</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>JDK动态代理测试：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public class Test&#123;</span><br><span class="line">    public static void main(String [] args)&#123;</span><br><span class="line">        Person abc = new Abc();</span><br><span class="line">        Person proxy = new JdkProxyHandler(abc).getProxyInstance();</span><br><span class="line">        proxy.sing();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="CGLIB动态代理"><a href="#CGLIB动态代理" class="headerlink" title="CGLIB动态代理"></a>CGLIB动态代理</h5><p>JDK动态代理需要实现类通过接口定义方法，那对于没有实现接口的类就使用了CGLIB动态代理来实现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">public class CglibProxyHandler implements MethodInterceptor&#123;</span><br><span class="line">	//维护目标对象</span><br><span class="line">    private Object target;</span><br><span class="line">    public Object getProxyInstance(final Object target)&#123;</span><br><span class="line">        this.target = target;</span><br><span class="line">        // Enhancer类是CGLIB中的一个字节码增强器，它可以方便的对你想要处理的类进行扩展</span><br><span class="line">       Enhancer enhancer = new Enhancer();</span><br><span class="line">       // 将被代理的对象设置成父类</span><br><span class="line">       enhancer.setSuperclass(this.target.getClass());</span><br><span class="line">       // 回调方法，设置拦截器</span><br><span class="line">       enhancer.setCallback(this);</span><br><span class="line">       // 动态创建一个代理类</span><br><span class="line">       return enhancer.create();</span><br><span class="line">    &#125;</span><br><span class="line">     @Override</span><br><span class="line">   public Object intercept(Object object, Method method, Object[] args,</span><br><span class="line">           MethodProxy methodProxy) throws Throwable &#123;</span><br><span class="line"></span><br><span class="line">       System.out.println(&quot;代理做一些操作&quot;);</span><br><span class="line">       Object result = methodProxy.invokeSuper(object, args);</span><br><span class="line">       return result;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用 CGLIB 需要实现 MethodInterceptor 接口，并重写intercept 方法，在该方法中对原始要执行的方法前后做增强处理。该类的代理对象可以使用代码中的字节码增强器来获取</p>
+<p>JDK动态代理测试：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public class Test&#123;</span><br><span class="line">    public static void main(String [] args)&#123;</span><br><span class="line">        Person abc = new Abc();</span><br><span class="line">        Person proxy = new CglibProxyHandler().getProxyInstance(abc);</span><br><span class="line">        proxy.sing();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>JDK 动态代理和 CGLIB 动态代理均是实现 Spring AOP 的基础</p>
+<p>如果目标对象实现了接口，默认情况下会采用 JDK 的动态代理实现 AOP；如果目标对象没有实现了接口，则采用 CGLIB 库，Spring 会自动在 JDK 动态代理和 CGLIB 动态代理之间转换。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag"># java</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/10/获取天气信息/" rel="next" title="获取天气信息">
+                <i class="fa fa-chevron-left"></i> 获取天气信息
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/08/14/Spring事务管理/" rel="prev" title="Spring事务管理">
+                Spring事务管理 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          ﻿
+
+  
+    <div class="comments" id="comments">
+      <div id="SOHUCS"></div>
+    </div>
+
+  
+
+
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/head.jpg" alt="heclam">
+            
+              <p class="site-author-name" itemprop="name">heclam</p>
+              <p class="site-description motion-element" itemprop="description">heclam的个人博客，主要涉及到编程、学习心得，个人提升</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/heclam" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:1455082745@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="/wechat" target="_blank" title="Wechat">
+                      
+                        <i class="fa fa-fw fa-wechat"></i>Wechat</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://wistbean.github.io/" title="wistbean" target="_blank">wistbean</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+		<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="//music.163.com/outchain/player?type=2&id=1346472029&auto=1&height=66"></iframe>
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#java中的代理"><span class="nav-number">1.</span> <span class="nav-text">java中的代理</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#通过java-lang-reflect-Proxy-类提供的一个newProxyInstance方法来串讲一个对象的代理对象"><span class="nav-number">1.1.</span> <span class="nav-text">通过java.lang.reflect.Proxy 类提供的一个newProxyInstance方法来串讲一个对象的代理对象</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#编写生成代理对象的类"><span class="nav-number">1.2.</span> <span class="nav-text">编写生成代理对象的类</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#创建生成代理对象的代理类"><span class="nav-number">1.3.</span> <span class="nav-text">创建生成代理对象的代理类</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#静态代理模式"><span class="nav-number">2.</span> <span class="nav-text">静态代理模式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#JDK动态代理"><span class="nav-number">3.</span> <span class="nav-text">JDK动态代理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#CGLIB动态代理"><span class="nav-number">4.</span> <span class="nav-text">CGLIB动态代理</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">heclam</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+    <script type="text/javascript">
+    (function(){
+      var appid = 'cyufU86pC';
+      var conf = '1788c6218073f9f8d00912d8164cae66';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){
+        window.changyan.api.config({appid:appid,conf:conf})});
+      }
+    })();
+    </script>
+    <script type="text/javascript" src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
+  
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false}});</script></body>
+</html>
