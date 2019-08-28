@@ -9,7 +9,7 @@ description: heclam的个人博客，主要涉及到编程、学习心得，个�
 keywords: heclam,just conding,java,linux,教程
 author: heclam
 avatar: /head.jpg #侧边栏头像
-language: en
+language: zh-CN
 timezone:
 
 # URL
@@ -74,7 +74,7 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: next
+theme: icarus
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
@@ -96,7 +96,7 @@ live2d:
     use: live2d-widget-model-hijiki
   display:
     position: left
-    width: 150
-    height: 300
+    width: 100
+    height: 200
   mobile:
     show: false

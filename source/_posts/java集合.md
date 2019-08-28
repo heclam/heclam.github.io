@@ -1,6 +1,7 @@
 ---
 title: java集合总结
 date: 2019-06-29 11:52:00
+toc: true
 categories:
 	- java
 tags:

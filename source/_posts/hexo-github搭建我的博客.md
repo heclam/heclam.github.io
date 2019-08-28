@@ -1,6 +1,7 @@
 ---
 title: hexo+github搭建我的博客
 date: 2019-06-14 11:52:00
+toc: true
 categories:
 	- 笔记
 	- 教程

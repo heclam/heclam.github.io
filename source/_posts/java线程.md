@@ -2,6 +2,7 @@
 layout: article
 title: java线程
 date: 2019-07-07 16:11:28
+toc: true
 categories:
 	- java
 tags:
@@ -162,9 +163,9 @@ synchronized关键字解决多个线程之间访问资源的同步性，它可�
 ​	
 ​	 import java.util.concurrent.Callable;
 ​	 
-	 public class CallableTest2 implements Callable {
-	 	private String name ;
-	 
+​	 public class CallableTest2 implements Callable {
+​	 	private String name ;
+​	 
 	 	public CallableTest2(String name) {
 	 		this.name = name;
 	 	}

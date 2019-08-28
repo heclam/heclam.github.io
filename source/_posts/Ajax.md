@@ -2,6 +2,7 @@
 layout: article
 title: Ajax
 date: 2019-06-26 11:19:37
+toc: true
 tags:
 	- ajax
 ---
