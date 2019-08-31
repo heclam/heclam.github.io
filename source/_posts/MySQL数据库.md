@@ -24,13 +24,14 @@ tags:
 
 #### 数据库ACID
 
- 	1. **原子性**
+ 	1. 原子性
      * 原子性是指事务是一个不可分割的工作单位，事务中的操作要么全部成功，要么全部失败。比如在同一个事务中的SQL语句，要么全部执行成功，要么全部执行失败。
- 	2. **一致性**
+      	2. 一致性
      * 事务必须使数据库从一个一致性状态变换到另外一个一致性状态。以转账为例子，A向B转账，假设转账之前这两个用户的钱加起来总共是2000，那么A向B转账之后，不管这两个账户怎么转，A用户的钱和B用户的钱加起来的总额还是2000，这个就是事务的一致性。
- 	3. **隔离性**
+      	3. 隔离性
      * 隔离性是当多个用户并发访问数据库时，比如操作同一张表时，数据库为每一个用户开启的事务，不能被其他事务的操作所干扰，多个并发事务之间要相互隔离。
-	4. **持久性**
+  	4. 持久性
+
     * 一旦事务提交，则其所做的修改将会永远保存到数据库中。即使系统发生崩溃，事务执行的结果也不能丢失。可以通过数据库备份和恢复来实现，在系统发生奔溃时，使用备份的数据库进行数据恢复。
 
 
@@ -89,15 +90,17 @@ try{
 ##### 事务的隔离级别
 
  * 数据库定义了4个隔离级别：
-    * Serializable（串行化）【可避免脏读，不可重复读，虚读】
-       * Repeatable read（可重复读）【可避免脏读，不可重复读】
-       * Read committed（读已提交）【可避免脏读】
-       * Read uncommitted（读未提交）【级别最低，什么都避免不了】
-* 分别对应
-  * **TRANSACTION_READ_UNCOMMITTED**
-  * **TRANSACTION_READ_COMMITTED**
-  * **TRANSACTION_REPEATABLE_READ**
-  * **TRANSACTION_SERIALIZABLE**
+     * Serializable（串行化）【可避免脏读，不可重复读，虚读】
+     * Repeatable read（可重复读）【可避免脏读，不可重复读】
+     * Read committed（读已提交）【可避免脏读】
+     * Read uncommitted（读未提交）【级别最低，什么都避免不了】
+ * 分别对应
+     * TRANSACTION_SERIALIZABLE
+     * TRANSACTION_REPEATABLE_READ
+     * TRANSACTION_READ_COMMITTED
+     * TRANSACTION_READ_UNCOMMITTED
+
+****
 
 
 
