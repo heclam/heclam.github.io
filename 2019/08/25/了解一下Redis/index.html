@@ -19,7 +19,7 @@
 <meta property="og:description" content="Redis支持以下五种类型 String list set SortedSet Hash">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/images/og_image.png">
-<meta property="og:updated_time" content="2019-08-31T15:52:16.549Z">
+<meta property="og:updated_time" content="2019-08-31T17:03:22.330Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="了解一下Redis">
 <meta name="twitter:description" content="Redis支持以下五种类型 String list set SortedSet Hash">
@@ -159,7 +159,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    14 分钟 读完 (大约 2046 个字)
+                    14 分钟 读完 (大约 2045 个字)
                 </span>
                 
                 
@@ -190,21 +190,24 @@
 <li><p>删除策略可以分为三种：</p>
 <ul>
 <li>定时删除(对内存友好，对CPU不友好)<ul>
-<li>到时间点上就把所有过期的键删除了<ul>
-<li>惰性删除(对CPU极度友好，对内存极度不友好)</li>
-<li>每次从键空间取键的时候，判断一下该键是否过期了，如果过期了就删除</li>
-<li>定期删除(折中)</li>
-<li><strong>每隔</strong>一段时间去删除过期键，<strong>限制</strong>删除的执行时长和频率。</li>
+<li>到时间点上就把所有过期的键删除了</li>
 </ul>
 </li>
+</ul>
+<ul>
+<li>惰性删除(对CPU极度友好，对内存极度不友好)<ul>
+<li>每次从键空间取键的时候，判断一下该键是否过期了，如果过期了就删除</li>
+</ul>
+</li>
+<li>定期删除(折中)<ul>
+<li><strong>每隔</strong>一段时间去删除过期键，<strong>限制</strong>删除的执行时长和频率。</li>
 </ul>
 </li>
 </ul>
 <p>Redis采用的是<strong>惰性删除+定期删除</strong>两种策略，所以说，在Redis里边如果过期键到了过期的时间了，未必被立马删除的！</p>
 </li>
 </ul>
-<p>####　Redis持久化</p>
-<ul>
+<h4 id="Redis持久化"><a href="#Redis持久化" class="headerlink" title="Redis持久化"></a>Redis持久化</h4><ul>
 <li><p>Redis提供两种不同的持久化方法来将数据存储到硬盘里面：</p>
 <ul>
 <li>RDB(基于快照)，将某一时刻的所有数据保存到一个RDB文件中。</li>
@@ -260,13 +263,16 @@
 <h4 id="复制功能"><a href="#复制功能" class="headerlink" title="复制功能"></a>复制功能</h4><p>主从架构的特点之一：主服务器和从服务器的数据是<strong>一致</strong>的。</p>
 <p><font color="red"><strong>Redis服务器（主）</strong></font> 《———–复制——————-   <font color="red"><strong>Redis服务器（主）</strong></font> </p>
 <ul>
-<li>复制功能分为两个步骤<ul>
+<li><p>复制功能分为两个步骤</p>
+<ul>
 <li>同步（sync）<ul>
-<li>将从服务器的数据库状态<strong>更新至</strong>主服务器的数据库状态<ul>
-<li>命令传播(command propagate)</li>
-<li>主服务器的数据库状态<strong>被修改</strong>，导致主从服务器的数据库状态<strong>不一致</strong>，让主从服务器的数据库状态<strong>重新回到一致状态</strong>。</li>
+<li>将从服务器的数据库状态<strong>更新至</strong>主服务器的数据库状态</li>
 </ul>
 </li>
+</ul>
+<ul>
+<li>命令传播(command propagate)<ul>
+<li>主服务器的数据库状态<strong>被修改</strong>，导致主从服务器的数据库状态<strong>不一致</strong>，让主从服务器的数据库状态<strong>重新回到一致状态</strong>。</li>
 </ul>
 </li>
 </ul>
@@ -539,48 +545,52 @@
         <span class="has-mr-6">3</span>
         <span>过期策略</span>
         </a></li><li>
-        <a class="is-flex" href="#主从框架">
+        <a class="is-flex" href="#Redis持久化">
         <span class="has-mr-6">4</span>
+        <span>Redis持久化</span>
+        </a></li><li>
+        <a class="is-flex" href="#主从框架">
+        <span class="has-mr-6">5</span>
         <span>主从框架</span>
         </a><ul class="menu-list"><li>
         <a class="is-flex" href="#主从框架的特点">
-        <span class="has-mr-6">4.1</span>
+        <span class="has-mr-6">5.1</span>
         <span>主从框架的特点</span>
         </a></li></ul></li><li>
         <a class="is-flex" href="#复制功能">
-        <span class="has-mr-6">5</span>
+        <span class="has-mr-6">6</span>
         <span>复制功能</span>
         </a></li><li>
         <a class="is-flex" href="#哨兵-Sentinal-机制">
-        <span class="has-mr-6">6</span>
+        <span class="has-mr-6">7</span>
         <span>哨兵(Sentinal)机制</span>
         </a></li><li>
         <a class="is-flex" href="#缓存雪崩">
-        <span class="has-mr-6">7</span>
+        <span class="has-mr-6">8</span>
         <span>缓存雪崩</span>
         </a><ul class="menu-list"><li>
         <a class="is-flex" href="#什么是缓存雪崩？">
-        <span class="has-mr-6">7.1</span>
+        <span class="has-mr-6">8.1</span>
         <span>什么是缓存雪崩？</span>
         </a></li><li>
         <a class="is-flex" href="#解决方法">
-        <span class="has-mr-6">7.2</span>
+        <span class="has-mr-6">8.2</span>
         <span>解决方法</span>
         </a></li></ul></li><li>
         <a class="is-flex" href="#缓存穿透">
-        <span class="has-mr-6">8</span>
+        <span class="has-mr-6">9</span>
         <span>缓存穿透</span>
         </a><ul class="menu-list"><li>
         <a class="is-flex" href="#什么是缓存穿透？">
-        <span class="has-mr-6">8.1</span>
+        <span class="has-mr-6">9.1</span>
         <span>什么是缓存穿透？</span>
         </a></li><li>
         <a class="is-flex" href="#这就是缓存穿透：">
-        <span class="has-mr-6">8.2</span>
+        <span class="has-mr-6">9.2</span>
         <span>这就是缓存穿透：</span>
         </a></li><li>
         <a class="is-flex" href="#解决方法-1">
-        <span class="has-mr-6">8.3</span>
+        <span class="has-mr-6">9.3</span>
         <span>解决方法</span>
         </a></li></ul></li></ul>
         </div>
