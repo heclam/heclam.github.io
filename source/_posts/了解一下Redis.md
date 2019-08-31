@@ -1,4 +1,4 @@
-```
+---
 title: 了解一下Redis
 date: 2019-8-25 14:40:19
 toc: true
@@ -6,9 +6,7 @@ categories:
 	- Redis
 tags:
 	- Redis
-```
-
-
+---
 
 ##### Redis支持以下五种类型
 

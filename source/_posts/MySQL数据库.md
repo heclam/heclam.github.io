@@ -1,4 +1,4 @@
-```
+---
 title: MySQL数据库
 date: 2019-8-16 14:19:19
 toc: true
@@ -6,7 +6,7 @@ categories:
 	- MySQL
 tags:
 	- MySQL
-```
+---
 
 #### 数据库的范式
 
