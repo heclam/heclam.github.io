@@ -24,7 +24,7 @@ tags:
 
 其实JSP的出现是简化了Servlet，之前我们要展示一个页面要在Servlet中写  
 
-```
+```java
 out.write("<html>");
 out.write("<body>");
 out.write("</body>");

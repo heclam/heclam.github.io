@@ -13,7 +13,7 @@ tags:
 
 ##### XMLHttpRequest对象
 
-```
+```javascript
 function getXHR() {
     //根据对象判断浏览器
     if(window.XMLHttpRequest) {
@@ -29,7 +29,7 @@ var xhr = getXHR();
 
 ##### get方式请求
 
-```
+```javascript
 //参数解析：
 	第一个参数：表示请求的方式
 	第二个参数：表示请求的地址
@@ -39,7 +39,7 @@ xhr.open("get", url, true);
 
 ##### 发送请求
 
-```
+```javascript
 xhr.send(null);
 ```
 
@@ -59,7 +59,7 @@ XHR 对象的`readyState` 属性可取的值：
 
 只要readyState 属性的值由一个值变成另一个值，都会触发一次readystatechange 事件。可以利用这个事件来检测每次状态变化后readyState 的值。
 
-````
+````javascript
 xhr.onreadystatechange = function(){
 	 //当请求结束且没报错时
      if(xhr.readyState==4 && xhr.status==200) {
@@ -76,7 +76,7 @@ responseXML：如果响应的内容类型是”text/xml”或”application/xml�
 
 ##### post请求
 
-```
+```javascript
 xhr.open("post",url, true);
 //设置请求头
 xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -101,7 +101,7 @@ $.ajax({key:value,key:value})
 
 例如：
 
-```
+```javascript
 $.ajax({
 	type: "GET", //String类型参数，请求方式POST或GET,默认为GET,请求方式
 

@@ -32,7 +32,7 @@ tags:
 
  * 继承Thread,重写run方法
 
-   ```
+   ```java 
    public class MyThread extends Thread {
        @Override
        public void run() {
@@ -51,7 +51,7 @@ tags:
 
  * 实现Runnable接口，重写run方法（这个比较常用，避免java单继承的限制）
 
-   ```
+   ```java
    public class MyRunnable implements Runnable {
    
        @Override
@@ -90,19 +90,19 @@ synchronized关键字解决多个线程之间访问资源的同步性，它可�
 
  * 修饰实力方法：给当前对象加锁，进入同步代码块前要获取当前对象实例的锁
 
-   ```
+   ```java
    public synchronized void add(){}
    ```
 
  * 修饰静态方法：给当前类加锁（因为静态方法没有this），会作用于当前类的所有对象实例，因为静态成员不属于任何一个实例对象，是一个类成员。
 
-    ```
+    ```java
       public synchronized static void add(){}
     ```
 
  * 修饰代码块：指定加锁对象，对给定对象加锁，进入同步代码块之前要获取给定对象的锁
 
-   ```
+   ```java
    synchronized(object){  }
    ```
 
@@ -126,52 +126,55 @@ synchronized关键字解决多个线程之间访问资源的同步性，它可�
 ​	**简单的实现有返回值得线程**
 
 
-	 import java.util.concurrent.ExecutionException;
-	 import java.util.concurrent.ExecutorService;
-	 import java.util.concurrent.Executors;
-	 import java.util.concurrent.Future;
-	 public class CallableFuture {
-	 	public static void main(String[] args) {
-	 		//创建一个线程池
-	 		ExecutorService pool = Executors.newFixedThreadPool(3) ;
-	 		
-	 		//创建三个有返回值的任务
-	 		CallableTest2 c1 = new CallableTest2("线程1") ;
-	 		CallableTest2 c2 = new CallableTest2("线程2") ;
-	 		CallableTest2 c3 = new CallableTest2("线程3") ;
-	 		
-			Future f1 = pool.submit(c1) ;
-	 		Future f2 = pool.submit(c2) ;
-	 		Future f3 = pool.submit(c3) ;
-	 		
-	 		try {
-	 			System.out.println(f1.get().toString());
-	 			System.out.println(f2.get().toString());
-	 			System.out.println(f3.get().toString());
-	 		} catch (InterruptedException e) {
-	 			e.printStackTrace();
-	 		} catch (ExecutionException e) {
-	 			e.printStackTrace();
-	 		}finally{
-	 			pool.shutdown();
-	 		}
-	 		
-	 	}
-	 }
+```java
+ import java.util.concurrent.ExecutionException;
+ import java.util.concurrent.ExecutorService;
+ import java.util.concurrent.Executors;
+ import java.util.concurrent.Future;
+ public class CallableFuture {
+ 	public static void main(String[] args) {
+ 		//创建一个线程池
+ 		ExecutorService pool = Executors.newFixedThreadPool(3) ;
+ 		
+ 		//创建三个有返回值的任务
+ 		CallableTest2 c1 = new CallableTest2("线程1") ;
+ 		CallableTest2 c2 = new CallableTest2("线程2") ;
+ 		CallableTest2 c3 = new CallableTest2("线程3") ;
+ 		
+		Future f1 = pool.submit(c1) ;
+ 		Future f2 = pool.submit(c2) ;
+ 		Future f3 = pool.submit(c3) ;
+ 		
+ 		try {
+ 			System.out.println(f1.get().toString());
+ 			System.out.println(f2.get().toString());
+ 			System.out.println(f3.get().toString());
+ 		} catch (InterruptedException e) {
+ 			e.printStackTrace();
+ 		} catch (ExecutionException e) {
+ 			e.printStackTrace();
+ 		}finally{
+ 			pool.shutdown();
+ 		}
+ 		
+ 	}
+ }
+```
 
-
-​	
-​	 import java.util.concurrent.Callable;
-​	 
-​	 public class CallableTest2 implements Callable {
-​	 	private String name ;
-​	 
+```java
+	 import java.util.concurrent.Callable;
+	 
+	 public class CallableTest2 implements Callable {
+	 	private String name ;
+	 
 	 	public CallableTest2(String name) {
 	 		this.name = name;
 	 	}
-	 
-	 	@Override
-		public Object call() throws Exception {
-	 		return name+"返回了东西";
-		}
-	   }
+         
+
+	@Override
+	public Object call() throws Exception {
+ 		return name+"返回了东西";
+	}
+   }
+```

@@ -14,7 +14,7 @@ Java反射机制是指在<font color=red> 运行状态中 </font>，对于任�
 
 #### 获取class的三种方法
 
-```获取class
+```java
 package com.luo.test;
 public class TestDemo{
     public static void main(String[] args){
@@ -51,7 +51,7 @@ public class TestDemo{
 
 单独获取某一个方法是通过Class类的以下方法获得的：
 
-```huo
+```java
 //参数：第一个参数为方法名，后面的参数为 参数类型 比如 String.class int.class(可以看下方的例子)
 public Method getDeclaredMethod(String name, Class<?>... parameterTypes) // 得到该类所有的方法，不包括父类的
 public Method getMethod(String name, Class<?>... parameterTypes) // 得到该类所有的public方法，包括父类的
@@ -59,7 +59,7 @@ public Method getMethod(String name, Class<?>... parameterTypes) // 得到该类
 
 例如有个一类
 
-```
+```java
 public class Person {
     private String name;
     private int age;
@@ -118,7 +118,7 @@ public class TestDemo{
 
 获取所有的成员方法：
 
-```
+```java
 Class c = Class.forName("com.luo.Person");
 //不带参数则获取全部的方法
 Method[] methods = c.getDeclaredMethods(); // 得到该类所有的方法，不包括父类的
@@ -134,7 +134,7 @@ for (Method method : methods)
 
 单独获取某个成员变量，通过Class类的以下方法实现：
 
-```
+```java
 public Field getDeclaredField(String name) // 获得该类自身声明的所有变量，不包括其父类的变量
 public Field getField(String name) // 获得该类自所有的public成员变量，包括其父类变量
 
@@ -143,7 +143,7 @@ public Field getField(String name) // 获得该类自所有的public成员变量
 
 获取全部的成员变量：
 
-```
+```java
 Field[] fields = c.getDeclaredFields();
 
 然后遍历变量数组,获得某个成员变量：
@@ -156,7 +156,7 @@ for(Field field : fields)
 
 获取单个构造函数（传入参数）
 
-```
+```java
 public Constructor<T> getDeclaredConstructor(Class<?>... parameterTypes) //  获得该类所有的构造器，不包括其父类的构造器
 public Constructor<T> getConstructor(Class<?>... parameterTypes) // 获得该类所以public构造器，包括父类
 
@@ -166,7 +166,7 @@ public Constructor<T> getConstructor(Class<?>... parameterTypes) // 获得该类
 
 获取该类的所有构造函数
 
-```
+```java
 Constructor[] constructors = c.getDeclaredConstructors();
 
 然后遍历：

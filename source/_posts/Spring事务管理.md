@@ -61,7 +61,7 @@ tags:
 
   * Spring的声明式事务的支持是通过Spring AOP框架来实现的
 
-```
+```xml
 <!-- 1.加载配置文件 --> 
 <context:property-placeholder location="classpath:jdbc.properties"/> 
 
@@ -108,7 +108,7 @@ tags:
 
 ##### Spring基于注解的声明式事务配置
 
-```
+```xml
 <!-- 1.加载配置文件 --> 
 <context:property-placeholder location="classpath:jdbc.properties"/> 
 

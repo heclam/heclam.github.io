@@ -22,7 +22,7 @@ tags:
 
 想要生成某一个对象的代理对象，这个代理对象也要编写一个类来生成
 
-```
+``` java
 参数解析：
 	first arg:ClassLoader loader用来指明生成代理对象使用哪个类加载器
 	second arg:Class<?>[] interfaces用来指明生成哪个对象的代理对象，通过接口指定
@@ -36,14 +36,14 @@ static Object newProxyInstance(ClassLoader loader,class<?>[] interfaces,Invocati
 
 例子：(要想为一个类生成一个代理对象，前提是这个类必须要有一个接口，比如下面的AbcMan就有一个Person接口)
 
-```
+```java
 public interface Person{
     String sing(String name);
     String dance(String name);
 }
 ```
 
-```
+```java
 public class AbcMan implements Person{
     public String sing(String name){
         return "sing a"+name+"song";
@@ -57,7 +57,7 @@ public class AbcMan implements Person{
 
 ###### 创建生成代理对象的代理类
 
-```
+```java
 public class AbcManProxy{
 	//设计一个类变量记住代理类要代理的目标对象
     private Person abc = new AbcMan();
@@ -70,7 +70,7 @@ public class AbcManProxy{
         			first arg:把代理对象自己传递进来
         			second arg:把代理对象当前调用的方法传递进来
         			third arg:把方法参数传递进来
-        	/*
+        	*/
             @Override
             public Object invoke(Object proxy,Method method,Object[] args) throws Throwable{
                 //如果调用的是代理对象的sing方法
@@ -92,7 +92,7 @@ public class AbcManProxy{
 
 测试：
 
-````
+````java
 public Class Test{
     public static void main(String[] args){
         AbcManProxy proxy = new AbcManProxy();
@@ -119,7 +119,7 @@ dance bbb
 
 ##### 静态代理模式
 
-```
+```java
 public interface Person{
     void sing();
 }
@@ -127,7 +127,7 @@ public interface Person{
 
 静态代理需要创建接口实现类和代理类，这两个类分别实现这个接口
 
-```
+```java
 public class Abc implements Person{
     @Override
     public void sing(){
@@ -136,7 +136,7 @@ public class Abc implements Person{
 }
 ```
 
-```
+```java
 public class ProxyAbc implements Person{
     //接收实现类对象
     private Person p;
@@ -154,7 +154,7 @@ public class ProxyAbc implements Person{
 
 静态代理测试：
 
-```
+```java
 public class Test{
     public static void main(String [] args){
         Person abc = new Abc();
@@ -168,7 +168,7 @@ public class Test{
 
 * 动态代理不需要创建代理类，只需要编写一个动态处理器即可
 
-```
+```java
 public class JdkProxyHandler{
 	//用来接收实现类对象
     private Object abc;
@@ -186,7 +186,7 @@ public class JdkProxyHandler{
         		first arg:指定当前目标对象使用的类加载器
         		second arg: 指定目标对象实现的接口的类型
         		third arg: 指定动态处理器
-        	/*
+        	*/
         return Proxy.newProxyInstance(abc.getClass().getClassLoader(),abc.getClass().getInterfaces(),new InvocationHandler(){
             @Override
             public Object invoke(Object proxy,Method method,Object[] args) throws Throwable{
@@ -201,7 +201,7 @@ public class JdkProxyHandler{
 
 JDK动态代理测试：
 
-```
+```java
 public class Test{
     public static void main(String [] args){
         Person abc = new Abc();
@@ -215,7 +215,7 @@ public class Test{
 
 JDK动态代理需要实现类通过接口定义方法，那对于没有实现接口的类就使用了CGLIB动态代理来实现
 
-```
+```java
 public class CglibProxyHandler implements MethodInterceptor{
 	//维护目标对象
     private Object target;
@@ -245,7 +245,7 @@ public class CglibProxyHandler implements MethodInterceptor{
 
 JDK动态代理测试：
 
-```
+```java
 public class Test{
     public static void main(String [] args){
         Person abc = new Abc();

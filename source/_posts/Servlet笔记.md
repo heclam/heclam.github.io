@@ -45,7 +45,7 @@ Servlet生命周期：
 
 ##### 一个Servlet的创建例子
 
-```
+```java 
 public class ServletDemo extends HttpServlet {
   
     public void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -73,7 +73,7 @@ public class ServletDemo extends HttpServlet {
 
 web.xml需要配置上servlet的映射
 
-```
+```xml
 	<servlet>
      <servlet-name>ServletDemo</servlet-name>
      <servlet-class>com.heclam.ServletDemo</servlet-class><!--这里写类的全限定名-->
@@ -90,7 +90,7 @@ web.xml需要配置上servlet的映射
 
 ##### 用servletContext实现请求转发
 
-```
+```java
 public class ServletDemo extends HttpServlet {
   
     public void doGet(HttpServletRequest request, HttpServletResponse response)

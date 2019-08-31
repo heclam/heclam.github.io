@@ -32,7 +32,7 @@ Cookie和Session
 
 ##### 一个Cookie例子
 
-```
+```java
 public class ServletDemo extends HttpServlet {
   
     public void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -60,7 +60,7 @@ public class ServletDemo extends HttpServlet {
 
 获取Cookie
 
-```
+```java
  Cookie[] cookies = request.getCookies();
         for (int i = 0;cookies! = null && i < cookies.length; i++) {
                 String name = cookies[i].getName();
@@ -78,7 +78,7 @@ Cookie有效期：
 
 ##### Cookie中存取中文
 
-```
+```java
 //Cookie存储中文的时候需要使用URLEncoder类里面的encode(String s,String enc)方法进行中文转码
 Cookie cookie = new Cookie("userName", URLEncoder.encode("孤傲苍狼", "UTF-8"));
 response.addCookie(cookie);

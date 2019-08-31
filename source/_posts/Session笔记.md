@@ -50,7 +50,7 @@ tags:
 
 ##### 一个Session的例子
 
-```
+```java 
 public class SessionDemo1 extends HttpServlet {
  
      public void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -81,7 +81,7 @@ public class SessionDemo1 extends HttpServlet {
 
 **Session也是一个域对象，Session作为一种记录浏览器状态的机制，只要Session对象没有被销毁，Servlet之间就可以通过Session对象实现通信**
 
-```
+```java
 //使用request对象的getSession()获取session，如果session不存在则创建一个
          HttpSession session = request.getSession();
 //获取存入Session的属性
