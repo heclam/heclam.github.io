@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html  lang="zh">
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 3.9.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>了解一下Redis - heclam&#39;s blog</title>
+
+
+    <meta name="description" content="Redis支持以下五种类型 String list set SortedSet Hash">
+<meta name="keywords" content="Redis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="了解一下Redis">
+<meta property="og:url" content="http://yoursite.com/2019/08/25/了解一下Redis/index.html">
+<meta property="og:site_name" content="heclam&#39;s blog">
+<meta property="og:description" content="Redis支持以下五种类型 String list set SortedSet Hash">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/images/og_image.png">
+<meta property="og:updated_time" content="2019-08-31T15:52:16.549Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="了解一下Redis">
+<meta name="twitter:description" content="Redis支持以下五种类型 String list set SortedSet Hash">
+<meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
+
+
+
+
+
+<link rel="alternative" href="/atom.xml" title="了解一下Redis" type="application/atom+xml">
+
+
+
+<link rel="icon" href="/images/favicons.ico">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/head.jpg" alt="了解一下Redis" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">主页</a>
+                
+                <a class="navbar-item"
+                href="/archives">归档</a>
+                
+                <a class="navbar-item"
+                href="/categories">分类</a>
+                
+                <a class="navbar-item"
+                href="/tags">标签</a>
+                
+                <a class="navbar-item"
+                href="/about">关于</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+	
+
+	
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-6-tablet is-6-desktop is-9-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-08-25T06:40:19.000Z">2019-08-25</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/Redis/">Redis</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    14 分钟 读完 (大约 2046 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                了解一下Redis
+            
+        </h1>
+        <div class="content">
+            <h5 id="Redis支持以下五种类型"><a href="#Redis支持以下五种类型" class="headerlink" title="Redis支持以下五种类型"></a>Redis支持以下五种类型</h5><ul>
+<li>String</li>
+<li>list</li>
+<li>set</li>
+<li>SortedSet</li>
+<li>Hash<a id="more"></a></li>
+</ul>
+<h4 id="键的过期时间"><a href="#键的过期时间" class="headerlink" title="键的过期时间"></a>键的过期时间</h4><ul>
+<li>设置键的<font color="red">生存</font>时间可以通过<strong>EXPIRE</strong>或者<strong>PEXPIRE</strong></li>
+<li>设置键的<font color="red">过期</font>时间可以通过<strong>EXPIREAT</strong>或者<strong>PEXPIREAT</strong></li>
+</ul>
+<p>其实<code>EXPIRE</code>、<code>PEXPIRE</code>、<code>EXPIREAT</code>这三个命令都是通过<code>PEXPIREAT</code>命令来实现的</p>
+<h4 id="过期策略"><a href="#过期策略" class="headerlink" title="过期策略"></a>过期策略</h4><ul>
+<li><p>过期键是保存在哈希表中了。那这些过期键到了过期的时间，就会立马被删除掉吗？？</p>
+</li>
+<li><p>删除策略可以分为三种：</p>
+<ul>
+<li>定时删除(对内存友好，对CPU不友好)<ul>
+<li>到时间点上就把所有过期的键删除了<ul>
+<li>惰性删除(对CPU极度友好，对内存极度不友好)</li>
+<li>每次从键空间取键的时候，判断一下该键是否过期了，如果过期了就删除</li>
+<li>定期删除(折中)</li>
+<li><strong>每隔</strong>一段时间去删除过期键，<strong>限制</strong>删除的执行时长和频率。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>Redis采用的是<strong>惰性删除+定期删除</strong>两种策略，所以说，在Redis里边如果过期键到了过期的时间了，未必被立马删除的！</p>
+</li>
+</ul>
+<p>####　Redis持久化</p>
+<ul>
+<li><p>Redis提供两种不同的持久化方法来将数据存储到硬盘里面：</p>
+<ul>
+<li>RDB(基于快照)，将某一时刻的所有数据保存到一个RDB文件中。</li>
+<li>AOF(append-only-file)，当Redis服务器执行<strong>写命令</strong>的时候，将执行的<strong>写命令</strong>保存到AOF文件中。</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>RDB(快照持久化)</p>
+<ul>
+<li><p><strong>流程：</strong> <font color="red">数据库状态</font> –保存—–》 <font color="red">RDB文件</font>        <font color="red">数据库状态</font> 《—-还原— <font color="red">RDB文件</font>    </p>
+</li>
+<li><p>有两个命令可以生成RDB文件：</p>
+<ul>
+<li><code>SAVE</code>会<strong>阻塞</strong>Redis服务器进程，服务器不能接收任何请求，直到RDB文件创建完毕为止</li>
+<li><code>BGSAVE</code>创建出一个<strong>子进程</strong>，由子进程来负责创建RDB文件，服务器进程可以继续接收请求。</li>
+</ul>
+</li>
+<li><p>Redis服务器在启动的时候，如果发现有RDB文件，就会<strong>自动</strong>载入RDB文件(不需要人工干预)</p>
+<ul>
+<li>服务器在载入RDB文件期间，会处于阻塞状态，直到载入工作完成。</li>
+</ul>
+</li>
+<li><p>除了手动调用<code>SAVE</code>或者<code>BGSAVE</code>命令生成RDB文件之外，我们可以使用配置的方式来<strong>定期</strong>执行</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">save 900 1              #在900秒(15分钟)之后，至少有1个key发生变化，</span><br><span class="line">save 300 10            #在300秒(5分钟)之后，至少有10个key发生变化</span><br><span class="line">save 60 10000        #在60秒(1分钟)之后，至少有10000个key发生变化</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>AOF(文件追加)</p>
+<ul>
+<li><strong>流程：</strong> <font color="red">客户端</font> —发送写的命令—-》<font color="red">服务器</font> —-保存被执行的写命令—–》<font color="red">AOF文件</font> </li>
+<li>AOF持久化功能的实现可以分为3个步骤：<ul>
+<li>命令追加：命令写入aof_buf缓冲区</li>
+<li>文件写入：调用flushAppendOnlyFile函数，考虑是否要将aof_buf缓冲区写入AOF文件中</li>
+<li>文件同步：考虑是否将内存缓冲区的数据真正写入到硬盘</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="主从框架"><a href="#主从框架" class="headerlink" title="主从框架"></a>主从框架</h4><p><img src="https://i.loli.net/2019/08/31/EmJOWLKnpDaFgrB.png" alt></p>
+<h5 id="主从框架的特点"><a href="#主从框架的特点" class="headerlink" title="主从框架的特点"></a>主从框架的特点</h5><ul>
+<li>主服务器负责接受写请求</li>
+<li><strong>从</strong>服务器负责接收<strong>读</strong>请求</li>
+<li>从服务器的数据由主服务器<strong>复制</strong>过去。主从服务器的数据是<strong>一致</strong>的</li>
+</ul>
+<p>主从框架的好处：</p>
+<ul>
+<li>读写分离(主服务器负责写，从服务器负责读)</li>
+<li>高可用(某一台从服务器挂了，其他从服务器还能继续接收请求，不影响服务)</li>
+<li>处理更多的并发量(每台从服务器<strong>都可以接收读请求</strong>，读QPS就上去了)</li>
+</ul>
+<h4 id="复制功能"><a href="#复制功能" class="headerlink" title="复制功能"></a>复制功能</h4><p>主从架构的特点之一：主服务器和从服务器的数据是<strong>一致</strong>的。</p>
+<p><font color="red"><strong>Redis服务器（主）</strong></font> 《———–复制——————-   <font color="red"><strong>Redis服务器（主）</strong></font> </p>
+<ul>
+<li>复制功能分为两个步骤<ul>
+<li>同步（sync）<ul>
+<li>将从服务器的数据库状态<strong>更新至</strong>主服务器的数据库状态<ul>
+<li>命令传播(command propagate)</li>
+<li>主服务器的数据库状态<strong>被修改</strong>，导致主从服务器的数据库状态<strong>不一致</strong>，让主从服务器的数据库状态<strong>重新回到一致状态</strong>。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>从服务器对主服务器的<strong>同步又可以分为两种情况</strong>：<ul>
+<li>初次同步：从服务器<strong>没有复制过任何</strong>的主服务器，或者从服务器要复制的主服务器跟上次复制的主服务器<strong>不一样</strong>。</li>
+<li>断线后同步：处于<strong>命令传播阶段</strong>的主从服务器因为<strong>网络原因</strong>中断了复制，从服务器通过<strong>自动重连</strong>重新连接主服务器，并继续复制主服务器</li>
+</ul>
+</li>
+</ul>
+<h4 id="哨兵-Sentinal-机制"><a href="#哨兵-Sentinal-机制" class="headerlink" title="哨兵(Sentinal)机制"></a>哨兵(Sentinal)机制</h4><p>​    哨兵机制可以监控，但主服务器瘫痪了之后，可以指定一台从服务器为新的主服务器,如果旧的主服务器接上来，那么旧的主服务器成为了从服务器</p>
+<h4 id="缓存雪崩"><a href="#缓存雪崩" class="headerlink" title="缓存雪崩"></a>缓存雪崩</h4><h5 id="什么是缓存雪崩？"><a href="#什么是缓存雪崩？" class="headerlink" title="什么是缓存雪崩？"></a>什么是缓存雪崩？</h5><ul>
+<li><p>如果缓存数据<strong>设置的过期时间是相同</strong>的，并且Redis恰好将这部分数据全部删光了。这就会导致在这段时间内，这些缓存<strong>同时失效</strong>，全部请求到数据库中。</p>
+</li>
+<li><p>这就是缓存雪崩：</p>
+<ul>
+<li><p>Redis挂掉了，请求全部走数据库。</p>
+</li>
+<li><p>对缓存数据设置相同的过期时间，导致某段时间内缓存失效，请求全部走数据库。</p>
+<p> 缓存雪崩如果发生了，很可能就把我们的数据库<strong>搞垮</strong>，导致整个服务瘫痪！</p>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h5><pre><code>在缓存的时候给过期时间加上一个**随机值**，这样就会大幅度的**减少缓存在同一时间过期**。
+
+**对于“Redis挂掉了，请求全部走数据库”这种情况，我们可以有以下的思路**</code></pre><ul>
+<li><p>事发前：实现Redis的高可用（主从框架+Sentinel(哨兵)或者Redis Cluster）,尽量避免Redis挂掉这种情况发生。</p>
+</li>
+<li><p>事发中：万一Redis真的垮了，我们可以设置本地缓存（ehcache）+限流（hystrix）,尽量避免我们的数据库被干掉（起码能保证我们的服务还是能正常工作的）</p>
+</li>
+<li><p>事发后： redis持久化，重启后自动从磁盘上加载数据，快速恢复缓存数据。</p>
+</li>
+</ul>
+<h4 id="缓存穿透"><a href="#缓存穿透" class="headerlink" title="缓存穿透"></a>缓存穿透</h4><h5 id="什么是缓存穿透？"><a href="#什么是缓存穿透？" class="headerlink" title="什么是缓存穿透？"></a>什么是缓存穿透？</h5><ul>
+<li><p>比如数据库后台表的ID都是大于1的书，每次请求的ID都是负数，这会导致我们的缓存不起作用，请求全部都去找数据库了，但数据库也没有这个值，所以每次返回都是空。</p>
+</li>
+<li><p>缓存穿透是指查询一个一定<strong>不存在的数据</strong>。由于缓存不命中，并且出于容错考虑，如果从<strong>数据库查不到数据则不写入缓存</strong>，这将导致这个不存在的数据<strong>每次请求都要到数据库去查询</strong>，失去了缓存的意义。</p>
+</li>
+</ul>
+<h5 id="这就是缓存穿透："><a href="#这就是缓存穿透：" class="headerlink" title="这就是缓存穿透："></a>这就是缓存穿透：</h5><ul>
+<li><p>请求的数据在缓存大量不命中，导致请求走数据库。</p>
+</li>
+<li><p>缓存穿透如果发生了，也可能把我们的数据库搞垮，导致整个服务瘫痪！</p>
+</li>
+</ul>
+<h5 id="解决方法-1"><a href="#解决方法-1" class="headerlink" title="解决方法"></a>解决方法</h5><p>解决缓存穿透的两种方案：</p>
+<ul>
+<li><p>由于请求的参数是不合法的(每次都请求不存在的参数)，于是我们可以使用布隆过滤器(BloomFilter)或者压缩filter提前拦截，不合法就不让这个请求到数据库层！</p>
+</li>
+<li><p>当我们从数据库找不到的时候，我们也将这个<strong>空对象设置到缓存里边去</strong>。下次再请求的时候，就可以从缓存里边获取了。</p>
+<ul>
+<li>这种情况我们一般会将空对象设置一个<strong>较短的过期时间</strong>。</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/Redis/">Redis</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        <div class="social-share"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3>
+        <div class="buttons is-centered">
+            
+                
+<a class="button is-info donate">
+    <span class="icon is-small">
+        <i class="fab fa-alipay"></i>
+    </span>
+    <span>支付宝</span>
+    <div class="qrcode"><img src="https://i.loli.net/2019/08/29/XzbeAQJ4qdlhNnC.png" alt="支付宝"></div>
+</a>
+
+                
+                
+<a class="button is-success donate">
+    <span class="icon is-small">
+        <i class="fab fa-weixin"></i>
+    </span>
+    <span>微信</span>
+    <div class="qrcode"><img src="https://i.loli.net/2019/08/29/1RAlYPc3Medjgma.png" alt="微信"></div>
+</a>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/08/16/MySQL数据库/">
+                <span class="level-item">MySQL数据库</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">评论</h3>
+        
+<div id="valine-thread" class="content"></div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+<script>
+    new Valine({
+        el: '#valine-thread' ,
+        notify: false,
+        verify: false,
+        app_id: 'DiXqsdSJ4j4eTKMUD6sGitDU-gzGzoHsz',
+        app_key: 'g7O6FCwr3j0m3eqqMGMVheTa',
+        placeholder: '留下你的评论'
+    });
+</script>
+
+    </div>
+</div>
+</div>
+                
+
+
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level">
+            <div class="level-item has-text-centered" style="flex-shrink: 1">
+                <div>
+                    
+                        <img class="image is-128x128 has-mb-6" src="/images/head.jpg" alt="Heclam">
+                    
+                    
+                    <p class="is-size-4 is-block">
+                        Heclam
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        Java Programmer
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>China,GuangZhou</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level is-mobile">
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        文章
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        19
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        分类
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        8
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        标签
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        20
+                    </p>
+                </div>
+            </div>
+        </nav>
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="https://github.com/heclam" target="_blank">
+                关注我</a>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank"
+                title="Github" href="https://github.com/heclam">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank"
+                title="Email" href="mailto:heclam@163.com">
+                
+                <i class="fa fa-envelope"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank"
+                title="RSS" href="/atom.xml">
+                
+                <i class="fas fa-rss"></i>
+                
+            </a>
+            
+        </div>
+        
+    </div>
+</div>
+    
+        
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                目录
+            </h3>
+            <ul class="menu-list"><ul class="menu-list"><li>
+        <a class="is-flex" href="#Redis支持以下五种类型">
+        <span class="has-mr-6">1.1</span>
+        <span>Redis支持以下五种类型</span>
+        </a></li></ul><li>
+        <a class="is-flex" href="#键的过期时间">
+        <span class="has-mr-6">2</span>
+        <span>键的过期时间</span>
+        </a></li><li>
+        <a class="is-flex" href="#过期策略">
+        <span class="has-mr-6">3</span>
+        <span>过期策略</span>
+        </a></li><li>
+        <a class="is-flex" href="#主从框架">
+        <span class="has-mr-6">4</span>
+        <span>主从框架</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#主从框架的特点">
+        <span class="has-mr-6">4.1</span>
+        <span>主从框架的特点</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#复制功能">
+        <span class="has-mr-6">5</span>
+        <span>复制功能</span>
+        </a></li><li>
+        <a class="is-flex" href="#哨兵-Sentinal-机制">
+        <span class="has-mr-6">6</span>
+        <span>哨兵(Sentinal)机制</span>
+        </a></li><li>
+        <a class="is-flex" href="#缓存雪崩">
+        <span class="has-mr-6">7</span>
+        <span>缓存雪崩</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#什么是缓存雪崩？">
+        <span class="has-mr-6">7.1</span>
+        <span>什么是缓存雪崩？</span>
+        </a></li><li>
+        <a class="is-flex" href="#解决方法">
+        <span class="has-mr-6">7.2</span>
+        <span>解决方法</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#缓存穿透">
+        <span class="has-mr-6">8</span>
+        <span>缓存穿透</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#什么是缓存穿透？">
+        <span class="has-mr-6">8.1</span>
+        <span>什么是缓存穿透？</span>
+        </a></li><li>
+        <a class="is-flex" href="#这就是缓存穿透：">
+        <span class="has-mr-6">8.2</span>
+        <span>这就是缓存穿透：</span>
+        </a></li><li>
+        <a class="is-flex" href="#解决方法-1">
+        <span class="has-mr-6">8.3</span>
+        <span>解决方法</span>
+        </a></li></ul></li></ul>
+        </div>
+    </div>
+</div>
+
+    
+        
+
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            链接
+        </h3>
+        <ul class="menu-list">
+        
+            <li>
+                <a class="level is-mobile" href="https://wistbean.github.io/" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">wistbean</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">wistbean.github.io</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://www.ccyh.xyz/" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">FlyFish</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">www.ccyh.xyz</span>
+                    </span>
+                </a>
+            </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+
+
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                分类
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/categories/MySQL/">
+            <span class="level-start">
+                <span class="level-item">MySQL</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Redis/">
+            <span class="level-start">
+                <span class="level-item">Redis</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Spring/">
+            <span class="level-start">
+                <span class="level-item">Spring</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/java/">
+            <span class="level-start">
+                <span class="level-item">java</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">5</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/javaWeb/">
+            <span class="level-start">
+                <span class="level-item">javaWeb</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">5</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/生活/">
+            <span class="level-start">
+                <span class="level-item">生活</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/笔记/">
+            <span class="level-start">
+                <span class="level-item">笔记</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/笔记/教程/">
+            <span class="level-start">
+                <span class="level-item">教程</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li></ul></li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen is-sticky">
+        
+            
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-08-25T06:40:19.000Z">2019-08-25</time></div>
+                    <a href="/2019/08/25/了解一下Redis/" class="title has-link-black-ter is-size-6 has-text-weight-normal">了解一下Redis</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Redis/">Redis</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-08-16T06:19:19.000Z">2019-08-16</time></div>
+                    <a href="/2019/08/16/MySQL数据库/" class="title has-link-black-ter is-size-6 has-text-weight-normal">MySQL数据库</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/MySQL/">MySQL</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-08-14T06:15:19.000Z">2019-08-14</time></div>
+                    <a href="/2019/08/14/Spring事务管理/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Spring事务管理</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Spring/">Spring</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-15T07:01:21.000Z">2019-07-15</time></div>
+                    <a href="/2019/07/15/代理(Proxy)/" class="title has-link-black-ter is-size-6 has-text-weight-normal">代理（Proxy）</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-10T08:43:01.000Z">2019-07-10</time></div>
+                    <a href="/2019/07/10/获取天气信息/" class="title has-link-black-ter is-size-6 has-text-weight-normal">获取天气信息</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/java/">java</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+
+        
+            
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            标签云
+        </h3>
+        <a href="/tags/Cookie/" style="font-size: 10px;">Cookie</a> <a href="/tags/JSP/" style="font-size: 10px;">JSP</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Servlet/" style="font-size: 10px;">Servlet</a> <a href="/tags/Session/" style="font-size: 10px;">Session</a> <a href="/tags/Spring事务/" style="font-size: 10px;">Spring事务</a> <a href="/tags/ajax/" style="font-size: 10px;">ajax</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/java线程/" style="font-size: 10px;">java线程</a> <a href="/tags/markdown语法/" style="font-size: 10px;">markdown语法</a> <a href="/tags/新技能/" style="font-size: 10px;">新技能</a> <a href="/tags/生活总结/" style="font-size: 10px;">生活总结</a> <a href="/tags/生活记录/" style="font-size: 10px;">生活记录</a> <a href="/tags/监听器/" style="font-size: 10px;">监听器</a> <a href="/tags/笔记/" style="font-size: 10px;">笔记</a> <a href="/tags/设计模式/" style="font-size: 10px;">设计模式</a> <a href="/tags/过滤器/" style="font-size: 10px;">过滤器</a>
+    </div>
+</div>
+
+        
+            <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/08/">
+                <span class="level-start">
+                    <span class="level-item">八月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/07/">
+                <span class="level-start">
+                    <span class="level-item">七月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">9</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/06/">
+                <span class="level-start">
+                    <span class="level-item">六月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">7</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+        
+        </div>
+    
+</div>
+
+                
+
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/head.jpg" alt="了解一下Redis" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2019 heclam&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Download on GitHub" href="https://github.com/heclam">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+			
+            </div>
+			
+			<div>
+				<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+				<script>
+					var now = new Date(); 
+					function createtime() { 
+						var grt= new Date("06/06/2019 11:35:00"); 
+						now.setTime(now.getTime()+250); 
+						days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days); 
+						hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours); 
+						if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum); 
+						mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;} 
+						seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum); 
+						snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;} 
+						document.getElementById("timeDate").innerHTML = "本站已安全运行 "+dnum+" 天 "; 
+						document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒"; 
+					} 
+				setInterval("createtime()",250);
+				</script>
+			<div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+<script>
+var IcarusThemeSettings = {
+    article: {
+        highlight: {
+            clipboard: false,
+            fold: ''
+        }
+    }
+};
+</script>
+
+
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+	
+	<!-- 雪花特效 -->
+    <script type="text/javascript">
+      var windowWidth = $(window).width();
+      if (windowWidth > 480) {
+        document.write('<script type="text/javascript" src="/js/src/snow.js"><\/script>');
+      }
+    </script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"left","width":100,"height":200},"mobile":{"show":false}});</script></body>
+</html>

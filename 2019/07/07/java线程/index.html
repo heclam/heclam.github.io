@@ -19,7 +19,7 @@
 <meta property="og:description" content="进程与线程的区别 进程: 进程简单的来说就是在内存中运行的应用程序，一个进程可以启动多个线程。​    比如在windows中一个运行( xxx.EXE文件 )就是一个进程。进程是系统运行程序的基本单位">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/images/og_image.png">
-<meta property="og:updated_time" content="2019-08-28T18:58:23.462Z">
+<meta property="og:updated_time" content="2019-08-31T14:46:44.225Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="java线程">
 <meta name="twitter:description" content="进程与线程的区别 进程: 进程简单的来说就是在内存中运行的应用程序，一个进程可以启动多个线程。​    比如在windows中一个运行( xxx.EXE文件 )就是一个进程。进程是系统运行程序的基本单位">
@@ -155,7 +155,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    9 分钟 读完 (大约 1420 个字)
+                    9 分钟 读完 (大约 1421 个字)
                 </span>
                 
                 
@@ -181,10 +181,10 @@
 <h5 id="何为死锁"><a href="#何为死锁" class="headerlink" title="何为死锁"></a>何为死锁</h5><p>例子：线程A持有资源2，线程B持有资源1，在线程A、B都没有释放自己所持有资源的情况下（锁未释放），他们有必需获取相互的资源才能完成线程，比如线程A需要获取资源1（线程B也需要获取资源2）才能完成线程操作，所才会释放，现在各自抱着其他线程所需要的资源而形成死锁。</p>
 <h4 id="创建多线程有两种方法"><a href="#创建多线程有两种方法" class="headerlink" title="创建多线程有两种方法"></a>创建多线程有两种方法</h4><ul>
 <li><p>继承Thread,重写run方法</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public class MyThread extends Thread &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void run() &#123;</span><br><span class="line">        for (int x = 0; x &lt; 200; x++) &#123;</span><br><span class="line">            System.out.println(x);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">----</span><br><span class="line">调用</span><br><span class="line">public static void main（String [] args）&#123;</span><br><span class="line">    MyThread my1 = new MyThread();</span><br><span class="line">    my1.start();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyThread</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Thread</span> </span>&#123;</span><br><span class="line">    <span class="hljs-meta">@Override</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">run</span><span class="hljs-params">()</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> x = <span class="hljs-number">0</span>; x &lt; <span class="hljs-number">200</span>; x++) &#123;</span><br><span class="line">            System.out.println(x);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">----</span><br><span class="line">调用</span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> main（String [] args）&#123;</span><br><span class="line">    MyThread my1 = <span class="hljs-keyword">new</span> MyThread();</span><br><span class="line">    my1.start();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>实现Runnable接口，重写run方法（这个比较常用，避免java单继承的限制）</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public class MyRunnable implements Runnable &#123;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void run() &#123;</span><br><span class="line">        for (int x = 0; x &lt; 100; x++) &#123;</span><br><span class="line">            System.out.println(x);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">----</span><br><span class="line">调用</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        MyRunnable my = new MyRunnable();</span><br><span class="line">        Thread t1 = new Thread(my);</span><br><span class="line">        t1.start();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyRunnable</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Runnable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-meta">@Override</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">run</span><span class="hljs-params">()</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> x = <span class="hljs-number">0</span>; x &lt; <span class="hljs-number">100</span>; x++) &#123;</span><br><span class="line">            System.out.println(x);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">----</span><br><span class="line">调用</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;</span><br><span class="line">        MyRunnable my = <span class="hljs-keyword">new</span> MyRunnable();</span><br><span class="line">        Thread t1 = <span class="hljs-keyword">new</span> Thread(my);</span><br><span class="line">        t1.start();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 
 </li>
 </ul>
@@ -199,13 +199,13 @@
 <p><strong>用法：</strong></p>
 <ul>
 <li><p>修饰实力方法：给当前对象加锁，进入同步代码块前要获取当前对象实例的锁</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public synchronized void add()&#123;&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">synchronized</span> <span class="hljs-keyword">void</span> <span class="hljs-title">add</span><span class="hljs-params">()</span></span>&#123;&#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>修饰静态方法：给当前类加锁（因为静态方法没有this），会作用于当前类的所有对象实例，因为静态成员不属于任何一个实例对象，是一个类成员。</p>
- <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public synchronized static void add()&#123;&#125;</span><br></pre></td></tr></table></figure>
+ <figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">synchronized</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">add</span><span class="hljs-params">()</span></span>&#123;&#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>修饰代码块：指定加锁对象，对给定对象加锁，进入同步代码块之前要获取给定对象的锁</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">synchronized(object)&#123;  &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">synchronized</span>(object)&#123;  &#125;</span><br></pre></td></tr></table></figure>
 
 </li>
 </ul>
@@ -226,46 +226,11 @@
 </li>
 </ul>
 <h4 id="有返回值得多线程"><a href="#有返回值得多线程" class="headerlink" title="有返回值得多线程"></a>有返回值得多线程</h4><p>​    <strong>简单的实现有返回值得线程</strong></p>
-<pre><code>import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-public class CallableFuture {
-    public static void main(String[] args) {
-        //创建一个线程池
-        ExecutorService pool = Executors.newFixedThreadPool(3) ;
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> java.util.concurrent.ExecutionException;</span><br><span class="line"><span class="hljs-keyword">import</span> java.util.concurrent.ExecutorService;</span><br><span class="line"><span class="hljs-keyword">import</span> java.util.concurrent.Executors;</span><br><span class="line"><span class="hljs-keyword">import</span> java.util.concurrent.Future;</span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CallableFuture</span> </span>&#123;</span><br><span class="line">	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;</span><br><span class="line">		<span class="hljs-comment">//创建一个线程池</span></span><br><span class="line">		ExecutorService pool = Executors.newFixedThreadPool(<span class="hljs-number">3</span>) ;</span><br><span class="line">		</span><br><span class="line">		<span class="hljs-comment">//创建三个有返回值的任务</span></span><br><span class="line">		CallableTest2 c1 = <span class="hljs-keyword">new</span> CallableTest2(<span class="hljs-string">"线程1"</span>) ;</span><br><span class="line">		CallableTest2 c2 = <span class="hljs-keyword">new</span> CallableTest2(<span class="hljs-string">"线程2"</span>) ;</span><br><span class="line">		CallableTest2 c3 = <span class="hljs-keyword">new</span> CallableTest2(<span class="hljs-string">"线程3"</span>) ;</span><br><span class="line">		</span><br><span class="line">	Future f1 = pool.submit(c1) ;</span><br><span class="line">		Future f2 = pool.submit(c2) ;</span><br><span class="line">		Future f3 = pool.submit(c3) ;</span><br><span class="line">		</span><br><span class="line">		<span class="hljs-keyword">try</span> &#123;</span><br><span class="line">			System.out.println(f1.get().toString());</span><br><span class="line">			System.out.println(f2.get().toString());</span><br><span class="line">			System.out.println(f3.get().toString());</span><br><span class="line">		&#125; <span class="hljs-keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125; <span class="hljs-keyword">catch</span> (ExecutionException e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;<span class="hljs-keyword">finally</span>&#123;</span><br><span class="line">			pool.shutdown();</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-        //创建三个有返回值的任务
-        CallableTest2 c1 = new CallableTest2(&quot;线程1&quot;) ;
-        CallableTest2 c2 = new CallableTest2(&quot;线程2&quot;) ;
-        CallableTest2 c3 = new CallableTest2(&quot;线程3&quot;) ;
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"> <span class="hljs-keyword">import</span> java.util.concurrent.Callable;</span><br><span class="line"> </span><br><span class="line"> <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CallableTest2</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Callable</span> </span>&#123;</span><br><span class="line"> 	<span class="hljs-keyword">private</span> String name ;</span><br><span class="line"> </span><br><span class="line"> 	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">CallableTest2</span><span class="hljs-params">(String name)</span> </span>&#123;</span><br><span class="line"> 		<span class="hljs-keyword">this</span>.name = name;</span><br><span class="line"> 	&#125;</span><br><span class="line">        </span><br><span class="line"></span><br><span class="line"><span class="hljs-meta">@Override</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">public</span> Object <span class="hljs-title">call</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;</span><br><span class="line">		<span class="hljs-keyword">return</span> name+<span class="hljs-string">"返回了东西"</span>;</span><br><span class="line">&#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
 
-       Future f1 = pool.submit(c1) ;
-        Future f2 = pool.submit(c2) ;
-        Future f3 = pool.submit(c3) ;
 
-        try {
-            System.out.println(f1.get().toString());
-            System.out.println(f2.get().toString());
-            System.out.println(f3.get().toString());
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }finally{
-            pool.shutdown();
-        }
-
-    }
-}</code></pre><p>​    
-​     import java.util.concurrent.Callable;<br>​     
-​     public class CallableTest2 implements Callable {<br>​         private String name ;<br>​     
-         public CallableTest2(String name) {<br>             this.name = name;<br>         }</p>
-<pre><code>  @Override
- public Object call() throws Exception {
-      return name+&quot;返回了东西&quot;;
- }
-}</code></pre>
         </div>
         
         <div class="level is-size-7 is-uppercase">
@@ -407,7 +372,7 @@ public class CallableFuture {
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        15
+                        19
                     </p>
                 </div>
             </div>
@@ -417,7 +382,7 @@ public class CallableFuture {
                         分类
                     </p>
                     <p class="title has-text-weight-normal">
-                        6
+                        8
                     </p>
                 </div>
             </div>
@@ -427,7 +392,7 @@ public class CallableFuture {
                         标签
                     </p>
                     <p class="title has-text-weight-normal">
-                        15
+                        20
                     </p>
                 </div>
             </div>
@@ -516,6 +481,22 @@ public class CallableFuture {
             </h3>
             <ul class="menu-list">
             <li>
+        <a class="level is-marginless" href="/categories/MySQL/">
+            <span class="level-start">
+                <span class="level-item">MySQL</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Redis/">
+            <span class="level-start">
+                <span class="level-item">Redis</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
         <a class="level is-marginless" href="/categories/Spring/">
             <span class="level-start">
                 <span class="level-item">Spring</span>
@@ -529,7 +510,7 @@ public class CallableFuture {
                 <span class="level-item">java</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">4</span>
+                <span class="level-item tag">5</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/javaWeb/">
@@ -537,7 +518,7 @@ public class CallableFuture {
                 <span class="level-item">javaWeb</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">4</span>
+                <span class="level-item tag">5</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/生活/">
@@ -583,6 +564,32 @@ public class CallableFuture {
             
             <div class="media-content">
                 <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-08-25T06:40:19.000Z">2019-08-25</time></div>
+                    <a href="/2019/08/25/了解一下Redis/" class="title has-link-black-ter is-size-6 has-text-weight-normal">了解一下Redis</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Redis/">Redis</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-08-16T06:19:19.000Z">2019-08-16</time></div>
+                    <a href="/2019/08/16/MySQL数据库/" class="title has-link-black-ter is-size-6 has-text-weight-normal">MySQL数据库</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/MySQL/">MySQL</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-08-14T06:15:19.000Z">2019-08-14</time></div>
                     <a href="/2019/08/14/Spring事务管理/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Spring事务管理</a>
                     <p class="is-size-7 is-uppercase">
@@ -618,32 +625,6 @@ public class CallableFuture {
             </div>
         </article>
         
-        <article class="media">
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-08T09:20:20.000Z">2019-07-08</time></div>
-                    <a href="/2019/07/08/JSP笔记/" class="title has-link-black-ter is-size-6 has-text-weight-normal">JSP笔记</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/javaWeb/">javaWeb</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-08T07:30:31.000Z">2019-07-08</time></div>
-                    <a href="/2019/07/08/Session笔记/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Session笔记</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/javaWeb/">javaWeb</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -654,7 +635,7 @@ public class CallableFuture {
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/tags/Cookie/" style="font-size: 10px;">Cookie</a> <a href="/tags/JSP/" style="font-size: 10px;">JSP</a> <a href="/tags/Servlet/" style="font-size: 10px;">Servlet</a> <a href="/tags/Session/" style="font-size: 10px;">Session</a> <a href="/tags/Spring事务/" style="font-size: 10px;">Spring事务</a> <a href="/tags/ajax/" style="font-size: 10px;">ajax</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/java线程/" style="font-size: 10px;">java线程</a> <a href="/tags/markdown语法/" style="font-size: 10px;">markdown语法</a> <a href="/tags/新技能/" style="font-size: 10px;">新技能</a> <a href="/tags/生活总结/" style="font-size: 10px;">生活总结</a> <a href="/tags/生活记录/" style="font-size: 10px;">生活记录</a> <a href="/tags/笔记/" style="font-size: 10px;">笔记</a>
+        <a href="/tags/Cookie/" style="font-size: 10px;">Cookie</a> <a href="/tags/JSP/" style="font-size: 10px;">JSP</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Servlet/" style="font-size: 10px;">Servlet</a> <a href="/tags/Session/" style="font-size: 10px;">Session</a> <a href="/tags/Spring事务/" style="font-size: 10px;">Spring事务</a> <a href="/tags/ajax/" style="font-size: 10px;">ajax</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/java线程/" style="font-size: 10px;">java线程</a> <a href="/tags/markdown语法/" style="font-size: 10px;">markdown语法</a> <a href="/tags/新技能/" style="font-size: 10px;">新技能</a> <a href="/tags/生活总结/" style="font-size: 10px;">生活总结</a> <a href="/tags/生活记录/" style="font-size: 10px;">生活记录</a> <a href="/tags/监听器/" style="font-size: 10px;">监听器</a> <a href="/tags/笔记/" style="font-size: 10px;">笔记</a> <a href="/tags/设计模式/" style="font-size: 10px;">设计模式</a> <a href="/tags/过滤器/" style="font-size: 10px;">过滤器</a>
     </div>
 </div>
 
@@ -673,7 +654,7 @@ public class CallableFuture {
                     <span class="level-item">八月 2019</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">1</span>
+                    <span class="level-item tag">3</span>
                 </span>
             </a>
         </li>
@@ -684,7 +665,7 @@ public class CallableFuture {
                     <span class="level-item">七月 2019</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">7</span>
+                    <span class="level-item tag">9</span>
                 </span>
             </a>
         </li>
@@ -794,15 +775,13 @@ public class CallableFuture {
 var IcarusThemeSettings = {
     article: {
         highlight: {
-            clipboard: true,
+            clipboard: false,
             fold: ''
         }
     }
 };
 </script>
 
-
-    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
 
 
 

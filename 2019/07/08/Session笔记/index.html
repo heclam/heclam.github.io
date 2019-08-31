@@ -19,7 +19,7 @@
 <meta property="og:description" content="何为Session在WEB开发中，服务器可以为每个用户浏览器创建一个会话对象（session对象），用户使用浏览器访问服务器的时候，服务器把用户的信息以某种的形式记录在服务器中，这就是Session。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/images/og_image.png">
-<meta property="og:updated_time" content="2019-08-28T18:58:56.269Z">
+<meta property="og:updated_time" content="2019-08-31T15:36:38.504Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Session笔记">
 <meta name="twitter:description" content="何为Session在WEB开发中，服务器可以为每个用户浏览器创建一个会话对象（session对象），用户使用浏览器访问服务器的时候，服务器把用户的信息以某种的形式记录在服务器中，这就是Session。">
@@ -155,7 +155,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    4 分钟 读完 (大约 668 个字)
+                    4 分钟 读完 (大约 670 个字)
                 </span>
                 
                 
@@ -237,10 +237,10 @@
 <td>该Session是否为新的</td>
 </tr>
 </tbody></table>
-<h5 id="一个Session的例子"><a href="#一个Session的例子" class="headerlink" title="一个Session的例子"></a>一个Session的例子</h5><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">public class SessionDemo1 extends HttpServlet &#123;</span><br><span class="line"> </span><br><span class="line">     public void doGet(HttpServletRequest request, HttpServletResponse response)</span><br><span class="line">             throws ServletException, IOException &#123;</span><br><span class="line"> </span><br><span class="line">         response.setCharacterEncoding(&quot;UTF=8&quot;);</span><br><span class="line">         response.setContentType(&quot;text/html;charset=UTF-8&quot;);</span><br><span class="line">         //使用request对象的getSession()获取session，如果session不存在则创建一个</span><br><span class="line">         HttpSession session = request.getSession();</span><br><span class="line">         //将数据存储到session中</span><br><span class="line">         session.setAttribute(&quot;data&quot;, &quot;heclam&quot;);</span><br><span class="line">         //获取session的Id</span><br><span class="line">       String sessionId = session.getId();</span><br><span class="line">         //判断session是不是新创建的</span><br><span class="line">         if (session.isNew()) &#123;</span><br><span class="line">             response.getWriter().print(&quot;session创建成功，session的id是：&quot;+sessionId);</span><br><span class="line">         &#125;else &#123;</span><br><span class="line">             response.getWriter().print(&quot;服务器已经存在该session了，session的id是：&quot;+sessionId);</span><br><span class="line">         &#125;</span><br><span class="line">     &#125;</span><br><span class="line"> </span><br><span class="line">     public void doPost(HttpServletRequest request, HttpServletResponse response)</span><br><span class="line">             throws ServletException, IOException &#123;</span><br><span class="line">        doGet(request, response);</span><br><span class="line">    &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<h5 id="一个Session的例子"><a href="#一个Session的例子" class="headerlink" title="一个Session的例子"></a>一个Session的例子</h5><figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SessionDemo1</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">HttpServlet</span> </span>&#123;</span><br><span class="line"> </span><br><span class="line">     <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">doGet</span><span class="hljs-params">(HttpServletRequest request, HttpServletResponse response)</span></span></span><br><span class="line"><span class="hljs-function">             <span class="hljs-keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line"> </span><br><span class="line">         response.setCharacterEncoding(<span class="hljs-string">"UTF=8"</span>);</span><br><span class="line">         response.setContentType(<span class="hljs-string">"text/html;charset=UTF-8"</span>);</span><br><span class="line">         <span class="hljs-comment">//使用request对象的getSession()获取session，如果session不存在则创建一个</span></span><br><span class="line">         HttpSession session = request.getSession();</span><br><span class="line">         <span class="hljs-comment">//将数据存储到session中</span></span><br><span class="line">         session.setAttribute(<span class="hljs-string">"data"</span>, <span class="hljs-string">"heclam"</span>);</span><br><span class="line">         <span class="hljs-comment">//获取session的Id</span></span><br><span class="line">       String sessionId = session.getId();</span><br><span class="line">         <span class="hljs-comment">//判断session是不是新创建的</span></span><br><span class="line">         <span class="hljs-keyword">if</span> (session.isNew()) &#123;</span><br><span class="line">             response.getWriter().print(<span class="hljs-string">"session创建成功，session的id是："</span>+sessionId);</span><br><span class="line">         &#125;<span class="hljs-keyword">else</span> &#123;</span><br><span class="line">             response.getWriter().print(<span class="hljs-string">"服务器已经存在该session了，session的id是："</span>+sessionId);</span><br><span class="line">         &#125;</span><br><span class="line">     &#125;</span><br><span class="line"> </span><br><span class="line">     <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">doPost</span><span class="hljs-params">(HttpServletRequest request, HttpServletResponse response)</span></span></span><br><span class="line"><span class="hljs-function">             <span class="hljs-keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">        doGet(request, response);</span><br><span class="line">    &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
 
 <p><strong>Session也是一个域对象，Session作为一种记录浏览器状态的机制，只要Session对象没有被销毁，Servlet之间就可以通过Session对象实现通信</strong></p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//使用request对象的getSession()获取session，如果session不存在则创建一个</span><br><span class="line">         HttpSession session = request.getSession();</span><br><span class="line">//获取存入Session的属性</span><br><span class="line">		String val = session.getAttribute(&quot;data&quot;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">//使用request对象的getSession()获取session，如果session不存在则创建一个</span></span><br><span class="line">         HttpSession session = request.getSession();</span><br><span class="line"><span class="hljs-comment">//获取存入Session的属性</span></span><br><span class="line">		String val = session.getAttribute(<span class="hljs-string">"data"</span>);</span><br></pre></td></tr></table></figure>
 
 
         </div>
@@ -384,7 +384,7 @@
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        15
+                        19
                     </p>
                 </div>
             </div>
@@ -394,7 +394,7 @@
                         分类
                     </p>
                     <p class="title has-text-weight-normal">
-                        6
+                        8
                     </p>
                 </div>
             </div>
@@ -404,7 +404,7 @@
                         标签
                     </p>
                     <p class="title has-text-weight-normal">
-                        15
+                        20
                     </p>
                 </div>
             </div>
@@ -493,6 +493,22 @@
             </h3>
             <ul class="menu-list">
             <li>
+        <a class="level is-marginless" href="/categories/MySQL/">
+            <span class="level-start">
+                <span class="level-item">MySQL</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Redis/">
+            <span class="level-start">
+                <span class="level-item">Redis</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
         <a class="level is-marginless" href="/categories/Spring/">
             <span class="level-start">
                 <span class="level-item">Spring</span>
@@ -506,7 +522,7 @@
                 <span class="level-item">java</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">4</span>
+                <span class="level-item tag">5</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/javaWeb/">
@@ -514,7 +530,7 @@
                 <span class="level-item">javaWeb</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">4</span>
+                <span class="level-item tag">5</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/生活/">
@@ -560,6 +576,32 @@
             
             <div class="media-content">
                 <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-08-25T06:40:19.000Z">2019-08-25</time></div>
+                    <a href="/2019/08/25/了解一下Redis/" class="title has-link-black-ter is-size-6 has-text-weight-normal">了解一下Redis</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Redis/">Redis</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-08-16T06:19:19.000Z">2019-08-16</time></div>
+                    <a href="/2019/08/16/MySQL数据库/" class="title has-link-black-ter is-size-6 has-text-weight-normal">MySQL数据库</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/MySQL/">MySQL</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-08-14T06:15:19.000Z">2019-08-14</time></div>
                     <a href="/2019/08/14/Spring事务管理/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Spring事务管理</a>
                     <p class="is-size-7 is-uppercase">
@@ -595,32 +637,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-08T09:20:20.000Z">2019-07-08</time></div>
-                    <a href="/2019/07/08/JSP笔记/" class="title has-link-black-ter is-size-6 has-text-weight-normal">JSP笔记</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/javaWeb/">javaWeb</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-08T07:30:31.000Z">2019-07-08</time></div>
-                    <a href="/2019/07/08/Session笔记/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Session笔记</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/javaWeb/">javaWeb</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -631,7 +647,7 @@
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/tags/Cookie/" style="font-size: 10px;">Cookie</a> <a href="/tags/JSP/" style="font-size: 10px;">JSP</a> <a href="/tags/Servlet/" style="font-size: 10px;">Servlet</a> <a href="/tags/Session/" style="font-size: 10px;">Session</a> <a href="/tags/Spring事务/" style="font-size: 10px;">Spring事务</a> <a href="/tags/ajax/" style="font-size: 10px;">ajax</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/java线程/" style="font-size: 10px;">java线程</a> <a href="/tags/markdown语法/" style="font-size: 10px;">markdown语法</a> <a href="/tags/新技能/" style="font-size: 10px;">新技能</a> <a href="/tags/生活总结/" style="font-size: 10px;">生活总结</a> <a href="/tags/生活记录/" style="font-size: 10px;">生活记录</a> <a href="/tags/笔记/" style="font-size: 10px;">笔记</a>
+        <a href="/tags/Cookie/" style="font-size: 10px;">Cookie</a> <a href="/tags/JSP/" style="font-size: 10px;">JSP</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Servlet/" style="font-size: 10px;">Servlet</a> <a href="/tags/Session/" style="font-size: 10px;">Session</a> <a href="/tags/Spring事务/" style="font-size: 10px;">Spring事务</a> <a href="/tags/ajax/" style="font-size: 10px;">ajax</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/java线程/" style="font-size: 10px;">java线程</a> <a href="/tags/markdown语法/" style="font-size: 10px;">markdown语法</a> <a href="/tags/新技能/" style="font-size: 10px;">新技能</a> <a href="/tags/生活总结/" style="font-size: 10px;">生活总结</a> <a href="/tags/生活记录/" style="font-size: 10px;">生活记录</a> <a href="/tags/监听器/" style="font-size: 10px;">监听器</a> <a href="/tags/笔记/" style="font-size: 10px;">笔记</a> <a href="/tags/设计模式/" style="font-size: 10px;">设计模式</a> <a href="/tags/过滤器/" style="font-size: 10px;">过滤器</a>
     </div>
 </div>
 
@@ -650,7 +666,7 @@
                     <span class="level-item">八月 2019</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">1</span>
+                    <span class="level-item tag">3</span>
                 </span>
             </a>
         </li>
@@ -661,7 +677,7 @@
                     <span class="level-item">七月 2019</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">7</span>
+                    <span class="level-item tag">9</span>
                 </span>
             </a>
         </li>
@@ -771,15 +787,13 @@
 var IcarusThemeSettings = {
     article: {
         highlight: {
-            clipboard: true,
+            clipboard: false,
             fold: ''
         }
     }
 };
 </script>
 
-
-    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
 
 
 

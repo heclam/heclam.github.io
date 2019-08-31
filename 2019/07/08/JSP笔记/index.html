@@ -19,7 +19,7 @@
 <meta property="og:description" content="何为JSP ？ JSP全称是Java Server Pages，它和servle技术一样，都是SUN公司定义的一种用于开发动态web资源的技术。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/images/og_image.png">
-<meta property="og:updated_time" content="2019-08-28T18:58:33.589Z">
+<meta property="og:updated_time" content="2019-08-31T15:13:13.336Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JSP笔记">
 <meta name="twitter:description" content="何为JSP ？ JSP全称是Java Server Pages，它和servle技术一样，都是SUN公司定义的一种用于开发动态web资源的技术。">
@@ -155,7 +155,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    3 分钟 读完 (大约 492 个字)
+                    6 分钟 读完 (大约 949 个字)
                 </span>
                 
                 
@@ -175,7 +175,7 @@
 <h5 id="JSP原理"><a href="#JSP原理" class="headerlink" title="JSP原理"></a>JSP原理</h5><p>浏览器向服务器发请求，不管访问的是什么资源，其实都是在访问Servlet，所以当访问一个jsp页面时，其实也是在访问一个Servlet，服务器在执行jsp的时候，首先把jsp翻译成一个Servlet，所以我们访问jsp时，其实不是在访问jsp，而是在访问jsp翻译过后的那个Servlet</p>
 <p>#####　为什么有了Servlet了还需要JSP呢？</p>
 <p>其实JSP的出现是简化了Servlet，之前我们要展示一个页面要在Servlet中写  </p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">out.write(&quot;&lt;html&gt;&quot;);</span><br><span class="line">out.write(&quot;&lt;body&gt;&quot;);</span><br><span class="line">out.write(&quot;&lt;/body&gt;&quot;);</span><br><span class="line">out.write(&quot;&lt;/html&gt;&quot;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">out.write(<span class="hljs-string">"&lt;html&gt;"</span>);</span><br><span class="line">out.write(<span class="hljs-string">"&lt;body&gt;"</span>);</span><br><span class="line">out.write(<span class="hljs-string">"&lt;/body&gt;"</span>);</span><br><span class="line">out.write(<span class="hljs-string">"&lt;/html&gt;"</span>);</span><br></pre></td></tr></table></figure>
 
 <p>之类的代码，显得太过麻烦了，所以就出现了JSP。</p>
 <h5 id="JSP的生命周期"><a href="#JSP的生命周期" class="headerlink" title="JSP的生命周期"></a>JSP的生命周期</h5><p>jsp的生命周期类似于servlet的生命周期，区别在于JSP生命周期还包括将JSP文件编译成servlet。</p>
@@ -196,6 +196,26 @@
 </li>
 </ol>
 <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">编译阶段 --&gt; jspInit()  --&gt;   _jspServcie()  --&gt;  jspDestroy()</span><br></pre></td></tr></table></figure>
+
+<h5 id="jsp获取绝对路径"><a href="#jsp获取绝对路径" class="headerlink" title="jsp获取绝对路径"></a>jsp获取绝对路径</h5><p>​    代码” ${pageContext.request.contextPath}”的作用是取出部署的应用程序名，这样不管如何部署，所用路径都是正确的</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--使用绝对路径的方式引入CSS文件--&gt;</span><br><span class="line">2 &lt;link rel=&quot;stylesheet&quot; href=&quot;$&#123;pageContext.request.contextPath&#125;/css/xxx.css&quot; type=&quot;text/css&quot;/&gt;</span><br><span class="line">3 &lt;!--使用绝对路径的方式引入JavaScript脚本--&gt;</span><br><span class="line">4 &lt;script type=&quot;text/javascript&quot; src=&quot;$&#123;pageContext.request.contextPath&#125;/js/xxx.js&quot;&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>使用&lt;%=request.getContextPath()%&gt;和使用${pageContext.request.contextPath}达到同样的效果</p>
+<h5 id="静态包含与动态包含"><a href="#静态包含与动态包含" class="headerlink" title="静态包含与动态包含"></a>静态包含与动态包含</h5><p><code>&lt;%@include file=”name.jsp”%&gt;</code></p>
+<p>include指令是静态包含。静态包含的意思就是：把文件的代码内容都包含进来，再编译！</p>
+<p><code>&lt;%jsp:include page=”name.jsp”%&gt;</code></p>
+<p>jsp行为包含文件就是先编译被包含的页面，再将页面的结果写入到包含的页面中</p>
+<p>动态包含可以向被包含的页面传递参数（用处不大）<strong>，并且是</strong>分别处理包含页面的（将被包含页面编译后得出的结果再写进包含页面）【如果有相同名称的参数，使用静态包含就会报错！】！</p>
+<h5 id="防止表单重复提交"><a href="#防止表单重复提交" class="headerlink" title="防止表单重复提交"></a>防止表单重复提交</h5><ul>
+<li><p>利用javascript防止表单重复提交</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;form onsubmit=&quot;return dosubmit()&quot;&gt;</span><br><span class="line">	这是表单内容</span><br><span class="line">&lt;/form&gt;</span><br><span class="line"></span><br><span class="line">&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">	 var isCommitted = false;//表单是否已经提交标识，默认为false</span><br><span class="line"> 8         function dosubmit()&#123;</span><br><span class="line"> 9             if(isCommitted==false)&#123;</span><br><span class="line">10                 isCommitted = true;//提交表单后，将表单是否已经提交标识设置为true</span><br><span class="line">11                 return true;//返回true让表单正常提交</span><br><span class="line">12             &#125;else&#123;</span><br><span class="line">13                 return false;//返回false那么表单将不提交</span><br><span class="line">14             &#125;</span><br><span class="line">15         &#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>还有一种方法是，当表单提交之后，设置提交按钮不可用</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">function dosubmit()&#123;</span><br><span class="line">2     //获取表单提交按钮</span><br><span class="line">3     var btnSubmit = document.getElementById(&quot;submit&quot;);</span><br><span class="line">4     //将表单提交按钮设置为不可用，这样就可以避免用户再次点击提交按钮</span><br><span class="line">5     btnSubmit.disabled= &quot;disabled&quot;;</span><br><span class="line">6     //返回true让表单可以正常提交</span><br><span class="line">7     return true;</span><br><span class="line">8 &#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+
         </div>
         
         <div class="level is-size-7 is-uppercase">
@@ -253,9 +273,9 @@
     <div class="level post-navigation is-flex-wrap is-mobile">
         
         <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/07/10/获取天气信息/">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/07/09/过滤器与监听器/">
                 <i class="level-item fas fa-chevron-left"></i>
-                <span class="level-item">获取天气信息</span>
+                <span class="level-item">过滤器与监听器</span>
             </a>
         </div>
         
@@ -337,7 +357,7 @@
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        15
+                        19
                     </p>
                 </div>
             </div>
@@ -347,7 +367,7 @@
                         分类
                     </p>
                     <p class="title has-text-weight-normal">
-                        6
+                        8
                     </p>
                 </div>
             </div>
@@ -357,7 +377,7 @@
                         标签
                     </p>
                     <p class="title has-text-weight-normal">
-                        15
+                        20
                     </p>
                 </div>
             </div>
@@ -446,6 +466,22 @@
             </h3>
             <ul class="menu-list">
             <li>
+        <a class="level is-marginless" href="/categories/MySQL/">
+            <span class="level-start">
+                <span class="level-item">MySQL</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Redis/">
+            <span class="level-start">
+                <span class="level-item">Redis</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
         <a class="level is-marginless" href="/categories/Spring/">
             <span class="level-start">
                 <span class="level-item">Spring</span>
@@ -459,7 +495,7 @@
                 <span class="level-item">java</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">4</span>
+                <span class="level-item tag">5</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/javaWeb/">
@@ -467,7 +503,7 @@
                 <span class="level-item">javaWeb</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">4</span>
+                <span class="level-item tag">5</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/生活/">
@@ -513,6 +549,32 @@
             
             <div class="media-content">
                 <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-08-25T06:40:19.000Z">2019-08-25</time></div>
+                    <a href="/2019/08/25/了解一下Redis/" class="title has-link-black-ter is-size-6 has-text-weight-normal">了解一下Redis</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Redis/">Redis</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-08-16T06:19:19.000Z">2019-08-16</time></div>
+                    <a href="/2019/08/16/MySQL数据库/" class="title has-link-black-ter is-size-6 has-text-weight-normal">MySQL数据库</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/MySQL/">MySQL</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-08-14T06:15:19.000Z">2019-08-14</time></div>
                     <a href="/2019/08/14/Spring事务管理/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Spring事务管理</a>
                     <p class="is-size-7 is-uppercase">
@@ -548,32 +610,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-08T09:20:20.000Z">2019-07-08</time></div>
-                    <a href="/2019/07/08/JSP笔记/" class="title has-link-black-ter is-size-6 has-text-weight-normal">JSP笔记</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/javaWeb/">javaWeb</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-08T07:30:31.000Z">2019-07-08</time></div>
-                    <a href="/2019/07/08/Session笔记/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Session笔记</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/javaWeb/">javaWeb</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -584,7 +620,7 @@
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/tags/Cookie/" style="font-size: 10px;">Cookie</a> <a href="/tags/JSP/" style="font-size: 10px;">JSP</a> <a href="/tags/Servlet/" style="font-size: 10px;">Servlet</a> <a href="/tags/Session/" style="font-size: 10px;">Session</a> <a href="/tags/Spring事务/" style="font-size: 10px;">Spring事务</a> <a href="/tags/ajax/" style="font-size: 10px;">ajax</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/java线程/" style="font-size: 10px;">java线程</a> <a href="/tags/markdown语法/" style="font-size: 10px;">markdown语法</a> <a href="/tags/新技能/" style="font-size: 10px;">新技能</a> <a href="/tags/生活总结/" style="font-size: 10px;">生活总结</a> <a href="/tags/生活记录/" style="font-size: 10px;">生活记录</a> <a href="/tags/笔记/" style="font-size: 10px;">笔记</a>
+        <a href="/tags/Cookie/" style="font-size: 10px;">Cookie</a> <a href="/tags/JSP/" style="font-size: 10px;">JSP</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Servlet/" style="font-size: 10px;">Servlet</a> <a href="/tags/Session/" style="font-size: 10px;">Session</a> <a href="/tags/Spring事务/" style="font-size: 10px;">Spring事务</a> <a href="/tags/ajax/" style="font-size: 10px;">ajax</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/java线程/" style="font-size: 10px;">java线程</a> <a href="/tags/markdown语法/" style="font-size: 10px;">markdown语法</a> <a href="/tags/新技能/" style="font-size: 10px;">新技能</a> <a href="/tags/生活总结/" style="font-size: 10px;">生活总结</a> <a href="/tags/生活记录/" style="font-size: 10px;">生活记录</a> <a href="/tags/监听器/" style="font-size: 10px;">监听器</a> <a href="/tags/笔记/" style="font-size: 10px;">笔记</a> <a href="/tags/设计模式/" style="font-size: 10px;">设计模式</a> <a href="/tags/过滤器/" style="font-size: 10px;">过滤器</a>
     </div>
 </div>
 
@@ -603,7 +639,7 @@
                     <span class="level-item">八月 2019</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">1</span>
+                    <span class="level-item tag">3</span>
                 </span>
             </a>
         </li>
@@ -614,7 +650,7 @@
                     <span class="level-item">七月 2019</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">7</span>
+                    <span class="level-item tag">9</span>
                 </span>
             </a>
         </li>
@@ -724,15 +760,13 @@
 var IcarusThemeSettings = {
     article: {
         highlight: {
-            clipboard: true,
+            clipboard: false,
             fold: ''
         }
     }
 };
 </script>
 
-
-    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
 
 
 

@@ -19,7 +19,7 @@
 <meta property="og:description" content="​    其实获取天气报告之前做android的时候就有做过（之前好像使用JSONObject来解析的），我这边再记录一下使用ajax的方式来获取天气信息，天气预报功能来源于高德地图API和和风天气API组合而成，能够查看当前IP地址所在地的近三日天气，看效果图  来看代码：">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/images/og_image.png">
-<meta property="og:updated_time" content="2019-08-28T18:59:18.260Z">
+<meta property="og:updated_time" content="2019-08-31T14:57:51.015Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="获取天气信息">
 <meta name="twitter:description" content="​    其实获取天气报告之前做android的时候就有做过（之前好像使用JSONObject来解析的），我这边再记录一下使用ajax的方式来获取天气信息，天气预报功能来源于高德地图API和和风天气API组合而成，能够查看当前IP地址所在地的近三日天气，看效果图  来看代码：">
@@ -155,7 +155,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    6 分钟 读完 (大约 906 个字)
+                    6 分钟 读完 (大约 909 个字)
                 </span>
                 
                 
@@ -171,17 +171,17 @@
             <p>​    其实获取天气报告之前做android的时候就有做过（之前好像使用JSONObject来解析的），我这边再记录一下使用ajax的方式来获取天气信息，天气预报功能来源于高德地图API和和风天气API组合而成，能够查看当前IP地址所在地的近三日天气，看效果图</p>
 <p><img src="https://i.loli.net/2019/07/29/5d3e5c70ea6ba80705.png" alt="weather.png"></p>
 <p>来看代码：<a id="more"></a></p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">&lt;html lang=&quot;zh-CN&quot;&gt;</span><br><span class="line">	&lt;head&gt;</span><br><span class="line">		&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot; /&gt;</span><br><span class="line">		&lt;title&gt;获取天气情况&lt;/title&gt;</span><br><span class="line">		</span><br><span class="line">		&lt;!--引入JQuery--&gt;</span><br><span class="line">		&lt;script src=&quot;https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">		</span><br><span class="line">		&lt;!--获取天气预报--&gt;</span><br><span class="line">		&lt;script&gt;</span><br><span class="line">			$(function()&#123;</span><br><span class="line">				/*先获取位置（也就是要获取那个地方的天气：比如广州）、再获取天气预报的信息*/</span><br><span class="line">				//使用ajax的方式获取</span><br><span class="line">				$.ajax(&#123;</span><br><span class="line">					/*参数解析：</span><br><span class="line">						url: 表示访问的地址</span><br><span class="line">						type: 请求的方式：get方式</span><br><span class="line">						success: 访问成功后执行的方法，里面的参数表示请求返回的对象</span><br><span class="line">					*/</span><br><span class="line">					url: &quot;http://restapi.amap.com/v3/ip?key=11ddf2f282ee4c39d35a46c3a4dae845&quot;,</span><br><span class="line">					type: &quot;get&quot;,</span><br><span class="line">					success: function(responseText1)&#123;//responseText1为一个json对象</span><br><span class="line">						/*</span><br><span class="line">							照样使用ajax请求，注意url后面添加了一个参数（根据responseText1获取城市并传递过去）</span><br><span class="line">						*/</span><br><span class="line">						$.ajax(&#123;</span><br><span class="line">							url: &quot;https://free-api.heweather.com/s6/weather/forecast?key=d66df9e9bec5484da78f88a5bb58d092&amp;location=&quot;+responseText1.city,</span><br><span class="line">							type: &quot;get&quot;,</span><br><span class="line">							success: function(responseText2)&#123;//responseText2照样也是一个json对象</span><br><span class="line">								$(&quot;#showForecast h1&quot;).html(responseText1.city+&quot;近三天天气&quot;);</span><br><span class="line">								//获取responseText2对象里面的HeWeather6（数组），获取第一个对象里面的daily_forecast（数组）</span><br><span class="line">								var jsonObj = responseText2.HeWeather6[0].daily_forecast;</span><br><span class="line">								//做遍历</span><br><span class="line">								for(var i = 0; i &lt; jsonObj.length; i++)&#123;</span><br><span class="line">									var date = jsonObj[i].date;</span><br><span class="line">									var weather = jsonObj[i].cond_txt_d;</span><br><span class="line">									var low = jsonObj[i].tmp_min;</span><br><span class="line">									var hight = jsonObj[i].tmp_max;</span><br><span class="line">									//展示到页面</span><br><span class="line">									$(&quot;#showForecast&quot;).append(&quot;&lt;p&gt;&quot;+ date + &quot;:&quot; + weather + &quot;，温度: &quot; + low+ &quot; ~ &quot; + hight + &quot;℃&lt;/p&gt;&quot;);</span><br><span class="line">								&#125;</span><br><span class="line">							&#125;,</span><br><span class="line">							error: function()&#123;</span><br><span class="line">								alert(&quot;获取天气失败&quot;);</span><br><span class="line">							&#125;</span><br><span class="line">						&#125;);</span><br><span class="line">						</span><br><span class="line">						</span><br><span class="line">					&#125;,</span><br><span class="line">					error: function()&#123;</span><br><span class="line">						alert(&quot;获取定位失败&quot;);</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;);</span><br><span class="line">			&#125;);</span><br><span class="line">		&lt;/script&gt;</span><br><span class="line">	&lt;/head&gt;</span><br><span class="line">	</span><br><span class="line">	&lt;body&gt;</span><br><span class="line">		</span><br><span class="line">		&lt;!--显示天气预报--&gt;</span><br><span class="line">		&lt;div id=&quot;showForecast&quot; align=&quot;center&quot;&gt;</span><br><span class="line">			&lt;h1&gt;&lt;/h1&gt;</span><br><span class="line">		&lt;/div&gt;</span><br><span class="line">	&lt;/body&gt;</span><br><span class="line"></span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight xml hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">"zh-CN"</span>&gt;</span></span><br><span class="line">	<span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span></span><br><span class="line">		<span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">http-equiv</span>=<span class="hljs-string">"Content-Type"</span> <span class="hljs-attr">content</span>=<span class="hljs-string">"text/html; charset=utf-8"</span> /&gt;</span></span><br><span class="line">		<span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>获取天气情况<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span></span><br><span class="line">		</span><br><span class="line">		<span class="hljs-comment">&lt;!--引入JQuery--&gt;</span></span><br><span class="line">		<span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br><span class="line">		</span><br><span class="line">		<span class="hljs-comment">&lt;!--获取天气预报--&gt;</span></span><br><span class="line">		<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span></span><br><span class="line"><span class="hljs-javascript">			$(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>&#123;</span></span><br><span class="line"><span class="hljs-javascript">				<span class="hljs-comment">/*先获取位置（也就是要获取那个地方的天气：比如广州）、再获取天气预报的信息*/</span></span></span><br><span class="line"><span class="hljs-javascript">				<span class="hljs-comment">//使用ajax的方式获取</span></span></span><br><span class="line"><span class="hljs-javascript">				$.ajax(&#123;</span></span><br><span class="line">					/*参数解析：</span><br><span class="line">						url: 表示访问的地址</span><br><span class="line"><span class="hljs-javascript">						type: 请求的方式：<span class="hljs-keyword">get</span>方式</span></span><br><span class="line">						success: 访问成功后执行的方法，里面的参数表示请求返回的对象</span><br><span class="line">					*/</span><br><span class="line"><span class="hljs-javascript">					url: <span class="hljs-string">"http://restapi.amap.com/v3/ip?key=11ddf2f282ee4c39d35a46c3a4dae845"</span>,</span></span><br><span class="line"><span class="hljs-javascript">					type: <span class="hljs-string">"get"</span>,</span></span><br><span class="line"><span class="hljs-javascript">					success: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">responseText1</span>)</span>&#123;<span class="hljs-comment">//responseText1为一个json对象</span></span></span><br><span class="line">						/*</span><br><span class="line">							照样使用ajax请求，注意url后面添加了一个参数（根据responseText1获取城市并传递过去）</span><br><span class="line">						*/</span><br><span class="line"><span class="hljs-javascript">						$.ajax(&#123;</span></span><br><span class="line"><span class="hljs-javascript">							url: <span class="hljs-string">"https://free-api.heweather.com/s6/weather/forecast?key=d66df9e9bec5484da78f88a5bb58d092&amp;location="</span>+responseText1.city,</span></span><br><span class="line"><span class="hljs-javascript">							type: <span class="hljs-string">"get"</span>,</span></span><br><span class="line"><span class="hljs-javascript">							success: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">responseText2</span>)</span>&#123;<span class="hljs-comment">//responseText2照样也是一个json对象</span></span></span><br><span class="line"><span class="hljs-javascript">								$(<span class="hljs-string">"#showForecast h1"</span>).html(responseText1.city+<span class="hljs-string">"近三天天气"</span>);</span></span><br><span class="line"><span class="hljs-javascript">								<span class="hljs-comment">//获取responseText2对象里面的HeWeather6（数组），获取第一个对象里面的daily_forecast（数组）</span></span></span><br><span class="line"><span class="hljs-javascript">								<span class="hljs-keyword">var</span> jsonObj = responseText2.HeWeather6[<span class="hljs-number">0</span>].daily_forecast;</span></span><br><span class="line"><span class="hljs-javascript">								<span class="hljs-comment">//做遍历</span></span></span><br><span class="line"><span class="hljs-javascript">								<span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; jsonObj.length; i++)&#123;</span></span><br><span class="line"><span class="hljs-javascript">									<span class="hljs-keyword">var</span> date = jsonObj[i].date;</span></span><br><span class="line"><span class="hljs-javascript">									<span class="hljs-keyword">var</span> weather = jsonObj[i].cond_txt_d;</span></span><br><span class="line"><span class="hljs-javascript">									<span class="hljs-keyword">var</span> low = jsonObj[i].tmp_min;</span></span><br><span class="line"><span class="hljs-javascript">									<span class="hljs-keyword">var</span> hight = jsonObj[i].tmp_max;</span></span><br><span class="line"><span class="hljs-javascript">									<span class="hljs-comment">//展示到页面</span></span></span><br><span class="line"><span class="hljs-javascript">									$(<span class="hljs-string">"#showForecast"</span>).append(<span class="hljs-string">"&lt;p&gt;"</span>+ date + <span class="hljs-string">":"</span> + weather + <span class="hljs-string">"，温度: "</span> + low+ <span class="hljs-string">" ~ "</span> + hight + <span class="hljs-string">"℃&lt;/p&gt;"</span>);</span></span><br><span class="line">								&#125;</span><br><span class="line">							&#125;,</span><br><span class="line"><span class="hljs-javascript">							error: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>&#123;</span></span><br><span class="line"><span class="hljs-javascript">								alert(<span class="hljs-string">"获取天气失败"</span>);</span></span><br><span class="line">							&#125;</span><br><span class="line">						&#125;);</span><br><span class="line">						</span><br><span class="line">						</span><br><span class="line">					&#125;,</span><br><span class="line"><span class="hljs-javascript">					error: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>&#123;</span></span><br><span class="line"><span class="hljs-javascript">						alert(<span class="hljs-string">"获取定位失败"</span>);</span></span><br><span class="line">					&#125;</span><br><span class="line">				&#125;);</span><br><span class="line">			&#125;);</span><br><span class="line">		<span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br><span class="line">	<span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span></span><br><span class="line">	</span><br><span class="line">	<span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span></span><br><span class="line">		</span><br><span class="line">		<span class="hljs-comment">&lt;!--显示天气预报--&gt;</span></span><br><span class="line">		<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"showForecast"</span> <span class="hljs-attr">align</span>=<span class="hljs-string">"center"</span>&gt;</span></span><br><span class="line">			<span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span><br><span class="line">		<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">	<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p><strong>以上的代码已经将功能实现，下面进行解析：</strong></p>
 <p>第一个ajax的时候responseText1为一个json对象，内容如下：</p>
 <p>（可以把地址复制粘贴到浏览器的地址栏就可以看到）</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">status: &quot;1&quot;,</span><br><span class="line">info: &quot;OK&quot;,</span><br><span class="line">infocode: &quot;10000&quot;,</span><br><span class="line">province: &quot;广东省&quot;,</span><br><span class="line">city: &quot;广州市&quot;,</span><br><span class="line">adcode: &quot;440100&quot;,</span><br><span class="line">rectangle: &quot;113.1017375,22.93212254;113.6770499,23.3809537&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">status: "1",</span><br><span class="line">info: "OK",</span><br><span class="line">infocode: "10000",</span><br><span class="line">province: "广东省",</span><br><span class="line">city: "广州市",</span><br><span class="line">adcode: "440100",</span><br><span class="line">rectangle: "113.1017375,22.93212254;113.6770499,23.3809537"</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>这个city是广州，如果想更换成其他的城市，需要更换（<a href="http://restapi.amap.com/v3/ip?key=11ddf2f282ee4c39d35a46c3a4dae845）key的值" target="_blank" rel="noopener">http://restapi.amap.com/v3/ip?key=11ddf2f282ee4c39d35a46c3a4dae845）key的值</a></p>
 <p>第二个ajax你可以看到url这个位置传入一个city参数，就是第一个ajax获取的responseText1的city</p>
 <p>responseText2的内容如下：（主要获取daily_forecast数组的值，然后遍历显示在页面）</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">HeWeather6: [</span><br><span class="line">&#123;</span><br><span class="line">basic: &#123;</span><br><span class="line">cid: &quot;CN101280101&quot;,</span><br><span class="line">location: &quot;广州&quot;,</span><br><span class="line">parent_city: &quot;广州&quot;,</span><br><span class="line">admin_area: &quot;广东&quot;,</span><br><span class="line">cnty: &quot;中国&quot;,</span><br><span class="line">lat: &quot;23.12517738&quot;,</span><br><span class="line">lon: &quot;113.28063965&quot;,</span><br><span class="line">tz: &quot;+8.00&quot;</span><br><span class="line">&#125;,</span><br><span class="line">update: &#123;</span><br><span class="line">loc: &quot;2019-07-10 10:57&quot;,</span><br><span class="line">utc: &quot;2019-07-10 02:57&quot;</span><br><span class="line">&#125;,</span><br><span class="line">status: &quot;ok&quot;,</span><br><span class="line">daily_forecast: [</span><br><span class="line">&#123;</span><br><span class="line">cond_code_d: &quot;306&quot;,</span><br><span class="line">cond_code_n: &quot;302&quot;,</span><br><span class="line">cond_txt_d: &quot;中雨&quot;,</span><br><span class="line">cond_txt_n: &quot;雷阵雨&quot;,</span><br><span class="line">date: &quot;2019-07-10&quot;,</span><br><span class="line">hum: &quot;76&quot;,</span><br><span class="line">mr: &quot;13:16&quot;,</span><br><span class="line">ms: &quot;00:34&quot;,</span><br><span class="line">pcpn: &quot;2.1&quot;,</span><br><span class="line">pop: &quot;55&quot;,</span><br><span class="line">pres: &quot;1003&quot;,</span><br><span class="line">sr: &quot;05:48&quot;,</span><br><span class="line">ss: &quot;19:16&quot;,</span><br><span class="line">tmp_max: &quot;30&quot;,</span><br><span class="line">tmp_min: &quot;25&quot;,</span><br><span class="line">uv_index: &quot;1&quot;,</span><br><span class="line">vis: &quot;13&quot;,</span><br><span class="line">wind_deg: &quot;-1&quot;,</span><br><span class="line">wind_dir: &quot;无持续风向&quot;,</span><br><span class="line">wind_sc: &quot;1-2&quot;,</span><br><span class="line">wind_spd: &quot;10&quot;</span><br><span class="line">&#125;,</span><br><span class="line">&#123;</span><br><span class="line">cond_code_d: &quot;306&quot;,</span><br><span class="line">cond_code_n: &quot;104&quot;,</span><br><span class="line">cond_txt_d: &quot;中雨&quot;,</span><br><span class="line">cond_txt_n: &quot;阴&quot;,</span><br><span class="line">date: &quot;2019-07-11&quot;,</span><br><span class="line">hum: &quot;70&quot;,</span><br><span class="line">mr: &quot;14:13&quot;,</span><br><span class="line">ms: &quot;01:14&quot;,</span><br><span class="line">pcpn: &quot;5.3&quot;,</span><br><span class="line">pop: &quot;65&quot;,</span><br><span class="line">pres: &quot;1004&quot;,</span><br><span class="line">sr: &quot;05:48&quot;,</span><br><span class="line">ss: &quot;19:16&quot;,</span><br><span class="line">tmp_max: &quot;31&quot;,</span><br><span class="line">tmp_min: &quot;26&quot;,</span><br><span class="line">uv_index: &quot;1&quot;,</span><br><span class="line">vis: &quot;20&quot;,</span><br><span class="line">wind_deg: &quot;-1&quot;,</span><br><span class="line">wind_dir: &quot;无持续风向&quot;,</span><br><span class="line">wind_sc: &quot;1-2&quot;,</span><br><span class="line">wind_spd: &quot;6&quot;</span><br><span class="line">&#125;,</span><br><span class="line">&#123;</span><br><span class="line">cond_code_d: &quot;302&quot;,</span><br><span class="line">cond_code_n: &quot;101&quot;,</span><br><span class="line">cond_txt_d: &quot;雷阵雨&quot;,</span><br><span class="line">cond_txt_n: &quot;多云&quot;,</span><br><span class="line">date: &quot;2019-07-12&quot;,</span><br><span class="line">hum: &quot;72&quot;,</span><br><span class="line">mr: &quot;15:11&quot;,</span><br><span class="line">ms: &quot;01:55&quot;,</span><br><span class="line">pcpn: &quot;0.0&quot;,</span><br><span class="line">pop: &quot;25&quot;,</span><br><span class="line">pres: &quot;1003&quot;,</span><br><span class="line">sr: &quot;05:49&quot;,</span><br><span class="line">ss: &quot;19:15&quot;,</span><br><span class="line">tmp_max: &quot;34&quot;,</span><br><span class="line">tmp_min: &quot;27&quot;,</span><br><span class="line">uv_index: &quot;2&quot;,</span><br><span class="line">vis: &quot;24&quot;,</span><br><span class="line">wind_deg: &quot;-1&quot;,</span><br><span class="line">wind_dir: &quot;无持续风向&quot;,</span><br><span class="line">wind_sc: &quot;1-2&quot;,</span><br><span class="line">wind_spd: &quot;9&quot;</span><br><span class="line">&#125;</span><br><span class="line">]</span><br><span class="line">&#125;</span><br><span class="line">]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	HeWeather6: [&#123;</span><br><span class="line">		basic: &#123;</span><br><span class="line">			cid: "CN101280101",</span><br><span class="line">			location: "广州",</span><br><span class="line">			parent_city: "广州",</span><br><span class="line">			admin_area: "广东",</span><br><span class="line">			cnty: "中国",</span><br><span class="line">			lat: "23.12517738",</span><br><span class="line">			lon: "113.28063965",</span><br><span class="line">			tz: "+8.00"</span><br><span class="line">		&#125;,</span><br><span class="line">		update: &#123;</span><br><span class="line">			loc: "2019-07-10 10:57",</span><br><span class="line">			utc: "2019-07-10 02:57"</span><br><span class="line">		&#125;,</span><br><span class="line">		status: "ok",</span><br><span class="line">		daily_forecast: [&#123;</span><br><span class="line">				cond_code_d: "306",</span><br><span class="line">				cond_code_n: "302",</span><br><span class="line">				cond_txt_d: "中雨",</span><br><span class="line">				cond_txt_n: "雷阵雨",</span><br><span class="line">				date: "2019-07-10",</span><br><span class="line">				hum: "76",</span><br><span class="line">				mr: "13:16",</span><br><span class="line">				ms: "00:34",</span><br><span class="line">				pcpn: "2.1",</span><br><span class="line">				pop: "55",</span><br><span class="line">				pres: "1003",</span><br><span class="line">				sr: "05:48",</span><br><span class="line">				ss: "19:16",</span><br><span class="line">				tmp_max: "30",</span><br><span class="line">				tmp_min: "25",</span><br><span class="line">				uv_index: "1",</span><br><span class="line">				vis: "13",</span><br><span class="line">				wind_deg: "-1",</span><br><span class="line">				wind_dir: "无持续风向",</span><br><span class="line">				wind_sc: "1-2",</span><br><span class="line">				wind_spd: "10"</span><br><span class="line">			&#125;,</span><br><span class="line">			&#123;</span><br><span class="line">				cond_code_d: "306",</span><br><span class="line">				cond_code_n: "104",</span><br><span class="line">				cond_txt_d: "中雨",</span><br><span class="line">				cond_txt_n: "阴",</span><br><span class="line">				date: "2019-07-11",</span><br><span class="line">				hum: "70",</span><br><span class="line">				mr: "14:13",</span><br><span class="line">				ms: "01:14",</span><br><span class="line">				pcpn: "5.3",</span><br><span class="line">				pop: "65",</span><br><span class="line">				pres: "1004",</span><br><span class="line">				sr: "05:48",</span><br><span class="line">				ss: "19:16",</span><br><span class="line">				tmp_max: "31",</span><br><span class="line">				tmp_min: "26",</span><br><span class="line">				uv_index: "1",</span><br><span class="line">				vis: "20",</span><br><span class="line">				wind_deg: "-1",</span><br><span class="line">				wind_dir: "无持续风向",</span><br><span class="line">				wind_sc: "1-2",</span><br><span class="line">				wind_spd: "6"</span><br><span class="line">			&#125;,</span><br><span class="line">			&#123;</span><br><span class="line">				cond_code_d: "302",</span><br><span class="line">				cond_code_n: "101",</span><br><span class="line">				cond_txt_d: "雷阵雨",</span><br><span class="line">				cond_txt_n: "多云",</span><br><span class="line">				date: "2019-07-12",</span><br><span class="line">				hum: "72",</span><br><span class="line">				mr: "15:11",</span><br><span class="line">				ms: "01:55",</span><br><span class="line">				pcpn: "0.0",</span><br><span class="line">				pop: "25",</span><br><span class="line">				pres: "1003",</span><br><span class="line">				sr: "05:49",</span><br><span class="line">				ss: "19:15",</span><br><span class="line">				tmp_max: "34",</span><br><span class="line">				tmp_min: "27",</span><br><span class="line">				uv_index: "2",</span><br><span class="line">				vis: "24",</span><br><span class="line">				wind_deg: "-1",</span><br><span class="line">				wind_dir: "无持续风向",</span><br><span class="line">				wind_sc: "1-2",</span><br><span class="line">				wind_spd: "9"</span><br><span class="line">			&#125;</span><br><span class="line">		]</span><br><span class="line">	&#125;]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>第二个ajax的用法在代码中已有注释</p>
 <hr>
@@ -256,8 +256,8 @@
         
         
         <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/2019/07/08/JSP笔记/">
-                <span class="level-item">JSP笔记</span>
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/07/09/常见的设计模式/">
+                <span class="level-item">常见的设计模式</span>
                 <i class="level-item fas fa-chevron-right"></i>
             </a>
         </div>
@@ -332,7 +332,7 @@
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        15
+                        19
                     </p>
                 </div>
             </div>
@@ -342,7 +342,7 @@
                         分类
                     </p>
                     <p class="title has-text-weight-normal">
-                        6
+                        8
                     </p>
                 </div>
             </div>
@@ -352,7 +352,7 @@
                         标签
                     </p>
                     <p class="title has-text-weight-normal">
-                        15
+                        20
                     </p>
                 </div>
             </div>
@@ -441,6 +441,22 @@
             </h3>
             <ul class="menu-list">
             <li>
+        <a class="level is-marginless" href="/categories/MySQL/">
+            <span class="level-start">
+                <span class="level-item">MySQL</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Redis/">
+            <span class="level-start">
+                <span class="level-item">Redis</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
         <a class="level is-marginless" href="/categories/Spring/">
             <span class="level-start">
                 <span class="level-item">Spring</span>
@@ -454,7 +470,7 @@
                 <span class="level-item">java</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">4</span>
+                <span class="level-item tag">5</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/javaWeb/">
@@ -462,7 +478,7 @@
                 <span class="level-item">javaWeb</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">4</span>
+                <span class="level-item tag">5</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/生活/">
@@ -508,6 +524,32 @@
             
             <div class="media-content">
                 <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-08-25T06:40:19.000Z">2019-08-25</time></div>
+                    <a href="/2019/08/25/了解一下Redis/" class="title has-link-black-ter is-size-6 has-text-weight-normal">了解一下Redis</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Redis/">Redis</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-08-16T06:19:19.000Z">2019-08-16</time></div>
+                    <a href="/2019/08/16/MySQL数据库/" class="title has-link-black-ter is-size-6 has-text-weight-normal">MySQL数据库</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/MySQL/">MySQL</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-08-14T06:15:19.000Z">2019-08-14</time></div>
                     <a href="/2019/08/14/Spring事务管理/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Spring事务管理</a>
                     <p class="is-size-7 is-uppercase">
@@ -543,32 +585,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-08T09:20:20.000Z">2019-07-08</time></div>
-                    <a href="/2019/07/08/JSP笔记/" class="title has-link-black-ter is-size-6 has-text-weight-normal">JSP笔记</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/javaWeb/">javaWeb</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-08T07:30:31.000Z">2019-07-08</time></div>
-                    <a href="/2019/07/08/Session笔记/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Session笔记</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/javaWeb/">javaWeb</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -579,7 +595,7 @@
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/tags/Cookie/" style="font-size: 10px;">Cookie</a> <a href="/tags/JSP/" style="font-size: 10px;">JSP</a> <a href="/tags/Servlet/" style="font-size: 10px;">Servlet</a> <a href="/tags/Session/" style="font-size: 10px;">Session</a> <a href="/tags/Spring事务/" style="font-size: 10px;">Spring事务</a> <a href="/tags/ajax/" style="font-size: 10px;">ajax</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/java线程/" style="font-size: 10px;">java线程</a> <a href="/tags/markdown语法/" style="font-size: 10px;">markdown语法</a> <a href="/tags/新技能/" style="font-size: 10px;">新技能</a> <a href="/tags/生活总结/" style="font-size: 10px;">生活总结</a> <a href="/tags/生活记录/" style="font-size: 10px;">生活记录</a> <a href="/tags/笔记/" style="font-size: 10px;">笔记</a>
+        <a href="/tags/Cookie/" style="font-size: 10px;">Cookie</a> <a href="/tags/JSP/" style="font-size: 10px;">JSP</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Servlet/" style="font-size: 10px;">Servlet</a> <a href="/tags/Session/" style="font-size: 10px;">Session</a> <a href="/tags/Spring事务/" style="font-size: 10px;">Spring事务</a> <a href="/tags/ajax/" style="font-size: 10px;">ajax</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/java线程/" style="font-size: 10px;">java线程</a> <a href="/tags/markdown语法/" style="font-size: 10px;">markdown语法</a> <a href="/tags/新技能/" style="font-size: 10px;">新技能</a> <a href="/tags/生活总结/" style="font-size: 10px;">生活总结</a> <a href="/tags/生活记录/" style="font-size: 10px;">生活记录</a> <a href="/tags/监听器/" style="font-size: 10px;">监听器</a> <a href="/tags/笔记/" style="font-size: 10px;">笔记</a> <a href="/tags/设计模式/" style="font-size: 10px;">设计模式</a> <a href="/tags/过滤器/" style="font-size: 10px;">过滤器</a>
     </div>
 </div>
 
@@ -598,7 +614,7 @@
                     <span class="level-item">八月 2019</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">1</span>
+                    <span class="level-item tag">3</span>
                 </span>
             </a>
         </li>
@@ -609,7 +625,7 @@
                     <span class="level-item">七月 2019</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">7</span>
+                    <span class="level-item tag">9</span>
                 </span>
             </a>
         </li>
@@ -719,15 +735,13 @@
 var IcarusThemeSettings = {
     article: {
         highlight: {
-            clipboard: true,
+            clipboard: false,
             fold: ''
         }
     }
 };
 </script>
 
-
-    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
 
 
 

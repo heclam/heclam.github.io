@@ -10,19 +10,19 @@
 <title>Servlet笔记 - heclam&#39;s blog</title>
 
 
-    <meta name="description" content="何为ServletServlet是sun公司提供的一门用于开发动态web资源的技术 用户若想用发一个动态web资源(即开发一个Java程序向浏览器输出数据)，需要完成以下2个步骤：">
+    <meta name="description" content="http：http请求：一个完整http请求应该包含三个部分：  请求行【描述客户端的请求方式、请求的资源名称，以及使用的HTTP协议版本号】 多个消息头【描述客户端请求哪台主机，以及客户端的一些环境信息等】 一个空行">
 <meta name="keywords" content="Servlet">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Servlet笔记">
 <meta property="og:url" content="http://yoursite.com/2019/07/08/Servlet笔记/index.html">
 <meta property="og:site_name" content="heclam&#39;s blog">
-<meta property="og:description" content="何为ServletServlet是sun公司提供的一门用于开发动态web资源的技术 用户若想用发一个动态web资源(即开发一个Java程序向浏览器输出数据)，需要完成以下2个步骤：">
+<meta property="og:description" content="http：http请求：一个完整http请求应该包含三个部分：  请求行【描述客户端的请求方式、请求的资源名称，以及使用的HTTP协议版本号】 多个消息头【描述客户端请求哪台主机，以及客户端的一些环境信息等】 一个空行">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/images/og_image.png">
-<meta property="og:updated_time" content="2019-08-28T18:58:49.978Z">
+<meta property="og:updated_time" content="2019-08-31T15:32:33.974Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Servlet笔记">
-<meta name="twitter:description" content="何为ServletServlet是sun公司提供的一门用于开发动态web资源的技术 用户若想用发一个动态web资源(即开发一个Java程序向浏览器输出数据)，需要完成以下2个步骤：">
+<meta name="twitter:description" content="http：http请求：一个完整http请求应该包含三个部分：  请求行【描述客户端的请求方式、请求的资源名称，以及使用的HTTP协议版本号】 多个消息头【描述客户端请求哪台主机，以及客户端的一些环境信息等】 一个空行">
 <meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
 
 
@@ -155,7 +155,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    4 分钟 读完 (大约 630 个字)
+                    7 分钟 读完 (大约 1062 个字)
                 </span>
                 
                 
@@ -168,8 +168,21 @@
             
         </h1>
         <div class="content">
-            <h5 id="何为Servlet"><a href="#何为Servlet" class="headerlink" title="何为Servlet"></a>何为Servlet</h5><p>Servlet是sun公司提供的一门用于开发动态web资源的技术</p>
-<p>用户若想用发一个动态web资源(即开发一个Java程序向浏览器输出数据)，需要完成以下2个步骤：<a id="more"></a></p>
+            <h5 id="http："><a href="#http：" class="headerlink" title="http："></a>http：</h5><h6 id="http请求："><a href="#http请求：" class="headerlink" title="http请求："></a>http请求：</h6><p>一个完整http请求应该包含三个部分：</p>
+<ol>
+<li>请求行【描述客户端的<strong>请求方式</strong>、<strong>请求的资源名称</strong>，以及使用的<strong>HTTP协议版本号</strong>】</li>
+<li>多个消息头【描述客户端请求哪台主机，以及<strong>客户端的一些环境信息</strong>等】</li>
+<li>一个空行<a id="more"></a></li>
+</ol>
+<h6 id="http响应："><a href="#http响应：" class="headerlink" title="http响应："></a>http响应：</h6><p>一个完整的HTTP响应应该包含四个部分:</p>
+<ol>
+<li>一个状态行【用于描述服务器对请求的处理结果。】</li>
+<li>多个消息头【用于描述服务器的基本信息，以及数据的描述，服务器通过这些数据的描述信息，可以通知客户端如何处理等一会儿它回送的数据】</li>
+<li>一个空行</li>
+<li>实体内容【服务器向客户端回送的数据】</li>
+</ol>
+<h5 id="何为Servlet"><a href="#何为Servlet" class="headerlink" title="何为Servlet"></a>何为Servlet</h5><p>Servlet是sun公司提供的一门用于开发动态web资源的技术</p>
+<p>用户若想用发一个动态web资源(即开发一个Java程序向浏览器输出数据)，需要完成以下2个步骤：</p>
 <p>  　　1. 编写一个Java类，实现servlet接口。<br>        　　2. 把开发好的Java类部署到web服务器中。</p>
 <h5 id="Servlet的运行过程"><a href="#Servlet的运行过程" class="headerlink" title="Servlet的运行过程"></a>Servlet的运行过程</h5><p>Servlet程序室友Web服务器调用，Web服务器接受到客户端的Servelt访问请求后：</p>
 <ol>
@@ -177,17 +190,21 @@
 </ol>
 <p>　2. 装载并创建该Servlet的一个实例对象。<br> 　3. 调用Servlet实例对象的init()方法。<br> 　4. 创建一个用于封装HTTP请求消息的HttpServletRequest对象和一个代表HTTP响应消息的HttpServletResponse对象，然后调用Servlet的service()方法并将请求和响应对象作为参数传递进去。<br> 　5. WEB应用程序被停止或重新启动之前，Servlet引擎将卸载Servlet，并在卸载之前调用Servlet的destroy()方法。 </p>
 <p>Servlet生命周期：</p>
+<p>访问地址 –&gt; WEB-INF  –&gt;  web.xml   –&gt; <servlet> –&gt; 执行servlet</servlet></p>
+<p>生命周期： init()(第一次访问servlet才会调用)  service()   destory()（关闭服务器则调用该方法或长时间不用tomcat自动销毁）</p>
 <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1.被创建，执行且只执行一次init方法</span><br><span class="line">2.提供服务，执行service方法，执行多次</span><br><span class="line">3.被销毁，当Servlet服务器正常关闭时，执行destroy方法，只执行一次。</span><br></pre></td></tr></table></figure>
 
 <p><strong>注意：只要有首次访问Servlet才创建目标</strong></p>
 <h5 id="Servlet调用图"><a href="#Servlet调用图" class="headerlink" title="Servlet调用图"></a>Servlet调用图</h5><p><img src="https://i.loli.net/2019/08/18/pQAkLvMUXGbDFsy.png" alt="servlet_init.png"></p>
-<h5 id="一个Servlet的创建例子"><a href="#一个Servlet的创建例子" class="headerlink" title="一个Servlet的创建例子"></a>一个Servlet的创建例子</h5><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">public class ServletDemo extends HttpServlet &#123;</span><br><span class="line">  </span><br><span class="line">    public void doGet(HttpServletRequest request, HttpServletResponse response)</span><br><span class="line">            throws ServletException, IOException &#123;</span><br><span class="line"> 		 response.setContentType(&quot;text/html&quot;);</span><br><span class="line">         PrintWriter out = response.getWriter();</span><br><span class="line">         out.println(&quot;&lt;!DOCTYPE HTML PUBLIC \&quot;-//W3C//DTD HTML 4.01 Transitional//EN\&quot;&gt;&quot;);</span><br><span class="line">         out.println(&quot;&lt;HTML&gt;&quot;);</span><br><span class="line">         out.println(&quot;  &lt;HEAD&gt;&lt;TITLE&gt;A Servlet&lt;/TITLE&gt;&lt;/HEAD&gt;&quot;);</span><br><span class="line">         out.println(&quot;  &lt;BODY&gt;&quot;);</span><br><span class="line">         out.print(&quot;Hello World!!!&quot;);</span><br><span class="line">        out.println(&quot;  &lt;/BODY&gt;&quot;);</span><br><span class="line">         out.println(&quot;&lt;/HTML&gt;&quot;);</span><br><span class="line">         out.flush();</span><br><span class="line">        out.close();</span><br><span class="line">     &#125;</span><br><span class="line">   public void doPost(HttpServletRequest request, HttpServletResponse response)</span><br><span class="line">             throws ServletException, IOException &#123;</span><br><span class="line">		this.doGet(request,response);</span><br><span class="line">		</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<h5 id="一个Servlet的创建例子"><a href="#一个Servlet的创建例子" class="headerlink" title="一个Servlet的创建例子"></a>一个Servlet的创建例子</h5><figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ServletDemo</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">HttpServlet</span> </span>&#123;</span><br><span class="line">  </span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">doGet</span><span class="hljs-params">(HttpServletRequest request, HttpServletResponse response)</span></span></span><br><span class="line"><span class="hljs-function">            <span class="hljs-keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line"> 		 response.setContentType(<span class="hljs-string">"text/html"</span>);</span><br><span class="line">         PrintWriter out = response.getWriter();</span><br><span class="line">         out.println(<span class="hljs-string">"&lt;!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\"&gt;"</span>);</span><br><span class="line">         out.println(<span class="hljs-string">"&lt;HTML&gt;"</span>);</span><br><span class="line">         out.println(<span class="hljs-string">"  &lt;HEAD&gt;&lt;TITLE&gt;A Servlet&lt;/TITLE&gt;&lt;/HEAD&gt;"</span>);</span><br><span class="line">         out.println(<span class="hljs-string">"  &lt;BODY&gt;"</span>);</span><br><span class="line">         out.print(<span class="hljs-string">"Hello World!!!"</span>);</span><br><span class="line">        out.println(<span class="hljs-string">"  &lt;/BODY&gt;"</span>);</span><br><span class="line">         out.println(<span class="hljs-string">"&lt;/HTML&gt;"</span>);</span><br><span class="line">         out.flush();</span><br><span class="line">        out.close();</span><br><span class="line">     &#125;</span><br><span class="line">   <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">doPost</span><span class="hljs-params">(HttpServletRequest request, HttpServletResponse response)</span></span></span><br><span class="line"><span class="hljs-function">             <span class="hljs-keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">		<span class="hljs-keyword">this</span>.doGet(request,response);</span><br><span class="line">		</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
 
 <p>web.xml需要配置上servlet的映射</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;servlet&gt;</span><br><span class="line">    &lt;servlet-name&gt;ServletDemo&lt;/servlet-name&gt;</span><br><span class="line">    &lt;servlet-class&gt;com.heclam.ServletDemo&lt;/servlet-class&gt;&lt;!--这里写类的全限定名--&gt;</span><br><span class="line">  &lt;/servlet&gt;</span><br><span class="line"></span><br><span class="line">  &lt;servlet-mapping&gt;</span><br><span class="line"> 	 &lt;!--这里需要与上面Servlet-name一致 --&gt;</span><br><span class="line">    &lt;servlet-name&gt;ServletDemo&lt;/servlet-name&gt;</span><br><span class="line">    &lt;!--这里是要输入什么才能访问到ServletDemo的映射--&gt;</span><br><span class="line">    &lt;url-pattern&gt;/ServletDemo&lt;/url-pattern&gt;</span><br><span class="line">  &lt;/servlet-mapping&gt;</span><br><span class="line">  注意：&lt;servlet-mapping&gt;可以设置多个，这个我们就有多个映射路径可以访问到ServletDemo了</span><br></pre></td></tr></table></figure>
+<figure class="highlight xml hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">servlet</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">servlet-name</span>&gt;</span>ServletDemo<span class="hljs-tag">&lt;/<span class="hljs-name">servlet-name</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">servlet-class</span>&gt;</span>com.heclam.ServletDemo<span class="hljs-tag">&lt;/<span class="hljs-name">servlet-class</span>&gt;</span><span class="hljs-comment">&lt;!--这里写类的全限定名--&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">servlet</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">servlet-mapping</span>&gt;</span></span><br><span class="line"> 	 <span class="hljs-comment">&lt;!--这里需要与上面Servlet-name一致 --&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">servlet-name</span>&gt;</span>ServletDemo<span class="hljs-tag">&lt;/<span class="hljs-name">servlet-name</span>&gt;</span></span><br><span class="line">    <span class="hljs-comment">&lt;!--这里是要输入什么才能访问到ServletDemo的映射--&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">url-pattern</span>&gt;</span>/ServletDemo<span class="hljs-tag">&lt;/<span class="hljs-name">url-pattern</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">servlet-mapping</span>&gt;</span></span><br><span class="line">  注意：<span class="hljs-tag">&lt;<span class="hljs-name">servlet-mapping</span>&gt;</span>可以设置多个，这个我们就有多个映射路径可以访问到ServletDemo了</span><br></pre></td></tr></table></figure>
 
-<h5 id="用servletContext实现请求转发"><a href="#用servletContext实现请求转发" class="headerlink" title="用servletContext实现请求转发"></a>用servletContext实现请求转发</h5><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public class ServletDemo extends HttpServlet &#123;</span><br><span class="line">  </span><br><span class="line">    public void doGet(HttpServletRequest request, HttpServletResponse response)</span><br><span class="line">            throws ServletException, IOException &#123;</span><br><span class="line">            //获取ServletContext对象</span><br><span class="line"> 			ServletContext context = this.getServletContext();</span><br><span class="line"> 			//获取请求转发对象</span><br><span class="line"> 			RequestDispatcher rd = context.getRequestDispatcher(&quot;/ServletDemo2&quot;);</span><br><span class="line"> 			//调用forward方法实现请求转发</span><br><span class="line">            rd.forward(request, response);</span><br><span class="line">     &#125;</span><br><span class="line">   public void doPost(HttpServletRequest request, HttpServletResponse response)</span><br><span class="line">             throws ServletException, IOException &#123;</span><br><span class="line">		...</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<h5 id="用servletContext实现请求转发"><a href="#用servletContext实现请求转发" class="headerlink" title="用servletContext实现请求转发"></a>用servletContext实现请求转发</h5><figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ServletDemo</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">HttpServlet</span> </span>&#123;</span><br><span class="line">  </span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">doGet</span><span class="hljs-params">(HttpServletRequest request, HttpServletResponse response)</span></span></span><br><span class="line"><span class="hljs-function">            <span class="hljs-keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">            <span class="hljs-comment">//获取ServletContext对象</span></span><br><span class="line"> 			ServletContext context = <span class="hljs-keyword">this</span>.getServletContext();</span><br><span class="line"> 			<span class="hljs-comment">//获取请求转发对象</span></span><br><span class="line"> 			RequestDispatcher rd = context.getRequestDispatcher(<span class="hljs-string">"/ServletDemo2"</span>);</span><br><span class="line"> 			<span class="hljs-comment">//调用forward方法实现请求转发</span></span><br><span class="line">            rd.forward(request, response);</span><br><span class="line">     &#125;</span><br><span class="line">   <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">doPost</span><span class="hljs-params">(HttpServletRequest request, HttpServletResponse response)</span></span></span><br><span class="line"><span class="hljs-function">             <span class="hljs-keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">		...</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
 
+<h5 id="转发（forward）和重定向（redirect）"><a href="#转发（forward）和重定向（redirect）" class="headerlink" title="转发（forward）和重定向（redirect）:"></a>转发（forward）和重定向（redirect）:</h5><p>​    转发为在服务器里面操作，跳转到另一个servlet,它的地址栏没有改变，可以获取原来的数据，因为这是同一个request、response的http</p>
+<p>​    重定向：浏览器发送请求给服务器，服务器让浏览器去找其他的服务器于是浏览器又发了一条请求给其他路径的服务器，请求地址栏发生了改变（如果在地址栏里面带参数的话，是可以在服务器获取的）</p>
 
         </div>
         
@@ -330,7 +347,7 @@
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        15
+                        19
                     </p>
                 </div>
             </div>
@@ -340,7 +357,7 @@
                         分类
                     </p>
                     <p class="title has-text-weight-normal">
-                        6
+                        8
                     </p>
                 </div>
             </div>
@@ -350,7 +367,7 @@
                         标签
                     </p>
                     <p class="title has-text-weight-normal">
-                        15
+                        20
                     </p>
                 </div>
             </div>
@@ -439,6 +456,22 @@
             </h3>
             <ul class="menu-list">
             <li>
+        <a class="level is-marginless" href="/categories/MySQL/">
+            <span class="level-start">
+                <span class="level-item">MySQL</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Redis/">
+            <span class="level-start">
+                <span class="level-item">Redis</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
         <a class="level is-marginless" href="/categories/Spring/">
             <span class="level-start">
                 <span class="level-item">Spring</span>
@@ -452,7 +485,7 @@
                 <span class="level-item">java</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">4</span>
+                <span class="level-item tag">5</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/javaWeb/">
@@ -460,7 +493,7 @@
                 <span class="level-item">javaWeb</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">4</span>
+                <span class="level-item tag">5</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/生活/">
@@ -506,6 +539,32 @@
             
             <div class="media-content">
                 <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-08-25T06:40:19.000Z">2019-08-25</time></div>
+                    <a href="/2019/08/25/了解一下Redis/" class="title has-link-black-ter is-size-6 has-text-weight-normal">了解一下Redis</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Redis/">Redis</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-08-16T06:19:19.000Z">2019-08-16</time></div>
+                    <a href="/2019/08/16/MySQL数据库/" class="title has-link-black-ter is-size-6 has-text-weight-normal">MySQL数据库</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/MySQL/">MySQL</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-08-14T06:15:19.000Z">2019-08-14</time></div>
                     <a href="/2019/08/14/Spring事务管理/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Spring事务管理</a>
                     <p class="is-size-7 is-uppercase">
@@ -541,32 +600,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-08T09:20:20.000Z">2019-07-08</time></div>
-                    <a href="/2019/07/08/JSP笔记/" class="title has-link-black-ter is-size-6 has-text-weight-normal">JSP笔记</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/javaWeb/">javaWeb</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-08T07:30:31.000Z">2019-07-08</time></div>
-                    <a href="/2019/07/08/Session笔记/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Session笔记</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/javaWeb/">javaWeb</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -577,7 +610,7 @@
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/tags/Cookie/" style="font-size: 10px;">Cookie</a> <a href="/tags/JSP/" style="font-size: 10px;">JSP</a> <a href="/tags/Servlet/" style="font-size: 10px;">Servlet</a> <a href="/tags/Session/" style="font-size: 10px;">Session</a> <a href="/tags/Spring事务/" style="font-size: 10px;">Spring事务</a> <a href="/tags/ajax/" style="font-size: 10px;">ajax</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/java线程/" style="font-size: 10px;">java线程</a> <a href="/tags/markdown语法/" style="font-size: 10px;">markdown语法</a> <a href="/tags/新技能/" style="font-size: 10px;">新技能</a> <a href="/tags/生活总结/" style="font-size: 10px;">生活总结</a> <a href="/tags/生活记录/" style="font-size: 10px;">生活记录</a> <a href="/tags/笔记/" style="font-size: 10px;">笔记</a>
+        <a href="/tags/Cookie/" style="font-size: 10px;">Cookie</a> <a href="/tags/JSP/" style="font-size: 10px;">JSP</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Servlet/" style="font-size: 10px;">Servlet</a> <a href="/tags/Session/" style="font-size: 10px;">Session</a> <a href="/tags/Spring事务/" style="font-size: 10px;">Spring事务</a> <a href="/tags/ajax/" style="font-size: 10px;">ajax</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/java线程/" style="font-size: 10px;">java线程</a> <a href="/tags/markdown语法/" style="font-size: 10px;">markdown语法</a> <a href="/tags/新技能/" style="font-size: 10px;">新技能</a> <a href="/tags/生活总结/" style="font-size: 10px;">生活总结</a> <a href="/tags/生活记录/" style="font-size: 10px;">生活记录</a> <a href="/tags/监听器/" style="font-size: 10px;">监听器</a> <a href="/tags/笔记/" style="font-size: 10px;">笔记</a> <a href="/tags/设计模式/" style="font-size: 10px;">设计模式</a> <a href="/tags/过滤器/" style="font-size: 10px;">过滤器</a>
     </div>
 </div>
 
@@ -596,7 +629,7 @@
                     <span class="level-item">八月 2019</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">1</span>
+                    <span class="level-item tag">3</span>
                 </span>
             </a>
         </li>
@@ -607,7 +640,7 @@
                     <span class="level-item">七月 2019</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">7</span>
+                    <span class="level-item tag">9</span>
                 </span>
             </a>
         </li>
@@ -717,15 +750,13 @@
 var IcarusThemeSettings = {
     article: {
         highlight: {
-            clipboard: true,
+            clipboard: false,
             fold: ''
         }
     }
 };
 </script>
 
-
-    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
 
 
 

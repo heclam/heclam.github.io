@@ -19,7 +19,7 @@
 <meta property="og:description" content="Java反射机制是指在 运行状态中 ，对于任意一个 类，都能够知道这个类的所有属性和方法；对于任意一个对象，都能够调用它的任意一个方法和属性；这种动态获取的信息以及动态调用对象的方法的功能称为java语言的反射机制。用一句话总结就是反射可以实现在运行时可以知道任意一个类的属性和方法。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/images/og_image.png">
-<meta property="og:updated_time" content="2019-08-28T18:58:05.292Z">
+<meta property="og:updated_time" content="2019-08-31T14:42:46.126Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="java反射机制">
 <meta name="twitter:description" content="Java反射机制是指在 运行状态中 ，对于任意一个 类，都能够知道这个类的所有属性和方法；对于任意一个对象，都能够调用它的任意一个方法和属性；这种动态获取的信息以及动态调用对象的方法的功能称为java语言的反射机制。用一句话总结就是反射可以实现在运行时可以知道任意一个类的属性和方法。">
@@ -155,7 +155,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    6 分钟 读完 (大约 857 个字)
+                    6 分钟 读完 (大约 861 个字)
                 </span>
                 
                 
@@ -169,7 +169,7 @@
         </h1>
         <div class="content">
             <p>Java反射机制是指在<font color="red"> 运行状态中 </font>，对于任意一个 <strong>类</strong>，都能够知道这个类的所有属性和方法；对于任意一个<strong>对象</strong>，都能够调用它的任意一个方法和属性；这种动态获取的信息以及动态调用对象的方法的功能称为java语言的反射机制。<br>用一句话总结就是反射可以实现在运行时可以知道任意一个类的属性和方法。<a id="more"></a></p>
-<h4 id="获取class的三种方法"><a href="#获取class的三种方法" class="headerlink" title="获取class的三种方法"></a>获取class的三种方法</h4><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">package com.luo.test;</span><br><span class="line">public class TestDemo&#123;</span><br><span class="line">    public static void main(String[] args)&#123;</span><br><span class="line">        //第一种</span><br><span class="line">        Class class1 = TestDemo.class;</span><br><span class="line">        System.out.pritnln(class1.getName（）);</span><br><span class="line">        </span><br><span class="line">        //第二种</span><br><span class="line">        TestDemo demo = new TestDemo();</span><br><span class="line">        Class class2 = demo.getClass();</span><br><span class="line">        System.out.pritnln(class2.getName（）);</span><br><span class="line">        </span><br><span class="line">        //第三种</span><br><span class="line">        Class class3 = Class.forName(&quot;com.luo.test.TestDemo&quot;);//这里面的参数为类的全量限定名</span><br><span class="line">        System.out.pritnln(class2.getName（）);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">执行结果为：</span><br><span class="line">		com.luo.test.TestDemo</span><br><span class="line">		com.luo.test.TestDemo</span><br><span class="line">		com.luo.test.TestDemo</span><br></pre></td></tr></table></figure>
+<h4 id="获取class的三种方法"><a href="#获取class的三种方法" class="headerlink" title="获取class的三种方法"></a>获取class的三种方法</h4><figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">package</span> com.luo.test;</span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TestDemo</span></span>&#123;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span>&#123;</span><br><span class="line">        <span class="hljs-comment">//第一种</span></span><br><span class="line">        Class class1 = TestDemo.class;</span><br><span class="line">        System.out.pritnln(class1.getName（）);</span><br><span class="line">        </span><br><span class="line">        <span class="hljs-comment">//第二种</span></span><br><span class="line">        TestDemo demo = <span class="hljs-keyword">new</span> TestDemo();</span><br><span class="line">        Class class2 = demo.getClass();</span><br><span class="line">        System.out.pritnln(class2.getName（）);</span><br><span class="line">        </span><br><span class="line">        <span class="hljs-comment">//第三种</span></span><br><span class="line">        Class class3 = Class.forName(<span class="hljs-string">"com.luo.test.TestDemo"</span>);<span class="hljs-comment">//这里面的参数为类的全量限定名</span></span><br><span class="line">        System.out.pritnln(class2.getName（）);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">执行结果为：</span><br><span class="line">		com.luo.test.TestDemo</span><br><span class="line">		com.luo.test.TestDemo</span><br><span class="line">		com.luo.test.TestDemo</span><br></pre></td></tr></table></figure>
 
 <h4 id="获取这个Class有什么作用？"><a href="#获取这个Class有什么作用？" class="headerlink" title="获取这个Class有什么作用？"></a>获取这个Class有什么作用？</h4><ul>
 <li>获取成员方法Method</li>
@@ -177,27 +177,27 @@
 <li>获取构造函数Constructor</li>
 </ul>
 <h4 id="获取成员方法"><a href="#获取成员方法" class="headerlink" title="获取成员方法"></a>获取成员方法</h4><p>单独获取某一个方法是通过Class类的以下方法获得的：</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">//参数：第一个参数为方法名，后面的参数为 参数类型 比如 String.class int.class(可以看下方的例子)</span><br><span class="line">public Method getDeclaredMethod(String name, Class&lt;?&gt;... parameterTypes) // 得到该类所有的方法，不包括父类的</span><br><span class="line">public Method getMethod(String name, Class&lt;?&gt;... parameterTypes) // 得到该类所有的public方法，包括父类的</span><br></pre></td></tr></table></figure>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">//参数：第一个参数为方法名，后面的参数为 参数类型 比如 String.class int.class(可以看下方的例子)</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">public</span> Method <span class="hljs-title">getDeclaredMethod</span><span class="hljs-params">(String name, Class&lt;?&gt;... parameterTypes)</span> <span class="hljs-comment">// 得到该类所有的方法，不包括父类的</span></span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">public</span> Method <span class="hljs-title">getMethod</span><span class="hljs-params">(String name, Class&lt;?&gt;... parameterTypes)</span> <span class="hljs-comment">// 得到该类所有的public方法，包括父类的</span></span></span><br></pre></td></tr></table></figure>
 
 <p>例如有个一类</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">public class Person &#123;</span><br><span class="line">    private String name;</span><br><span class="line">    private int age;</span><br><span class="line">    private String msg=&quot;hello wrold&quot;;</span><br><span class="line"> public String getName() &#123;</span><br><span class="line">        return name;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">    public void setName(String name) &#123;</span><br><span class="line">        this.name = name;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">    public int getAge() &#123;</span><br><span class="line">        return age;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">    public void setAge(int age) &#123;</span><br><span class="line">        this.age = age;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">    public Person() &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private Person(String name) &#123;</span><br><span class="line">        this.name = name;</span><br><span class="line">  System.out.println(name);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">    public void fun() &#123;</span><br><span class="line">        System.out.println(&quot;fun&quot;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">    public void fun(String name,int age) &#123;</span><br><span class="line">        System.out.println(&quot;我叫&quot;+name+&quot;,今年&quot;+age+&quot;岁&quot;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class TestDemo&#123;</span><br><span class="line">    public static void main(String[] args)&#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            Class c = Class.forName(&quot;com.luo.Person&quot;);</span><br><span class="line">            Object o = c.newInstance();</span><br><span class="line">            Method method = c.getMethod(&quot;fun&quot;, String.class, int.class);</span><br><span class="line">            method.invoke(o, &quot;abc&quot;, 18);</span><br><span class="line">        &#125; catch (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Person</span> </span>&#123;</span><br><span class="line">    <span class="hljs-keyword">private</span> String name;</span><br><span class="line">    <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> age;</span><br><span class="line">    <span class="hljs-keyword">private</span> String msg=<span class="hljs-string">"hello wrold"</span>;</span><br><span class="line"> <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getName</span><span class="hljs-params">()</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> name;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setName</span><span class="hljs-params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">this</span>.name = name;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">getAge</span><span class="hljs-params">()</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> age;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setAge</span><span class="hljs-params">(<span class="hljs-keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">this</span>.age = age;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Person</span><span class="hljs-params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-title">Person</span><span class="hljs-params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">this</span>.name = name;</span><br><span class="line">  System.out.println(name);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">fun</span><span class="hljs-params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="hljs-string">"fun"</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">fun</span><span class="hljs-params">(String name,<span class="hljs-keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="hljs-string">"我叫"</span>+name+<span class="hljs-string">",今年"</span>+age+<span class="hljs-string">"岁"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TestDemo</span></span>&#123;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span>&#123;</span><br><span class="line">        <span class="hljs-keyword">try</span> &#123;</span><br><span class="line">            Class c = Class.forName(<span class="hljs-string">"com.luo.Person"</span>);</span><br><span class="line">            Object o = c.newInstance();</span><br><span class="line">            Method method = c.getMethod(<span class="hljs-string">"fun"</span>, String.class, <span class="hljs-keyword">int</span>.class);</span><br><span class="line">            method.invoke(o, <span class="hljs-string">"abc"</span>, <span class="hljs-number">18</span>);</span><br><span class="line">        &#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">执行结果：</span><br><span class="line">	我叫abc,今年18岁</span><br></pre></td></tr></table></figure>
 
 <p>获取所有的成员方法：</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Class c = Class.forName(&quot;com.luo.Person&quot;);</span><br><span class="line">//不带参数则获取全部的方法</span><br><span class="line">Method[] methods = c.getDeclaredMethods(); // 得到该类所有的方法，不包括父类的</span><br><span class="line">或者：</span><br><span class="line">Method[] methods = c.getMethods();// 得到该类所有的public方法，包括父类的</span><br><span class="line"></span><br><span class="line">遍历数组：</span><br><span class="line">for (Method method : methods)</span><br></pre></td></tr></table></figure>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Class c = Class.forName(<span class="hljs-string">"com.luo.Person"</span>);</span><br><span class="line"><span class="hljs-comment">//不带参数则获取全部的方法</span></span><br><span class="line">Method[] methods = c.getDeclaredMethods(); <span class="hljs-comment">// 得到该类所有的方法，不包括父类的</span></span><br><span class="line">或者：</span><br><span class="line">Method[] methods = c.getMethods();<span class="hljs-comment">// 得到该类所有的public方法，包括父类的</span></span><br><span class="line"></span><br><span class="line">遍历数组：</span><br><span class="line"><span class="hljs-keyword">for</span> (Method method : methods)</span><br></pre></td></tr></table></figure>
 
 <h4 id="获取成员变量"><a href="#获取成员变量" class="headerlink" title="获取成员变量"></a>获取成员变量</h4><p>单独获取某个成员变量，通过Class类的以下方法实现：</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public Field getDeclaredField(String name) // 获得该类自身声明的所有变量，不包括其父类的变量</span><br><span class="line">public Field getField(String name) // 获得该类自所有的public成员变量，包括其父类变量</span><br><span class="line"></span><br><span class="line">注意：field.setAccessible(true);//如果变量的访问属性为private,需设置是否允许访问</span><br></pre></td></tr></table></figure>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">public</span> Field <span class="hljs-title">getDeclaredField</span><span class="hljs-params">(String name)</span> <span class="hljs-comment">// 获得该类自身声明的所有变量，不包括其父类的变量</span></span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">public</span> Field <span class="hljs-title">getField</span><span class="hljs-params">(String name)</span> <span class="hljs-comment">// 获得该类自所有的public成员变量，包括其父类变量</span></span></span><br><span class="line"><span class="hljs-function"></span></span><br><span class="line"><span class="hljs-function">注意：field.<span class="hljs-title">setAccessible</span><span class="hljs-params">(<span class="hljs-keyword">true</span>)</span></span>;<span class="hljs-comment">//如果变量的访问属性为private,需设置是否允许访问</span></span><br></pre></td></tr></table></figure>
 
 <p>获取全部的成员变量：</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Field[] fields = c.getDeclaredFields();</span><br><span class="line"></span><br><span class="line">然后遍历变量数组,获得某个成员变量：</span><br><span class="line">for(Field field : fields)</span><br></pre></td></tr></table></figure>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Field[] fields = c.getDeclaredFields();</span><br><span class="line"></span><br><span class="line">然后遍历变量数组,获得某个成员变量：</span><br><span class="line"><span class="hljs-keyword">for</span>(Field field : fields)</span><br></pre></td></tr></table></figure>
 
 <h4 id="获取构造方法"><a href="#获取构造方法" class="headerlink" title="获取构造方法"></a>获取构造方法</h4><p>获取单个构造函数（传入参数）</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public Constructor&lt;T&gt; getDeclaredConstructor(Class&lt;?&gt;... parameterTypes) //  获得该类所有的构造器，不包括其父类的构造器</span><br><span class="line">public Constructor&lt;T&gt; getConstructor(Class&lt;?&gt;... parameterTypes) // 获得该类所以public构造器，包括父类</span><br><span class="line"></span><br><span class="line">注意： constructor.setAccessible(true);//如果构造方法为private，需设置是否允许访问</span><br></pre></td></tr></table></figure>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">public</span> Constructor&lt;T&gt; <span class="hljs-title">getDeclaredConstructor</span><span class="hljs-params">(Class&lt;?&gt;... parameterTypes)</span> <span class="hljs-comment">//  获得该类所有的构造器，不包括其父类的构造器</span></span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">public</span> Constructor&lt;T&gt; <span class="hljs-title">getConstructor</span><span class="hljs-params">(Class&lt;?&gt;... parameterTypes)</span> <span class="hljs-comment">// 获得该类所以public构造器，包括父类</span></span></span><br><span class="line"><span class="hljs-function"></span></span><br><span class="line"><span class="hljs-function">注意： constructor.<span class="hljs-title">setAccessible</span><span class="hljs-params">(<span class="hljs-keyword">true</span>)</span></span>;<span class="hljs-comment">//如果构造方法为private，需设置是否允许访问</span></span><br></pre></td></tr></table></figure>
 
 <p>获取该类的所有构造函数</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Constructor[] constructors = c.getDeclaredConstructors();</span><br><span class="line"></span><br><span class="line">然后遍历：</span><br><span class="line">for (Constructor constructor : constructors)</span><br></pre></td></tr></table></figure>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Constructor[] constructors = c.getDeclaredConstructors();</span><br><span class="line"></span><br><span class="line">然后遍历：</span><br><span class="line"><span class="hljs-keyword">for</span> (Constructor constructor : constructors)</span><br></pre></td></tr></table></figure>
         </div>
         
         <div class="level is-size-7 is-uppercase">
@@ -339,7 +339,7 @@
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        15
+                        19
                     </p>
                 </div>
             </div>
@@ -349,7 +349,7 @@
                         分类
                     </p>
                     <p class="title has-text-weight-normal">
-                        6
+                        8
                     </p>
                 </div>
             </div>
@@ -359,7 +359,7 @@
                         标签
                     </p>
                     <p class="title has-text-weight-normal">
-                        15
+                        20
                     </p>
                 </div>
             </div>
@@ -448,6 +448,22 @@
             </h3>
             <ul class="menu-list">
             <li>
+        <a class="level is-marginless" href="/categories/MySQL/">
+            <span class="level-start">
+                <span class="level-item">MySQL</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Redis/">
+            <span class="level-start">
+                <span class="level-item">Redis</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
         <a class="level is-marginless" href="/categories/Spring/">
             <span class="level-start">
                 <span class="level-item">Spring</span>
@@ -461,7 +477,7 @@
                 <span class="level-item">java</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">4</span>
+                <span class="level-item tag">5</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/javaWeb/">
@@ -469,7 +485,7 @@
                 <span class="level-item">javaWeb</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">4</span>
+                <span class="level-item tag">5</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/生活/">
@@ -515,6 +531,32 @@
             
             <div class="media-content">
                 <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-08-25T06:40:19.000Z">2019-08-25</time></div>
+                    <a href="/2019/08/25/了解一下Redis/" class="title has-link-black-ter is-size-6 has-text-weight-normal">了解一下Redis</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Redis/">Redis</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-08-16T06:19:19.000Z">2019-08-16</time></div>
+                    <a href="/2019/08/16/MySQL数据库/" class="title has-link-black-ter is-size-6 has-text-weight-normal">MySQL数据库</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/MySQL/">MySQL</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-08-14T06:15:19.000Z">2019-08-14</time></div>
                     <a href="/2019/08/14/Spring事务管理/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Spring事务管理</a>
                     <p class="is-size-7 is-uppercase">
@@ -550,32 +592,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-08T09:20:20.000Z">2019-07-08</time></div>
-                    <a href="/2019/07/08/JSP笔记/" class="title has-link-black-ter is-size-6 has-text-weight-normal">JSP笔记</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/javaWeb/">javaWeb</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-08T07:30:31.000Z">2019-07-08</time></div>
-                    <a href="/2019/07/08/Session笔记/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Session笔记</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/javaWeb/">javaWeb</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -586,7 +602,7 @@
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/tags/Cookie/" style="font-size: 10px;">Cookie</a> <a href="/tags/JSP/" style="font-size: 10px;">JSP</a> <a href="/tags/Servlet/" style="font-size: 10px;">Servlet</a> <a href="/tags/Session/" style="font-size: 10px;">Session</a> <a href="/tags/Spring事务/" style="font-size: 10px;">Spring事务</a> <a href="/tags/ajax/" style="font-size: 10px;">ajax</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/java线程/" style="font-size: 10px;">java线程</a> <a href="/tags/markdown语法/" style="font-size: 10px;">markdown语法</a> <a href="/tags/新技能/" style="font-size: 10px;">新技能</a> <a href="/tags/生活总结/" style="font-size: 10px;">生活总结</a> <a href="/tags/生活记录/" style="font-size: 10px;">生活记录</a> <a href="/tags/笔记/" style="font-size: 10px;">笔记</a>
+        <a href="/tags/Cookie/" style="font-size: 10px;">Cookie</a> <a href="/tags/JSP/" style="font-size: 10px;">JSP</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Servlet/" style="font-size: 10px;">Servlet</a> <a href="/tags/Session/" style="font-size: 10px;">Session</a> <a href="/tags/Spring事务/" style="font-size: 10px;">Spring事务</a> <a href="/tags/ajax/" style="font-size: 10px;">ajax</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/java线程/" style="font-size: 10px;">java线程</a> <a href="/tags/markdown语法/" style="font-size: 10px;">markdown语法</a> <a href="/tags/新技能/" style="font-size: 10px;">新技能</a> <a href="/tags/生活总结/" style="font-size: 10px;">生活总结</a> <a href="/tags/生活记录/" style="font-size: 10px;">生活记录</a> <a href="/tags/监听器/" style="font-size: 10px;">监听器</a> <a href="/tags/笔记/" style="font-size: 10px;">笔记</a> <a href="/tags/设计模式/" style="font-size: 10px;">设计模式</a> <a href="/tags/过滤器/" style="font-size: 10px;">过滤器</a>
     </div>
 </div>
 
@@ -605,7 +621,7 @@
                     <span class="level-item">八月 2019</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">1</span>
+                    <span class="level-item tag">3</span>
                 </span>
             </a>
         </li>
@@ -616,7 +632,7 @@
                     <span class="level-item">七月 2019</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">7</span>
+                    <span class="level-item tag">9</span>
                 </span>
             </a>
         </li>
@@ -726,15 +742,13 @@
 var IcarusThemeSettings = {
     article: {
         highlight: {
-            clipboard: true,
+            clipboard: false,
             fold: ''
         }
     }
 };
 </script>
 
-
-    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
 
 
 
