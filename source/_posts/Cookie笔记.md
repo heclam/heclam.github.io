@@ -13,6 +13,18 @@ tags:
 
 用户开一个浏览器，点击多个超链接，访问服务器多个web资源，然后关闭浏览器，整个过程称之为一个会话。<!--more-->
 
+##### Cookie的流程：
+
+浏览器访问服务器，如果服务器需要记录该用户的状态，就使用response向浏览器发送一个Cookie，浏览器会把Cookie保存起来。当浏览器再次访问服务器的时候，浏览器会把请求的网址连同Cookie一同交给服务器。
+
+​	创建一个Cookie对象，发送给浏览器
+
+​	Cookie cookie = new Cookie(key,valus); //创建Cookie对象，指定名称和值
+
+​	Cookie.setAge(秒);  //设置时间
+
+​	response.addCookie(cookie);//向浏览器发送一个cookie
+
 ##### 保存会话数据的两种技术
 
 Cookie和Session
