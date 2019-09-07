@@ -19,7 +19,7 @@
 <meta property="og:description" content="Redis支持以下五种类型 String list set SortedSet Hash">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/images/og_image.png">
-<meta property="og:updated_time" content="2019-08-31T17:03:22.330Z">
+<meta property="og:updated_time" content="2019-09-07T13:36:37.229Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="了解一下Redis">
 <meta name="twitter:description" content="Redis支持以下五种类型 String list set SortedSet Hash">
@@ -159,7 +159,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    14 分钟 读完 (大约 2045 个字)
+                    14 分钟 读完 (大约 2047 个字)
                 </span>
                 
                 
@@ -183,7 +183,7 @@
 <li>设置键的<font color="red">生存</font>时间可以通过<strong>EXPIRE</strong>或者<strong>PEXPIRE</strong></li>
 <li>设置键的<font color="red">过期</font>时间可以通过<strong>EXPIREAT</strong>或者<strong>PEXPIREAT</strong></li>
 </ul>
-<p>其实<code>EXPIRE</code>、<code>PEXPIRE</code>、<code>EXPIREAT</code>这三个命令都是通过<code>PEXPIREAT</code>命令来实现的</p>
+<p>其实<strong><em>EXPIRE</em></strong>、<strong><em>PEXPIRE</em></strong>、<strong><em>EXPIREAT</em></strong>这三个命令都是通过<strong><em>PEXPIREAT</em></strong>命令来实现的</p>
 <h4 id="过期策略"><a href="#过期策略" class="headerlink" title="过期策略"></a>过期策略</h4><ul>
 <li><p>过期键是保存在哈希表中了。那这些过期键到了过期的时间，就会立马被删除掉吗？？</p>
 </li>
@@ -299,9 +299,9 @@
 </ul>
 </li>
 </ul>
-<h5 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h5><pre><code>在缓存的时候给过期时间加上一个**随机值**，这样就会大幅度的**减少缓存在同一时间过期**。
-
-**对于“Redis挂掉了，请求全部走数据库”这种情况，我们可以有以下的思路**</code></pre><ul>
+<h5 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h5><p>​    在缓存的时候给过期时间加上一个<strong>随机值</strong>，这样就会大幅度的<strong>减少缓存在同一时间过期</strong>。</p>
+<p>​    <strong>对于“Redis挂掉了，请求全部走数据库”这种情况，我们可以有以下的思路</strong>        </p>
+<ul>
 <li><p>事发前：实现Redis的高可用（主从框架+Sentinel(哨兵)或者Redis Cluster）,尽量避免Redis挂掉这种情况发生。</p>
 </li>
 <li><p>事发中：万一Redis真的垮了，我们可以设置本地缓存（ehcache）+限流（hystrix）,尽量避免我们的数据库被干掉（起码能保证我们的服务还是能正常工作的）</p>

@@ -166,7 +166,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    9 分钟 读完 (大约 1378 个字)
+                    9 分钟 读完 (大约 1379 个字)
                 </span>
                 
                 
@@ -181,89 +181,16 @@
         <div class="content">
             <p>一台云服务器需要搭建的运行环境，包括JDK、MySQL、Tomcat、Nginx等，该服务器（CentOS7）用于部署JavaEE项目</p>
 <h4 id="一、JDK安装"><a href="#一、JDK安装" class="headerlink" title="一、JDK安装"></a>一、JDK安装</h4><h5 id="卸载自带的openJDK"><a href="#卸载自带的openJDK" class="headerlink" title="卸载自带的openJDK"></a>卸载自带的openJDK</h5><p>​        因为centos有自带的jdk，所以在安装自己的JDK时需要卸载自带的openJDK</p>
-<ol>
-<li>使用<strong><em>rpm -qa | grep java</em></strong>命令查看系统中是存在有java</li>
-<li>使用<strong><em>rpm -e –nodeps 相关应用名称</em></strong>来进行卸载</li>
-</ol>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# rpm -qa | grep java</span><br><span class="line">java-1.8.0-openjdk-headless-1.8.0.161-2.b14.el7.x86_64</span><br><span class="line">tzdata-java-2018c-1.el7.noarch</span><br><span class="line">python-javapackages-3.4.1-11.el7.noarch</span><br><span class="line">javapackages-tools-3.4.1-11.el7.noarch</span><br><span class="line">java-1.8.0-openjdk-1.8.0.161-2.b14.el7.x86_64</span><br><span class="line">[root@localhost ~]# rpm -e --nodeps java-1.8.0-openjdk-headless-1.8.0.161-2.b14.el7.x86_64</span><br><span class="line">[root@localhost ~]# rpm -e --nodeps java-1.8.0-openjdk-1.8.0.161-2.b14.el7.x86_64</span><br></pre></td></tr></table></figure>
-
-<h5 id="下载并安装JDK"><a href="#下载并安装JDK" class="headerlink" title="下载并安装JDK"></a>下载并安装JDK</h5><ol>
-<li>下载ORAClE所提供的JDK,<a href="https://www.oracle.com/java/technologies/jdk8-downloads.html" target="_blank" rel="noopener">传送门</a>可根据自己的系统来进行选择相应的版本，我这选择的是<strong><em>jdk-8u221-linux-x64.tar.gz</em></strong></li>
-<li>从本地上传文件到服务器，需要安装<strong><em>Irzsz</em></strong>: yum -y install lrzsz (注：参数-y中”y”的意思是：当安装过程提示选择全部为”yes”)</li>
-<li>rz中的r意为received（接收），输入rz时、意为服务器接收文件，既将文件从本地上传到服务器。sz中的s意为send（发送），输入sz时、意为服务器要发送文件，既从服务器发送文件到本地，或是说本地从服务器上下载文件。注：不论是send还是received，动作都是在服务器上发起的。</li>
-<li>将文件上传到<strong><em>/usr/java</em></strong>目录下，然后使用<strong><em>tar -zxvf jdk-8u221-linux-x64.tar.gz</em></strong>进行解压</li>
-</ol>
-<h5 id="修改profile配置文件"><a href="#修改profile配置文件" class="headerlink" title="修改profile配置文件"></a>修改profile配置文件</h5><p>使用<strong><em>vi /etc/profile</em></strong>打开，并加入以下内容（注：<a href="https://vimjc.com/" target="_blank" rel="noopener">传送门</a>不熟悉vi可以先去学习以下基本操作）</p>
-<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME=/usr/java/jdk1.8.0_221(这个根据你解压之后的名称来定)</span><br><span class="line">export CLASSPATH=.:$JAVA_HOME/jre/lib/rt.jar:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar</span><br><span class="line">export PATH=$PATH:$JAVA_HOME/bin</span><br></pre></td></tr></table></figure>
-
-<p>保存退出之后需要运行<strong><em>source /etc/profile</em></strong>使配置生效</p>
-<p>最后执行<strong><em>java -version</em></strong>验证是否安装成功</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">java version &quot;1.8.0_221&quot;</span><br><span class="line">Java(TM) SE Runtime Environment (build 1.8.0_221-b11)</span><br><span class="line">Java HotSpot(TM) 64-Bit Server VM (build 25.221-b11, mixed mode)</span><br></pre></td></tr></table></figure>
-
-<h4 id="二、MySQL安装"><a href="#二、MySQL安装" class="headerlink" title="二、MySQL安装"></a>二、MySQL安装</h4><h5 id="卸载之前安装的mysql"><a href="#卸载之前安装的mysql" class="headerlink" title="卸载之前安装的mysql"></a>卸载之前安装的mysql</h5><ol>
-<li><p>使用以下命令查看当前安装mysql的情况，看是否有安装mysql</p>
- <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -qa | grep -i mysql</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>停止mysql服务，删除之前安装的mysql</p>
- <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -e --nodeps mysql(mysql表示为相关的应用名称)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>查找之前老版本mysql的目录、并且删除老版本的文件和库</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">find / -name mysql</span><br><span class="line"></span><br><span class="line">删除对应的mysql目录</span><br><span class="line">rm -rf  /var/lib/mysql(这个是由上述命令查询出来的)</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">还要手动删除/etc/my.cnf文件</span><br><span class="line">rm -rf /etc/my.cnf</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>再次验证机器是否由安装mysql</p>
- <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -qa | grep -i mysql</span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<h5 id="安装mysql"><a href="#安装mysql" class="headerlink" title="安装mysql"></a>安装mysql</h5><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm</span><br><span class="line">rpm -ivh mysql-community-release-el7-5.noarch.rpm</span><br><span class="line">yum install mysql-server</span><br></pre></td></tr></table></figure>
-
-<p>权限设置：</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chown mysql:mysql -R /var/lib/mysql</span><br></pre></td></tr></table></figure>
-
-<p>初始化MySQL:</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mysqld --initialize</span><br><span class="line"></span><br><span class="line">如果报 Fatal error: Please read &quot;Security&quot; section of the manual to find out how to run mysqld as root!错误信息则在/etc/my.cnf中添加一个用户，比如user=mysql</span><br><span class="line">那么在启动的时候就需要：mysqld --initialize --user=mysql来初始化</span><br></pre></td></tr></table></figure>
-
-<p>启动MySQL:</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start mysqld</span><br></pre></td></tr></table></figure>
-
-<p>查看MySQL运行状态：</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl status mysqld</span><br></pre></td></tr></table></figure>
-
-<h5 id="验证MySQL是否安装"><a href="#验证MySQL是否安装" class="headerlink" title="验证MySQL是否安装"></a>验证MySQL是否安装</h5><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# mysqladmin --version</span><br><span class="line">如果出现以下内容则证明安装成功，否则则为失败</span><br><span class="line">mysqladmin  Ver 8.42 Distrib 5.6.45, for Linux on x86_64</span><br></pre></td></tr></table></figure>
-
-<h5 id="使用MySQL-Client-Mysql客户端-执行简单的SQL命令"><a href="#使用MySQL-Client-Mysql客户端-执行简单的SQL命令" class="headerlink" title="使用MySQL Client(Mysql客户端)执行简单的SQL命令"></a>使用MySQL Client(Mysql客户端)执行简单的SQL命令</h5><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# mysql</span><br><span class="line">就会出现</span><br><span class="line">mysql&gt;  这里输入平常的sql命令即可</span><br></pre></td></tr></table></figure>
-
-<h5 id="为root用户添加密码"><a href="#为root用户添加密码" class="headerlink" title="为root用户添加密码"></a>为root用户添加密码</h5><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# mysqladmin -u root password &quot;新密码&quot;;</span><br><span class="line">那么就可以通过以下命令来连接Mysql服务器</span><br><span class="line">[root@localhost ~]# mysql -u root -p</span><br></pre></td></tr></table></figure>
-
-<h4 id="三、Tomcat安装"><a href="#三、Tomcat安装" class="headerlink" title="三、Tomcat安装"></a>三、Tomcat安装</h4><ol>
-<li><p>需要先下载tomcat,<a href="http://tomcat.apache.org/" target="_blank" rel="noopener">传送门</a>，我下载的是apache-tomcat-9.0.24.tar.gz</p>
-</li>
-<li><p>将这个文件上传到/usr/local/tomcat里面进行解压</p>
-</li>
-<li><p>启动tomcat</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">切换到以下目录</span><br><span class="line">cd /usr/local/tomcat/apache-tomcat-9.0.24/bin</span><br><span class="line">执行</span><br><span class="line"> ./startup.sh</span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<p>可以通过<strong><em>ip addr</em></strong>查看linux的ip地址，然后在本机上输入<strong>* ip地址：8080 *</strong></p>
-<h4 id="四、nginx安装"><a href="#四、nginx安装" class="headerlink" title="四、nginx安装"></a>四、nginx安装</h4><p>需要安装几个必备的库</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yum install gcc-c++   //安装gcc环境</span><br><span class="line">yum install -y pcre pcre-devel</span><br><span class="line">yum install -y openssl openssl-devel</span><br></pre></td></tr></table></figure>
-
-<h5 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h5><p>上传本地的压缩包到/usr/local目录进行解压，我使用的是<strong><em>nginx-1.12.2.tar.gz</em></strong>,可以到<a href="https://nginx.org/download/" target="_blank" rel="noopener">传送门</a>下载</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">解压：</span><br><span class="line">tar -zxvf nginx-1.12.2.tar.gz</span><br><span class="line">创建Makefile文件：</span><br><span class="line">[root@localhost ~]# cd nginx-1.12.2</span><br><span class="line">[root@localhost nginx-1.12.2]# ./configure</span><br><span class="line">编译：</span><br><span class="line">[root@localhost nginx-1.12.2]# make</span><br><span class="line">安装：</span><br><span class="line">[root@localhost nginx-1.12.2]# make install</span><br></pre></td></tr></table></figure>
-
-<h5 id="Nginx启动与访问"><a href="#Nginx启动与访问" class="headerlink" title="Nginx启动与访问"></a>Nginx启动与访问</h5><p>编译安装的Nginx其实默认被安装在CentOS7系统的<strong><em>/usr/local/nginx</em></strong>目录</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">启动Nginx(到/usr/local/nginx目录下)</span><br><span class="line">[root@localhost nginx]# cd sbin</span><br><span class="line">[root@localhost sbin]# ./nginx</span><br></pre></td></tr></table></figure>
-
-<p>在本地输入服务器的地址 即可访问到Nginx欢迎界面，可以通过 <strong><em>ip addr</em></strong>获取到地址</p>
-<p>如果访问不到则关闭CentOS7的防火墙，开放80端口</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost sbin]# systemctl stop firewalld.service #停止firewall</span><br><span class="line">[root@localhost sbin]# systemctl disable firewalld.service #禁止firewall开机启动</span><br><span class="line">[root@localhost sbin]# firewall-cmd --state #查看默认防火墙状态（关闭后显示notrunning，开启后显示running）</span><br></pre></td></tr></table></figure>
-
-<h5 id="Nginx的基本操作"><a href="#Nginx的基本操作" class="headerlink" title="Nginx的基本操作"></a>Nginx的基本操作</h5><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">查看Nginx进程：</span><br><span class="line">[root@localhost sbin]# ps aux|grep nginx</span><br><span class="line"></span><br><span class="line">关闭Nginx:</span><br><span class="line">[root@localhost sbin]# ./nginx -s stop</span><br><span class="line">或：[root@localhost sbin]# ./nginx -s quit</span><br><span class="line"></span><br><span class="line">重启Nginx:</span><br><span class="line">[root@localhost sbin]# ./nginx -s reload</span><br><span class="line"></span><br><span class="line">检查Nginx配置文件是否正确：</span><br><span class="line">[root@localhost sbin]# ./nginx -t</span><br></pre></td></tr></table></figure>
-
-
         </div>
         
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/2019/09/07/Linux服务器运行环境配置/#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
         
         
     </div>

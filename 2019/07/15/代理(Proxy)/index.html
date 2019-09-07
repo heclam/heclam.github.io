@@ -19,7 +19,7 @@
 <meta property="og:description" content="动态代理技术是整个java技术中最重要的一个技术，它是学java框架的基础，在Spring框架中广泛使用 动态代理技术就是用来产生一个对象的代理对象">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/images/og_image.png">
-<meta property="og:updated_time" content="2019-08-31T14:50:48.341Z">
+<meta property="og:updated_time" content="2019-09-07T13:49:49.522Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="代理（Proxy）">
 <meta name="twitter:description" content="动态代理技术是整个java技术中最重要的一个技术，它是学java框架的基础，在Spring框架中广泛使用 动态代理技术就是用来产生一个对象的代理对象">
@@ -166,8 +166,11 @@
         <div class="content">
             <p>动态代理技术是整个java技术中最重要的一个技术，它是学java框架的基础，在Spring框架中广泛使用</p>
 <p>动态代理技术就是用来产生一个对象的代理对象<a id="more"></a></p>
-<pre><code>1. 代理对象存在的价值主要用于拦截对真实业务对象的访问
-2. 代理对象应该具有和目标对象（真实业务对象）相同的方法</code></pre><h5 id="java中的代理"><a href="#java中的代理" class="headerlink" title="java中的代理"></a>java中的代理</h5><h6 id="通过java-lang-reflect-Proxy-类提供的一个newProxyInstance方法来串讲一个对象的代理对象"><a href="#通过java-lang-reflect-Proxy-类提供的一个newProxyInstance方法来串讲一个对象的代理对象" class="headerlink" title="通过java.lang.reflect.Proxy 类提供的一个newProxyInstance方法来串讲一个对象的代理对象"></a>通过java.lang.reflect.Proxy 类提供的一个newProxyInstance方法来串讲一个对象的代理对象</h6><p>想要生成某一个对象的代理对象，这个代理对象也要编写一个类来生成</p>
+<ol>
+<li>代理对象存在的价值主要用于拦截对真实业务对象的访问</li>
+<li>代理对象应该具有和目标对象（真实业务对象）相同的方法</li>
+</ol>
+<h5 id="java中的代理"><a href="#java中的代理" class="headerlink" title="java中的代理"></a>java中的代理</h5><h6 id="通过java-lang-reflect-Proxy-类提供的一个newProxyInstance方法来串讲一个对象的代理对象"><a href="#通过java-lang-reflect-Proxy-类提供的一个newProxyInstance方法来串讲一个对象的代理对象" class="headerlink" title="通过java.lang.reflect.Proxy 类提供的一个newProxyInstance方法来串讲一个对象的代理对象"></a>通过java.lang.reflect.Proxy 类提供的一个newProxyInstance方法来串讲一个对象的代理对象</h6><p>想要生成某一个对象的代理对象，这个代理对象也要编写一个类来生成</p>
 <figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">参数解析：</span><br><span class="line">	first arg:ClassLoader loader用来指明生成代理对象使用哪个类加载器</span><br><span class="line">	second arg:Class&lt;?&gt;[] interfaces用来指明生成哪个对象的代理对象，通过接口指定</span><br><span class="line">	third arg:InvocationHandler h用来指明产生的这个dialing对象要做什么事情</span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">static</span> Object <span class="hljs-title">newProxyInstance</span><span class="hljs-params">(ClassLoader loader,class&lt;?&gt;[] interfaces,InvocationHandler h)</span></span></span><br></pre></td></tr></table></figure>
 
 <h6 id="编写生成代理对象的类"><a href="#编写生成代理对象的类" class="headerlink" title="编写生成代理对象的类"></a>编写生成代理对象的类</h6><p>在java中规定，要想产生一个对象的代理对象，那么这个对象必须要有一个接口</p>
