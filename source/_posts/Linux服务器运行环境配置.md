@@ -20,7 +20,7 @@ tags:
 
 ##### 卸载自带的openJDK
 
-​		因为centos有自带的jdk，所以在安装自己的JDK时需要卸载自带的openJDK
+​		因为centos有自带的jdk，所以在安装自己的JDK时需要卸载自带的openJDK<!--more-->
 
 1. 使用***rpm -qa | grep java***命令查看系统中是存在有java
 2. 使用***rpm -e --nodeps 相关应用名称***来进行卸载
