@@ -164,8 +164,10 @@ search:
     index_pages: true
 # Comment plugin configurations
 # https://ppoffice.github.io/hexo-theme-icarus/categories/Plugins/Comment/
-#comment:
-    #type: disqus
+comment:
+    type: changyan
+    app_id: cyufU86pC
+    conf: prod_56203f74e881c954b4dfe34891581972
     # Disqus shortname
     #shortname: ''
 # Donate plugin configurations
