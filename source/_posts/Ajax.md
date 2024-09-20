@@ -11,6 +11,8 @@ tags:
 >
 >XMLHttpRequest异步对象会不停监听服务器状态的变化，得到服务器返回的数据，就写到浏览器上【因为不是转发的方式，所以是无刷新就能够获取服务器端的数据】<!--more-->
 
+
+
 ##### XMLHttpRequest对象
 
 ```javascript
@@ -27,6 +29,8 @@ function getXHR() {
 var xhr = getXHR();
 ```
 
+
+
 ##### get方式请求
 
 ```javascript
@@ -37,11 +41,15 @@ var xhr = getXHR();
 xhr.open("get", url, true);
 ```
 
+
+
 ##### 发送请求
 
 ```javascript
 xhr.send(null);
 ```
+
+
 
 ##### 回调函数
 
@@ -73,6 +81,8 @@ xhr.onreadystatechange = function(){
 responseText:作为响应主体被返回的文本
 
 responseXML：如果响应的内容类型是”text/xml”或”application/xml”，这个属性中将保存包含着响应数据的XML DOM 文档。
+
+
 
 ##### post请求
 
