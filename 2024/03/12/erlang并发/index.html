@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>erlang并发 - heclam&#039;s blog</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="heclam&#039;s blog"><meta name="msapplication-TileImage" content="/images/earth-favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="heclam&#039;s blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="1、进程的生命周期（从创建到销毁的过程）Pid &amp;#x3D; spawn(Fun)	创建一个新的并发进程（Pid  (process identifier 进程标识符)） 进程间通过发送信息进行通信，所以必须双方必须知道对方的Pid才可以发起通信 如何注册一个进程？ Erlang中有4个BIF用于管理注册进程"><meta property="og:type" content="blog"><meta property="og:title" content="erlang并发"><meta property="og:url" content="http://example.com/2024/03/12/erlang%E5%B9%B6%E5%8F%91/"><meta property="og:site_name" content="heclam&#039;s blog"><meta property="og:description" content="1、进程的生命周期（从创建到销毁的过程）Pid &amp;#x3D; spawn(Fun)	创建一个新的并发进程（Pid  (process identifier 进程标识符)） 进程间通过发送信息进行通信，所以必须双方必须知道对方的Pid才可以发起通信 如何注册一个进程？ Erlang中有4个BIF用于管理注册进程"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="http://example.com/images/erlang_receive.png"><meta property="article:published_time" content="2024-03-12T06:30:41.000Z"><meta property="article:modified_time" content="2024-09-23T07:08:38.992Z"><meta property="article:author" content="heclam"><meta property="article:tag" content="erlang"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="http://example.com/images/erlang_receive.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://example.com/2024/03/12/erlang%E5%B9%B6%E5%8F%91/"},"headline":"erlang并发","image":["http://example.com/images/erlang_receive.png"],"datePublished":"2024-03-12T06:30:41.000Z","dateModified":"2024-09-23T07:08:38.992Z","author":{"@type":"Person","name":"heclam"},"publisher":{"@type":"Organization","name":"heclam's blog","logo":{"@type":"ImageObject","url":"http://example.com/images/head.jpg"}},"description":"1、进程的生命周期（从创建到销毁的过程）Pid &#x3D; spawn(Fun)\t创建一个新的并发进程（Pid  (process identifier 进程标识符)） 进程间通过发送信息进行通信，所以必须双方必须知道对方的Pid才可以发起通信 如何注册一个进程？ Erlang中有4个BIF用于管理注册进程"}</script><link rel="canonical" href="http://example.com/2024/03/12/erlang%E5%B9%B6%E5%8F%91/"><link rel="icon" href="/images/earth-favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link data-pjax rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.7.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link data-pjax rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><script src="/js/runtime.js"></script><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body class="is-3-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/images/head.jpg" alt="heclam&#039;s blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">主页</a><a class="navbar-item" href="/archives">归档</a><a class="navbar-item" href="/categories">分类</a><a class="navbar-item" href="/tags">标签</a><a class="navbar-item" href="/about">关于</a></div><div class="navbar-end"><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-6-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2024-03-12T06:30:41.000Z" title="2024/3/12 14:30:41">2024-03-12</time>发表</span><span class="level-item"><time dateTime="2024-09-23T07:08:38.992Z" title="2024/9/23 15:08:38">2024-09-23</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/erlang/">erlang</a></span><span class="level-item">15 分钟读完 (大约2289个字)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>次访问</span></div></div><h1 class="title is-3 is-size-4-mobile">erlang并发</h1><div class="content"><h4 id="1、进程的生命周期（从创建到销毁的过程）"><a href="#1、进程的生命周期（从创建到销毁的过程）" class="headerlink" title="1、进程的生命周期（从创建到销毁的过程）"></a>1、进程的生命周期（从创建到销毁的过程）</h4><p><code>Pid = spawn(Fun)</code>	创建一个新的并发进程（Pid  (<code>process identifier </code>进程标识符)）</p>
+<p>进程间通过发送信息进行通信，所以必须双方必须知道对方的Pid才可以发起通信</p>
+<p>如何注册一个进程？</p>
+<p>Erlang中有4个BIF用于管理注册进程</p>
+<span id="more"></span>
+
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>register(AnAtom,Pid)</td>
+<td>将一个进程Pid注册一个名为AnAtom的原子，如果原子AnAtom已经被另外一个注册进程所使用，那么注册就会失败。</td>
+</tr>
+<tr>
+<td>unregister(Antom)</td>
+<td>移除与AnAtom相对应进程的所有注册信息（如果一个注册进程死亡，那么它也会被自动取消注册）</td>
+</tr>
+<tr>
+<td>whereis(AnAtom) -&gt; Pid | undefined</td>
+<td>判断AnAtom是否已经被其他进程注册，如果成功，返回进程标识符Pid,没有成功则返回原子undefined</td>
+</tr>
+<tr>
+<td>registered() -&gt; [AnAtom :: atom()]</td>
+<td>返回一个系统中所有已经注册的名称列表</td>
+</tr>
+</tbody></table>
+<p>两个进程之间如何相关联?</p>
+<p>两个进程A和B，它们之间建立链接，是其中一个进程调用了BIF(Built In Function 内置函数) link(Pid)。</p>
+<p>一旦两个进程之间建立链接，它们就会相互监视，若A消亡，系统就会向B发送一个叫做退出的信号，反之也一样。</p>
+<p><strong>process_flag(trap_exit,true)可以把创建的进程变为一个系统进程</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">-spec 表示这是对一个函数进行规范，人话就是：说明函数的参数或者返回值的类型</span><br><span class="line">@spec spawn_link(Fun) -&gt; Pid</span><br><span class="line">这个原语非常像spawn(Fun),但它除了创建进程之外还会在这个两个进程之间建立链接。</span><br><span class="line">spawn_link是一个原子操作，它和spawn+link操作并不等价，因为在执行spawn和link的间隙之间，所创建的进程有可能就已经消亡了</span><br><span class="line"></span><br><span class="line">@spec process_flag(trap_exit,true)</span><br><span class="line">这个原语把当前进程转换为系统进程，系统进程可以接收和处理退出信号</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>link(Pid) -&gt; true</td>
+<td>将当前进程与Pid进程之间链接起来</td>
+</tr>
+<tr>
+<td>unlink(Pid) -&gt; true</td>
+<td>取消链接</td>
+</tr>
+<tr>
+<td>exit(why) -&gt; none()</td>
+<td>终止当前进程</td>
+</tr>
+<tr>
+<td>exit(Pid,why) -&gt; true</td>
+<td>向Pid所指示的进程发出一个退出信号，并把退出原因设置为why</td>
+</tr>
+<tr>
+<td>erlang:monitor(process,Item) -&gt; MonitorRef</td>
+<td>建立一个监视器，Item为一个PId或者一个进程的注册名</td>
+</tr>
+</tbody></table>
+<h4 id="2、并发编程"><a href="#2、并发编程" class="headerlink" title="2、并发编程"></a>2、并发编程</h4><p>3个原语：<strong>spawn、send(使用！操作符)和receive</strong></p>
+<ol>
+<li><p>创建进程</p>
+<p>通过使用内置函数<code>spawn(Module, Function, Arguments)</code>可以生成一个新的进程，并对<code>Module</code>模块中导出函数<code>Function</code>以列表<code>Arguments</code>作为参数进行求值，内置函数<code>spawn/3</code>会返回一个进程标识符（<code>process identifier）pid</code></p>
+</li>
+</ol>
+<p><strong>可以使用终端命令i()来查看当前运行时系统正在执行的进程</strong></p>
+<p><strong>终端崩溃会自动产生一个新终端进程</strong></p>
+<ol start="2">
+<li>接收一个发给当前进程的消息，它的语法如下</li>
+</ol>
+<p><code>receive... end</code></p>
+<figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">receive</span></span><br><span class="line">	Pattern1 [<span class="keyword">when</span> Guard1] -&gt; Expression1;</span><br><span class="line">	Pattern2 [<span class="keyword">when</span> Guard2] -&gt; Expression2;</span><br><span class="line">	...</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>带超时的<code>receive</code></p>
+<figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">receive</span></span><br><span class="line">	Pattern1 [<span class="keyword">when</span> Guard1] -&gt; Expression1;</span><br><span class="line">	Pattern2 [<span class="keyword">when</span> Guard2] -&gt; Expression2;</span><br><span class="line">	...</span><br><span class="line"><span class="keyword">after</span> Time -&gt;</span><br><span class="line">    Expressions</span><br><span class="line"><span class="keyword">end</span>.</span><br><span class="line"></span><br><span class="line"><span class="comment">%% 如果在进入receive表达式后在Time所规定的毫秒数内没有接收到能够匹配的消息，那么进程就会停止等待，并对Expression进行求值。</span></span><br></pre></td></tr></table></figure>
+
+<p>Erlang的每个进程都有与之对应的邮箱。当向进程发送消息时，消息就被送入邮箱之中。当系统对receive语句进行求值时，就是对进程邮箱进行检查的唯一机会。</p>
+<p><strong>receive的内部工作机制</strong></p>
+<p><img src="/images/erlang_receive.png" alt="receive内部工作机制"></p>
+<ol start="3">
+<li><p>注册进程</p>
+<p>如果想要向一个进程发送消息，那么就需要知道它的<code>Pid</code>。Erlang有一种机制可以用于发布一个进程的标识符以便其他进程可以与之通信，这种进程就叫注册进程。</p>
+<figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">%% 将一个进程Pid注册一个名为AnAtom的原子，如果原子AnAtom已经被另一个注册进程所使用，那么注册就会失败</span></span><br><span class="line"><span class="function"><span class="title">register</span><span class="params">(AnAtom, Pid)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">%% 移除与A<span class="title">nAtom</span>相对应进程的所有注册信息</span></span><br><span class="line"><span class="function"><span class="title">unregister</span><span class="params">(AnAtom)</span></span></span><br></pre></td></tr></table></figure>
+
+<p>注：如果一个注册进程死亡，那么它也会被自动取消注册</p>
+</li>
+</ol>
+<h4 id="3、并发编程中的错误处理"><a href="#3、并发编程中的错误处理" class="headerlink" title="3、并发编程中的错误处理"></a>3、并发编程中的错误处理</h4><p>​	链接（<code>link</code>）、退出信号（<code>exit signal</code>）、系统进程</p>
+<ol>
+<li><p>链接进程</p>
+<p>如果一个进程在某种程度上依赖于另一个进程，那么它就需要时刻紧盯着第二个进程的运行状态。</p>
+<blockquote>
+<p>现有A、B两个进程，如果其中的一个进程调用了BIF link(P)(P的值是另一个进程的PID),那么这两个进程就建立了链接。一旦两个进程建立链接，它们就会自动互相监视。此时，若A消亡，系统就会向B发送一个叫做退出信号的东西，反之，若B消亡，则A也会接受到这个信号</p>
+</blockquote>
+</li>
+</ol>
+<p>​	如果一个进程接受到退出信号，若没有对这个接受进行特殊处理，那么这个退出信号的默认处理就是让该进程也一并退出。但也可以让这个<strong>进程捕获退出信号</strong>，当进程进入这个捕获状态时，那么我们称其为系统进程</p>
+<h4 id="4、gen-server"><a href="#4、gen-server" class="headerlink" title="4、gen_server"></a>4、gen_server</h4><p>gen_server行为模式的接口包含六个函数：<code>init/1、handle_call/3、handle_cast/2、handle_info/2、terminate/2、code_change/3</code></p>
+<p>gen_server行为模式最精简的实现模块：</p>
+<figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">-module</span><span class="params">(...)</span>.</span><br><span class="line"><span class="keyword">-behaviour</span><span class="params">(gen_server)</span>.</span><br><span class="line"><span class="keyword">-export</span><span class="params">([init/<span class="number">1</span>,handle_call/<span class="number">3</span>,handle_cast/<span class="number">2</span>,handle_info/<span class="number">2</span>,terminate/<span class="number">2</span>,code_change/<span class="number">3</span>])</span>.</span><br><span class="line"><span class="keyword">-record</span><span class="params">(state,&#123;&#125;)</span>.</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">init</span><span class="params">([])</span> -&gt;</span></span><br><span class="line">	&#123;ok, #state&#123;&#125;&#125;.</span><br><span class="line"><span class="function"><span class="title">handle_call</span><span class="params">(_Request, _From, State)</span> -&gt;</span></span><br><span class="line">	Reply = ok,</span><br><span class="line">	&#123;reply, Reply, State&#125;.</span><br><span class="line"><span class="function"><span class="title">handle_cast</span><span class="params">(_Msg, State)</span> -&gt;</span></span><br><span class="line">	&#123;noreply, State&#125;</span><br><span class="line">handle_info(_Info, State) -&gt;</span><br><span class="line">	&#123;noreply, State&#125;.</span><br><span class="line"><span class="function"><span class="title">terminate</span><span class="params">(_Reason, _State)</span> -&gt;</span></span><br><span class="line">	ok.</span><br><span class="line"><span class="function"><span class="title">code_change</span><span class="params">(_OldVsn, State, _Extra)</span> -&gt;</span></span><br><span class="line">	&#123;ok, State&#125;.</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>gen_server实现API的库函数</strong></p>
+<table>
+<thead>
+<tr>
+<th>库函数</th>
+<th>对应的回调函数</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>gen_server:start_link&#x2F;4</td>
+<td>Module:init&#x2F;1</td>
+<td>启动并链接一个gen_server容器进程</td>
+</tr>
+<tr>
+<td>gen_server:call&#x2F;2</td>
+<td>Module:handle_call&#x2F;3</td>
+<td>向gen_server进程发送同步消息并等待应答</td>
+</tr>
+<tr>
+<td>gen_server:cast&#x2F;2</td>
+<td>Module:handle_cast&#x2F;2</td>
+<td>向gen_server进程发送异步消息</td>
+</tr>
+<tr>
+<td>N&#x2F;A</td>
+<td>Module:handle_info&#x2F;2</td>
+<td>处理通过call或cast函数以外的手段发送给gen_server容器的消息，这些都是带外（out_of_band）消息</td>
+</tr>
+</tbody></table>
+<p><code>gen_server:call/2 </code> 调用方会等待应答（同步消息）</p>
+<p><code>gen_server:cast/2</code> 无须坐等应答（异步消息）</p>
+<p><code>handle_info/2</code>没有对应的gen_server库函数，这个回调是一个重要的特例，所有未经call或cast库函数发送至gen_server信箱的消息都由它处理（通常是直接用！运算符发送的裸消息）</p>
+<p><strong>带外消息处理：</strong>采用call或cast以外的手段发送消息给gen_server进程的所有消息都由<code>handle_info/2</code>回调函数处理。这些消息都被归类为带外消息</p>
+<p><code>tr_server:start_link/1    ---对用户屏蔽调用----&gt;   gen_server:start_link/4    -----------然后新进程随后会回调---------&gt;tr_server:init/1</code></p>
+<p><code>gen_server:start </code>函数可以四个参数（<code>ServerName,Module,Args, Options</code>)</p>
+<ul>
+<li>第一个参数<code>ServerName</code>是服务名，可以省略掉。具有相同服务名的模块在一个节点中只能启动一次，重复启动会报错，为<code>&#123;error, &#123;already_started, Pid&#125;&#125;</code>。具有服务名的服务进程可以使用服务名来调用，没有服务名的只能通过进程号<code>Pid</code>来调用。通常有名字的服务进程会使用模块名作为服务名称，即代码中定义的宏 <code>-define(SERVER, ?MODULE)</code>,然后再需要使用服务名的地方填入<code>?SERVER</code></li>
+<li>第二个参数<code>Module</code>是模块名，一般而言API和回调函数是写在同一个文件里，所以就用<code>?MODULE</code>,表示本模块的模块名</li>
+<li>第三个参数<code>Args</code>是回调函数<code>init/1</code>的参数，会原封不动地传给<code>init/1</code></li>
+<li>第四个参数<code>Options</code>是一些选项，可以设置debug、超时等东西</li>
+</ul>
+<h4 id="5、杂项"><a href="#5、杂项" class="headerlink" title="5、杂项"></a>5、杂项</h4><p><code>Module:Func(Args) </code>与<code>Func(Args)</code>的区别</p>
+<ol>
+<li><p>Erlang函数有<code>local call</code>和<code>external call</code>的区别，<code>Local call </code>就是在函数在被定义的模块里面被调用,可以直接被调用<code>Func(Args)</code>; <code>External call</code> 就是显式的使用<code>Module:Func(Args)</code>来调用或import别的模块进来的调用.</p>
+<p>当同一个模块有2个版本被加载里，所有的<code>local call</code>都可以工作在当前版本状态，但是：<code>external call</code>只能调用到最新的版本！(<strong>代码热更的时候</strong>)</p>
+</li>
+<li><p>用link进行关联的进程组，只要其中一个进程终止，其他进程也会同时终止</p>
+</li>
+<li><p>通过<code>process_flag(trap_exit, true)</code> 将进程设置为系统进程，不会随着其他进程退出而退出，同时还能监控其他进程</p>
+</li>
+</ol>
+</div><div class="article-licensing box"><div class="licensing-title"><p>erlang并发</p><p><a href="http://example.com/2024/03/12/erlang并发/">http://example.com/2024/03/12/erlang并发/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>heclam</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2024-03-12</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2024-09-23</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/erlang/">erlang</a></div><div class="a2a_kit a2a_kit_size_32 a2a_default_style"><a class="a2a_dd" target="_blank" rel="noopener" href="https://www.addtoany.com/share"></a><a class="a2a_button_facebook"></a><a class="a2a_button_twitter"></a><a class="a2a_button_telegram"></a><a class="a2a_button_whatsapp"></a><a class="a2a_button_reddit"></a></div><script src="https://static.addtoany.com/menu/page.js" defer></script></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3><div class="buttons is-centered"><a class="button donate" data-type="alipay"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>支付宝</span><span class="qrcode"><img src="/images/alipay.png" alt="支付宝"></span></a><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>微信</span><span class="qrcode"><img src="/images/wechat.png" alt="微信"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2024/03/13/Erlang%E8%8A%82%E7%82%B9/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">erlang节点</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2024/03/11/erlang%E5%9F%BA%E7%A1%80/"><span class="level-item">erlang基础</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card" id="comments"><div class="card-content"><h3 class="title is-5">评论</h3><div id="SOHUCS" sid="2024/03/12/erlang并发/"></div><script charset="utf-8" src="https://changyan.sohu.com/upload/changyan.js"></script><script>window.changyan.api.config({appid: 'cyufU86pC',conf: 'prod_56203f74e881c954b4dfe34891581972'});</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-3-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar" src="/images/head.jpg" alt="Heclam"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">Heclam</p><p class="is-size-6 is-block">Java、Erlang Programmer</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>China,GuangZhou</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">31</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">13</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">28</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/heclam" target="_blank" rel="me noopener">关注我</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="Github" href="https://github.com/heclam"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="Mail" href="mailto:heclam@163.com"><i class="fa fa-envelope"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="RSS" href="/"><i class="fas fa-rss"></i></a></div></div></div><!--!--><div class="card widget" data-type="links"><div class="card-content"><div class="menu"><h3 class="menu-label">链接</h3><ul class="menu-list"><li><a class="level is-mobile" href="https://wistbean.org/" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">wistbean</span></span><span class="level-right"><span class="level-item tag">wistbean.org</span></span></a></li><li><a class="level is-mobile" href="https://ccyh.xyz/" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">FlyFish</span></span><span class="level-right"><span class="level-item tag">ccyh.xyz</span></span></a></li></ul></div></div></div><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/MySQL/"><span class="level-start"><span class="level-item">MySQL</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/Redis/"><span class="level-start"><span class="level-item">Redis</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/Spring/"><span class="level-start"><span class="level-item">Spring</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/batch/"><span class="level-start"><span class="level-item">batch</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/contab/"><span class="level-start"><span class="level-item">contab</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/erlang/"><span class="level-start"><span class="level-item">erlang</span></span><span class="level-end"><span class="level-item tag">6</span></span></a></li><li><a class="level is-mobile" href="/categories/gameServer/"><span class="level-start"><span class="level-item">gameServer</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/hexo/"><span class="level-start"><span class="level-item">hexo</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/java/"><span class="level-start"><span class="level-item">java</span></span><span class="level-end"><span class="level-item tag">5</span></span></a></li><li><a class="level is-mobile" href="/categories/javaWeb/"><span class="level-start"><span class="level-item">javaWeb</span></span><span class="level-end"><span class="level-item tag">5</span></span></a></li><li><a class="level is-mobile" href="/categories/linux/"><span class="level-start"><span class="level-item">linux</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/markdown/"><span class="level-start"><span class="level-item">markdown</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/php/"><span class="level-start"><span class="level-item">php</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><div class="column-right-shadow is-hidden-widescreen"></div></div><div class="column column-right is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only order-3"><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2024-05-11T06:40:19.000Z">2024-05-11</time></p><p class="title"><a href="/2024/05/11/%E6%B8%B8%E6%88%8F%E8%A3%85%E6%9C%8D%E6%B5%81%E7%A8%8B/">游戏装服流程</a></p><p class="categories"><a href="/categories/gameServer/">gameServer</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2024-05-11T03:19:37.000Z">2024-05-11</time></p><p class="title"><a href="/2024/05/11/Linux%E5%9F%BA%E7%A1%80%E6%9C%8D%E5%8A%A1%E6%90%AD%E5%BB%BA/">linux基础服务搭建</a></p><p class="categories"><a href="/categories/linux/">linux</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2024-03-19T02:30:31.000Z">2024-03-19</time></p><p class="title"><a href="/2024/03/19/Mnesia/">mnesia</a></p><p class="categories"><a href="/categories/erlang/">erlang</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2024-03-18T06:30:41.000Z">2024-03-18</time></p><p class="title"><a href="/2024/03/18/linux%E6%9D%82%E9%A1%B9/">linux杂项</a></p><p class="categories"><a href="/categories/linux/">linux</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2024-03-16T06:30:41.000Z">2024-03-16</time></p><p class="title"><a href="/2024/03/16/crontab/">contab基础用法</a></p><p class="categories"><a href="/categories/contab/">contab</a></p></div></article></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">归档</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2024/05/"><span class="level-start"><span class="level-item">五月 2024</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2024/03/"><span class="level-start"><span class="level-item">三月 2024</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li><li><a class="level is-mobile" href="/archives/2024/02/"><span class="level-start"><span class="level-item">二月 2024</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2019/09/"><span class="level-start"><span class="level-item">九月 2019</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2019/08/"><span class="level-start"><span class="level-item">八月 2019</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/archives/2019/07/"><span class="level-start"><span class="level-item">七月 2019</span></span><span class="level-end"><span class="level-item tag">9</span></span></a></li><li><a class="level is-mobile" href="/archives/2019/06/"><span class="level-start"><span class="level-item">六月 2019</span></span><span class="level-end"><span class="level-item tag">6</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">标签</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/Cookie/"><span class="tag">Cookie</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/JDk/"><span class="tag">JDk</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/JSP/"><span class="tag">JSP</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/MySQL/"><span class="tag">MySQL</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Nginx/"><span class="tag">Nginx</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Redis/"><span class="tag">Redis</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Servlet/"><span class="tag">Servlet</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Session/"><span class="tag">Session</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Spring%E4%BA%8B%E5%8A%A1/"><span class="tag">Spring事务</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Tomcat/"><span class="tag">Tomcat</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ajax/"><span class="tag">ajax</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/batch/"><span class="tag">batch</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/contab/"><span class="tag">contab</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/erlang/"><span class="tag">erlang</span><span class="tag">6</span></a></div><div class="control"><a class="tags has-addons" href="/tags/gameServer/"><span class="tag">gameServer</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/git/"><span class="tag">git</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/hexo/"><span class="tag">hexo</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/java/"><span class="tag">java</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/java%E7%BA%BF%E7%A8%8B/"><span class="tag">java线程</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/linux/"><span class="tag">linux</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/linux-screen/"><span class="tag">linux - screen</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/markdown/"><span class="tag">markdown</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/mnesia/"><span class="tag">mnesia</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/php/"><span class="tag">php</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%96%B0%E6%8A%80%E8%83%BD/"><span class="tag">新技能</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E7%9B%91%E5%90%AC%E5%99%A8/"><span class="tag">监听器</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><span class="tag">设计模式</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%BF%87%E6%BB%A4%E5%99%A8/"><span class="tag">过滤器</span><span class="tag">1</span></a></div></div></div></div></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/images/head.jpg" alt="heclam&#039;s blog" height="28"></a><p class="is-size-7"><span>&copy; 2024 heclam</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><span id="busuanzi_container_site_uv">共<span id="busuanzi_value_site_uv">0</span>个访客</span></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/heclam"><i class="fab fa-github"></i></a></p></div></div><div id="site-runtime"></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script data-pjax src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script data-pjax src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script><script src="/js/pjax.js"></script><!--!--><!--!--><!--!--><script data-pjax src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>

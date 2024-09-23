@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>php笔记 - heclam&#039;s blog</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="heclam&#039;s blog"><meta name="msapplication-TileImage" content="/images/earth-favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="heclam&#039;s blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="PHP是一门弱类型语言(PHP: Hypertext Preprocessor) php基本语法：  12345678910&amp;lt;?php	&amp;#x2F;&amp;#x2F;php代码	&amp;#x2F;&amp;#x2F;echo与print的区别都是打印语句，echo可以同时打印多个字符串，prin只能打印一个	&amp;#x2F;&amp;#x2F;echo打印之后没有返回值，print始终会返回一个1	echo &amp;quot;first line code&amp;quot;;	&amp;#x2F;&amp;#x2F; echo"><meta property="og:type" content="blog"><meta property="og:title" content="php笔记"><meta property="og:url" content="http://example.com/2024/02/12/PHP/"><meta property="og:site_name" content="heclam&#039;s blog"><meta property="og:description" content="PHP是一门弱类型语言(PHP: Hypertext Preprocessor) php基本语法：  12345678910&amp;lt;?php	&amp;#x2F;&amp;#x2F;php代码	&amp;#x2F;&amp;#x2F;echo与print的区别都是打印语句，echo可以同时打印多个字符串，prin只能打印一个	&amp;#x2F;&amp;#x2F;echo打印之后没有返回值，print始终会返回一个1	echo &amp;quot;first line code&amp;quot;;	&amp;#x2F;&amp;#x2F; echo"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="http://example.com/img/og_image.png"><meta property="article:published_time" content="2024-02-12T08:40:41.000Z"><meta property="article:modified_time" content="2024-09-23T07:22:11.082Z"><meta property="article:author" content="heclam"><meta property="article:tag" content="php"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="http://example.com/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://example.com/2024/02/12/PHP/"},"headline":"php笔记","image":["http://example.com/img/og_image.png"],"datePublished":"2024-02-12T08:40:41.000Z","dateModified":"2024-09-23T07:22:11.082Z","author":{"@type":"Person","name":"heclam"},"publisher":{"@type":"Organization","name":"heclam's blog","logo":{"@type":"ImageObject","url":"http://example.com/images/head.jpg"}},"description":"PHP是一门弱类型语言(PHP: Hypertext Preprocessor) php基本语法：  12345678910&lt;?php\t&#x2F;&#x2F;php代码\t&#x2F;&#x2F;echo与print的区别都是打印语句，echo可以同时打印多个字符串，prin只能打印一个\t&#x2F;&#x2F;echo打印之后没有返回值，print始终会返回一个1\techo &quot;first line code&quot;;\t&#x2F;&#x2F; echo"}</script><link rel="canonical" href="http://example.com/2024/02/12/PHP/"><link rel="icon" href="/images/earth-favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link data-pjax rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.7.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link data-pjax rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><script src="/js/runtime.js"></script><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body class="is-3-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/images/head.jpg" alt="heclam&#039;s blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">主页</a><a class="navbar-item" href="/archives">归档</a><a class="navbar-item" href="/categories">分类</a><a class="navbar-item" href="/tags">标签</a><a class="navbar-item" href="/about">关于</a></div><div class="navbar-end"><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-6-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2024-02-12T08:40:41.000Z" title="2024/2/12 16:40:41">2024-02-12</time>发表</span><span class="level-item"><time dateTime="2024-09-23T07:22:11.082Z" title="2024/9/23 15:22:11">2024-09-23</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/php/">php</a></span><span class="level-item">22 分钟读完 (大约3290个字)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>次访问</span></div></div><h1 class="title is-3 is-size-4-mobile">php笔记</h1><div class="content"><p>PHP是一门弱类型语言(PHP: Hypertext Preprocessor)</p>
+<p>php基本语法：</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">	//php代码</span><br><span class="line">	//echo与print的区别都是打印语句，echo可以同时打印多个字符串，prin只能打印一个</span><br><span class="line">	//echo打印之后没有返回值，print始终会返回一个1</span><br><span class="line">	echo &quot;first line code&quot;;	// echo &quot;test1&quot;,&quot;test2&quot;</span><br><span class="line">	print &quot;hello world&quot;;</span><br><span class="line">?&gt;</span><br><span class="line"></span><br><span class="line">php 脚本以&lt;?php 开始， 以 ?&gt; 结束</span><br><span class="line">php文件通常包含HTML标签和一些PHP脚本代码</span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<p>注释：</p>
+<pre><code>// 单行
+/*
+* 
+多行注释
+*/
+</code></pre>
+<p>大小写敏感：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">在PHP中，所有用户定义的函数、类和关键字（例如if、else、echo等）都对大小写不敏感</span><br><span class="line">不过在PHP中，所有变量都会对大小写敏感</span><br></pre></td></tr></table></figure>
+
+<p>变量：</p>
+<pre><code>* 以$符号开始，后面接变量名称：$age (变量名称区分大小写 ,$Age 是另一个变量)
+* 变量名只能包含字母、数字和下划线
+</code></pre>
+<p>变量作用域：</p>
+<ul>
+<li><p>local (局部)		&#x2F;&#x2F; 如在方法内定义的变量即为局部变量（变量前面若有 global则为全局变量）</p>
+</li>
+<li><p>global（全局）          &#x2F;&#x2F;  函数内调用函数外定义的全局变量，需要在函数内变量前加上global关键字</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">	$x = 1;</span><br><span class="line">	$y = 2;</span><br><span class="line">	</span><br><span class="line">	function test()&#123;</span><br><span class="line">		global $x,$y;</span><br><span class="line">		$y = $x + $y;	//对全局变量$y 进行了新的赋值</span><br><span class="line">	&#125;</span><br><span class="line">?&gt;</span><br><span class="line"></span><br><span class="line">另一种写法</span><br><span class="line">// PHP将所有全局变量存储在一个名为$GLOBALS[index]的数组中，index保存变量的名称， 这个数组可以在函数内部访问，也可以直接用来更新全局变量</span><br><span class="line">&lt;?php</span><br><span class="line">	$x = 1;</span><br><span class="line">	$y = 2;</span><br><span class="line">	function test()&#123;</span><br><span class="line">		$GOLBALS[&#x27;y&#x27;] = $GLOBALS[&#x27;x&#x27;] + $GLOBALS[&#x27;y&#x27;];	//对全局变量$y 进行了新的赋值</span><br><span class="line">	&#125;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>static （静态）     </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">	function test()&#123;</span><br><span class="line">		static $x = 0;</span><br><span class="line">		echo $x;</span><br><span class="line">		$x++;			//静态变量进行加1</span><br><span class="line">		echo PHP_EOL	//换行符</span><br><span class="line">	&#125;</span><br><span class="line">	test();		// echo 0</span><br><span class="line">	test();		// echo 1</span><br><span class="line">	test();		// echo 2</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>如在一个方法内定义了一个静态变量(对变量进加1），那么每一次调用这个方法的时候，都是从之前的基础上进行加 1</p>
+</li>
+<li><p>parameter(参数作用域)  &#x2F;&#x2F;  方法的形参与实参</p>
+<p>参数是通过调用代码将值传递给函数的局部变量。</p>
+<p>参数是在参数列表中声明的，作为参数声明的一部分</p>
+</li>
+</ul>
+<p>数据类型：</p>
+<pre><code>* String(字符串)   //使用&quot;.&quot;（并置运算符）用于把两个字符串值连接起来。字符串可以使用单引号或双引号
+* Integer(整型)
+* Float(浮点型)
+* Boolean(布尔型)
+* Array(数组)
+* Object(对象)
+* NULL(空值)
+</code></pre>
+<p>类型比较	(注意 0 、false、null 这三者的比较)</p>
+<pre><code>* 使用两个等号&#39;==&#39;比较，只比较值，不比较类型
+* 使用三个等号&#39;===&#39;比较，比较值，也比较类型
+</code></pre>
+<p>常量：</p>
+<p> 常量值被定义后，在脚本的其他任何地方都不能被改变</p>
+<p><strong>常量的命令规则与变量一样，但不需要在前面加上$ 符号</strong></p>
+<p>设置常量使用define()函数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">bool define(string $name, mixed $value [, bool $case_insensitive = false])</span><br><span class="line"></span><br><span class="line">name :必选参数，常量名称</span><br><span class="line">value：必选参数，常量值</span><br><span class="line">case_insensitive: 可选参数，如果设置为TRUE,该常量大小写不敏感。默认是大小写敏感</span><br><span class="line"></span><br><span class="line">例子：</span><br><span class="line">define(&quot;GREETING&quot;, &quot;Welcome&quot;);</span><br></pre></td></tr></table></figure>
+
+
+
+<p>顺序语句：</p>
+<pre><code>* if.....elseif....else语句
+* switch语句
+</code></pre>
+<p>循环语句：</p>
+<pre><code>* while语句
+* do....while语句
+* for 语句
+* foreach语句
+</code></pre>
+<p>数组（Array）（详解）：</p>
+<p>1、在PHP中，有三种类型的数组：</p>
+<ul>
+<li><p>数值数组 - 带有数字索引的数组 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$cars = array(&quot;Volvo&quot;, &quot;BMW&quot;, &quot;Toyota&quot;);</span><br><span class="line">?&gt;</span><br><span class="line">// 可通过下标访问,获取数组长度count($cars)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>关联数组 - 带有指定键的数组，每个键关联一个值</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">	$age = array(&quot;Peter&quot; =&gt; &quot;35&quot;, &quot;Ben&quot; =&gt; &quot;37&quot;, &quot;Joe&quot; =&gt; 18);</span><br><span class="line">	//遍历数组</span><br><span class="line">	foreach($age as $x =&gt; $x_value)&#123;</span><br><span class="line">		echo &quot;key=&quot;. $x .&quot;, value= &quot;. $x_value;</span><br><span class="line">		echo &quot;&lt;br&gt;&quot;</span><br><span class="line">	&#125;</span><br><span class="line">?&gt;</span><br><span class="line">$age[&#x27;Peter&#x27;]		// 可通过键去访问</span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>多维数组 - 包含一个或多个数组的数组</p>
+<pre><code>* todo
+</code></pre>
+</li>
+</ul>
+<p>2、数组排序</p>
+<pre><code>* sort()  //对数组进行升序排序
+* rsort()  //对数组进行降序排序
+* asort() //根据关联数组的值，对数组进行升序排序
+* ksort() //根据关联数组的键，对数组进行升序排序
+* arsort() //根据关联数组的值，对数组进行降序排序
+* krsort() //根据关联数组的值，对数组进行降序排序
+</code></pre>
+<p>PHP超级全局变量：（在全部作用域中始终可用的内置变量）</p>
+<p>PHP中预定义了几个超级全局变量（superglobals）, 在一个脚本的全部作用域都可以用，不需要特别说明，就可以在函数及类中使用</p>
+<ul>
+<li><p>$GLOBALS</p>
+</li>
+<li><p>$_SERVER</p>
+<p>&#x2F;&#x2F;用于保存关于报头、路径和脚本位置的信息</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">如在表单中</span><br><span class="line">&lt;form method=&quot;post&quot; action=&quot;&lt;?php echo htmlspecialchars($_SERVER[&quot;PHP_SELF&quot;]); ?&gt;&quot;&gt;</span><br><span class="line"></span><br><span class="line">$_SERVER[&quot;PHP_SELF&quot;]是超级全局变量，返回当前正在执行脚本的文件名</span><br><span class="line"></span><br><span class="line">htmlspecialchars()函数把一些预定义的字符转换为HTML实体</span><br><span class="line">	* &amp;（和号） 成为 &amp;amp;</span><br><span class="line">	* &quot;（双引号） 成为 &amp;quot;</span><br><span class="line">	* &#x27; (单引号) 成为 &amp;#039;</span><br><span class="line">	* &lt; (小于)  成为  &amp;lt;</span><br><span class="line">	* &gt; (大于)  成为  &amp;gt;</span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>$_REQUEST  </p>
+<p>&#x2F;&#x2F;用于收集HTML表单提交的数据 如：$name &#x3D; $_REQUEST[‘name’];</p>
+<p>预定义的$_REQUEST变量包含了$_GET、$_POST、$_COOKIE的内容。</p>
+<p>$_REQUEST变量可用来收集通过GET和POST方法发送过来的表单数据。</p>
+</li>
+<li><p>$_POST</p>
+<p>&#x2F;&#x2F; 用于收集表单数据（post方法提交的表单）</p>
+</li>
+<li><p>$_GET</p>
+<p>用于收集表单数据（get方法提交的表单）</p>
+</li>
+<li><p>$_FILES</p>
+</li>
+<li><p>$_ENV</p>
+</li>
+<li><p>$_COOKIE</p>
+</li>
+<li><p>$_SESSION</p>
+</li>
+</ul>
+<p>PHP 魔术常量：</p>
+<p>这些常量是由不同的扩展库定义的，只有在加载这些扩展库时才会出现，或者动态加载后，或者在编译时已经包括进去了</p>
+<p><strong>__LINE__</strong>    &#x2F;&#x2F;文件中的当前行号</p>
+<p><strong>__FILE__</strong>    &#x2F;&#x2F;文件的完整路径和文件名，如果用在被包含文件中，则返回被包含的文件名</p>
+<p><strong>__DIR__</strong>    &#x2F;&#x2F; 文件所在的目录。如果用在被包括文件中，则返回被包括的文件所在的目录</p>
+<p><strong>__FUNCTION__</strong>    &#x2F;&#x2F; 显示方法名</p>
+<p><strong>__CLASS__</strong>    &#x2F;&#x2F; 显示类名</p>
+<p><strong>__METHOD__</strong>    &#x2F;&#x2F; 显示方法名</p>
+<p><strong>__NAMESPACE__</strong>    &#x2F;&#x2F; 显示命令空间</p>
+<p>命名空间：</p>
+<ul>
+<li>todo</li>
+</ul>
+<h4 id="PHP面向对象"><a href="#PHP面向对象" class="headerlink" title="PHP面向对象"></a>PHP面向对象</h4><ul>
+<li>类使用class关键字后加上类名定义</li>
+<li>类名后一对大括号，里面定义成员变量以及成员方法</li>
+<li>类的变量使用var进行声明，变量也可以初始化值</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">	class Site&#123;</span><br><span class="line">		/* 成员变量 */</span><br><span class="line">		var $url</span><br><span class="line">		var $title;</span><br><span class="line">		</span><br><span class="line">		/*成员函数*/</span><br><span class="line">		function setUrl($par)&#123;</span><br><span class="line">			$this-&gt;url = $par;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		function getUrl()&#123;</span><br><span class="line">			echo $this.url.PHP_EOL;  //输入url并拼接一个换行符</span><br><span class="line">		&#125;</span><br><span class="line">		....</span><br><span class="line">		....</span><br><span class="line">	&#125;</span><br><span class="line">?&gt;</span><br><span class="line"></span><br><span class="line">//创建对象</span><br><span class="line">$mysite = new Site()</span><br><span class="line"></span><br><span class="line">//调用方法</span><br><span class="line">$mysite-&gt;getUrl()</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>构造方法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">void __construct(...)	//可以设置多个参数</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>析构函数</p>
+<p>析构函数与构造函数相反，当对象结束其生命周期时（例如对象所在的函数已调用完毕），系统自动执行析构函数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">void __destruct(void)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>继承</p>
+<p>PHP跟java一行不支持多继承（关键字 extends）</p>
+</li>
+<li><p>方法重写</p>
+<p>从父类继承的方法不满足子类的需求，对其方法进行修改，这个过程称为覆盖（override）</p>
+</li>
+<li><p>访问控制</p>
+<p>PHP对属性或方法的访问控制，是通过在前面添加关键字public（共有）， protected(受保护)，private(私有)</p>
+<ul>
+<li><p>public : 共有的类成员可以在任何地方被访问</p>
+</li>
+<li><p>protected: 受保护的类成员则可以被其自身以及其子类和父类访问</p>
+</li>
+<li><p>private: 私有的类成员则只能被其定义所在的类访问</p>
+<p><strong>被protected及private声明的变量、方法无法通过对象直接调用，会抛出错误，这是没有访问权限</strong></p>
+<p>可以在对象内部中定义一个普通的共有方法，在该方法里面调用<strong>protected、private</strong>修饰的变量、方法</p>
+</li>
+</ul>
+</li>
+<li><p>接口</p>
+<p>使用接口（interface）, 可以指定某个类必须实现哪些方法，但不需要定义这些方法的具体内容</p>
+<p>要实现一个接口，使用implements操作符，类中必须实现接口中定义的所有方法，类可以实现多个接口，用逗号来分隔多个接口的名称</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">	声明一个接口</span><br><span class="line">	interface iTemplate&#123;</span><br><span class="line">		public function setVariable($name,$var);</span><br><span class="line">		public function getHtml($template);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	//实现接口</span><br><span class="line">	class Template implements iTemplate</span><br><span class="line">&#123;</span><br><span class="line">    private $vars = array();	//定义一个空数组</span><br><span class="line">  </span><br><span class="line">    public function setVariable($name, $var)</span><br><span class="line">    &#123;</span><br><span class="line">        $this-&gt;vars[$name] = $var;	// 将传进来的值，存入关联数组中</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">    public function getHtml($template)</span><br><span class="line">    &#123;</span><br><span class="line">        foreach($this-&gt;vars as $name =&gt; $value) &#123; //关联数组获取值</span><br><span class="line">            $template = str_replace(&#x27;&#123;&#x27; . $name . &#x27;&#125;&#x27;, $value, $template);</span><br><span class="line">        &#125;</span><br><span class="line"> </span><br><span class="line">        return $template;</span><br><span class="line">    &#125;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>常量</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">类中声明一个常量</span><br><span class="line">const constant = &#x27;常量值&#x27;	 //不可变的值</span><br><span class="line"></span><br><span class="line">可通过类名或对象直接调用</span><br><span class="line">类名::constant	// :: 这个符号用来调用常量</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>抽象类</p>
+<p>如果一个类里面至少有一个方法被声明为抽象的，那么这个类就必须声明为抽象的</p>
+<p>定义为抽象的类不能被实例化</p>
+<p>继承一个抽象类的时候，子类必须定义父类中的所有抽象方法，另外，这些方法的访问控制必须和父类中一样（或者更为宽松）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">	abstract class AbstractClass&#123;</span><br><span class="line">		abstract protected function getvalue();</span><br><span class="line">		abstract protected function prefixValue($prefix);</span><br><span class="line">		//普通的方法</span><br><span class="line">		public function printOut()&#123;</span><br><span class="line">			print $this-&gt;getvalue().PHP_EOL;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	class ConcreteClass extends AbstractClass&#123;</span><br><span class="line">		protected function getValue()&#123;</span><br><span class="line">			return &quot;xxxxxxx&quot;</span><br><span class="line">		&#125;</span><br><span class="line">		public function prefixValue($prefix)&#123;</span><br><span class="line">			return &quot;xxxxxxxxxx&quot;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>子类方法可以包含父类抽象方法中不存在的可选参数。</p>
+<p>子类定义了一个可选参数，而父类抽象方法的声明里没有，则也是可以正常运行的</p>
+</li>
+<li><p>Static关键字</p>
+<p>声明类属性或方法为static(静态)，就可以不实例化类而直接访问</p>
+<p>静态属性不能通过一个类已实例化的对象来访问（但静态方法可以）</p>
+<p>由于静态方法不需要通过对象即可直接调用，所以伪变量$this在静态方法中不可用</p>
+<p>静态属性不可以有对象通过-&gt;来访问</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">	class Foo &#123;</span><br><span class="line">		public static $my_static = &#x27;foo&#x27;;</span><br><span class="line">		</span><br><span class="line">		public function staticValue()&#123;</span><br><span class="line">			return self::$my_static;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	print Foo::$my_static.PHP_EOL;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Final关键字</p>
+<p>如果父类中的方法被声明为final，则子类无法覆盖该方法，如果一个类被声明为final，则不能被继承</p>
+</li>
+<li><p>调用父类构造方法</p>
+<p>PHP不会在子类的构造方法中调用父类的构造方法。要执行父类的构造方法，需在子类的构造方法中调用<strong>parent::__construct()</strong></p>
+</li>
+</ul>
+<h4 id="高级"><a href="#高级" class="headerlink" title="高级"></a>高级</h4><p>​	PHP include 或 require语句，可以将PHP文件的内容插入另一个PHP文件</p>
+<p>​	include 和 require语句是相同的，除了错误处理方面：</p>
+<ul>
+<li>require会生成致命错误并停止脚本</li>
+<li>include只会生成警告，并且脚本会继续运行</li>
+</ul>
+<p>​	PHP文件：</p>
+<ul>
+<li><p>readfile()函数读取文件，并把它写入输出缓存</p>
+</li>
+<li><p>文件打开&#x2F;读取</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">	$myfile = fopen(&quot;filename.txt&quot;,&quot;r&quot;) or die(&quot;Unable to open file!&quot;);</span><br><span class="line">	echo fread($myfile, filesize(&quot;filename.txt&quot;))</span><br><span class="line">	fclose($myfile);</span><br><span class="line">?&gt;</span><br><span class="line"></span><br><span class="line">读取文件-fread()</span><br><span class="line">	fread()的第一个参数包含待读文件名，第二个参数规定待读取的最大字节数</span><br><span class="line">	</span><br><span class="line">关闭文件-fclose()</span><br><span class="line"></span><br><span class="line">读取单行文件- fgets()</span><br><span class="line"></span><br><span class="line">读取单字符-fgetc()</span><br><span class="line"></span><br><span class="line">检查 End-Of_file - feof()</span><br><span class="line">	feof()函数检查是否已到达&quot;end-of-file&quot; (EOF)</span><br><span class="line">	feof()对于遍历未知长度的数据很有用</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>文件创建&#x2F;写入</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># 创建文件，并写入</span><br><span class="line">$myfile = fopen(&quot;filename.text&quot;, &quot;w&quot;) or die(&quot;Unable to open file&quot;);</span><br><span class="line">$txt = &quot;string&quot;;</span><br><span class="line">fwrite($myfile, $txt);</span><br><span class="line">fclose($myfile);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">写入文件-fwrite()</span><br><span class="line">	fwrite()的第一个参数：要写入文件的文件名，第二个参数：被写的字符串</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>文件上传</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">	if($_FILES[&quot;file&quot;][&quot;error&quot;]&gt;0)&#123;</span><br><span class="line">		echo &quot;Error:&quot; . $_FILES[&quot;file&quot;][&quot;error&quot;] . &quot;&lt;br/&gt;&quot;;</span><br><span class="line">	&#125;else&#123;</span><br><span class="line">		echo &quot;Upload:&quot; . $_FILES[&quot;file&quot;][&quot;name&quot;] . &quot;&lt;br/&gt;&quot;;</span><br><span class="line">		echo &quot;Type:&quot; . $_FILES[&quot;file&quot;][&quot;type&quot;] . &quot;&lt;br/&gt;&quot;;</span><br><span class="line">		echo &quot;Size&quot; . ($_FILEs[&quot;file&quot;][&quot;size&quot;] /1024) . &quot;Kb&lt;br/&gt;&quot;;</span><br><span class="line">		echo &quot;store in:&quot; . $_FILES[&quot;file&quot;][&quot;tmp_name&quot;];</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>cookie and session</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">设置cookie</span><br><span class="line">	setcookie(name,value,expire, path, domain);</span><br><span class="line">获取cookie</span><br><span class="line">	$_COOKIE[name]</span><br><span class="line">	</span><br><span class="line">php 用到sessioin必须先开启会话(session)</span><br><span class="line">&lt;?php session_start(); ?&gt;</span><br><span class="line"></span><br><span class="line">存储Session变量</span><br><span class="line">&lt;?php</span><br><span class="line">	session_start();</span><br><span class="line">	//store session data</span><br><span class="line">	$_SESSION[&#x27;views&#x27;] = 1;</span><br><span class="line">?&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">	&lt;body&gt;</span><br><span class="line">		&lt;?php</span><br><span class="line">			//retrieve session data</span><br><span class="line">			echo &quot;pageviews=&quot;. $_SESSION[&#x27;views&#x27;];</span><br><span class="line">		?&gt;</span><br><span class="line">	&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br><span class="line"></span><br><span class="line">销毁session</span><br><span class="line">&lt;?php</span><br><span class="line">	unset($_SESSION[&#x27;views&#x27;]);</span><br><span class="line">	//or</span><br><span class="line">	session_destroy(); // lost all session</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>php 发送电子邮件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mail(to(接受者), subject（主题）, message（消息）, headers, parameters)</span><br></pre></td></tr></table></figure>
+
+
+
+<p>过滤器（Filter）:</p>
+<pre><code>* filter_var() 通过一个指定的过滤器来过滤单一的变量
+* filter_var_array() 通过相同的或不同的过滤器来过滤多个变量
+* filter_input 获取一个输入变量，并对它进行过滤变量
+* filter_input_array() 获取多个输入变量，并通过相同的或不同的过滤器对它们进行过滤
+</code></pre>
+<h4 id="PHP连接MySQL数据库"><a href="#PHP连接MySQL数据库" class="headerlink" title="PHP连接MySQL数据库"></a>PHP连接MySQL数据库</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">语法</span><br><span class="line">mysqli_connect(host, username, password, dbname)</span><br><span class="line"></span><br><span class="line">创建数据库</span><br><span class="line">&lt;?php</span><br><span class="line">$con = mysqli_connect(&quot;127.0.0.1&quot;, &quot;abc&quot;, &quot;123456&quot;);</span><br><span class="line"></span><br><span class="line">if(mysqli_connect_errno($con))&#123;</span><br><span class="line">	echo &quot;Failed to connect to MySQL:&quot;. mysqli_connect_error();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$sql = &quot;CREATE DATABASE test_db&quot;;</span><br><span class="line">if(mysqli_query($con,$sql))&#123;</span><br><span class="line">	echo &quot;Database my_db created successfully&quot;</span><br><span class="line">&#125;else&#123;</span><br><span class="line">	echo &quot;fail:&quot; . mysqli_error($conn);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//关闭连接</span><br><span class="line">mysqli_close($con);</span><br><span class="line"></span><br><span class="line">?&gt;</span><br><span class="line">===========================</span><br><span class="line"></span><br><span class="line">&lt;?php</span><br><span class="line">$con = mysqli_connect(&quot;127.0.0.1&quot;, &quot;abc&quot;, &quot;123456&quot;, &quot;test_db&quot;);</span><br><span class="line"></span><br><span class="line">if(mysqli_connect_errno($con))&#123;</span><br><span class="line">	echo &quot;Failed to connect to MySQL:&quot;. mysqli_connect_error();</span><br><span class="line">&#125;</span><br><span class="line">//创建数据表</span><br><span class="line">$sql = &quot;create table Persons(FirstName char(30), LastName char(30), Age INT)&quot;;</span><br><span class="line"></span><br><span class="line">if(mysqli_query($con,$sql))&#123;</span><br><span class="line">	echo &quot;crate table success&quot;;</span><br><span class="line">&#125;else&#123;</span><br><span class="line">	echo &quot;fail&quot; . mysqli_error($con);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//关闭连接</span><br><span class="line">mysqli_close($con);</span><br><span class="line"></span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="杂项"><a href="#杂项" class="headerlink" title="杂项"></a>杂项</h4><p>htmlspecialchars()函数把特殊字符转换为HTML实体。这意味着&lt;  和  &gt; 之类的HTML字符会被替换为$lt;和$gt;</p>
+<p>基本的错误处理：使用die()函数</p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>php笔记</p><p><a href="http://example.com/2024/02/12/PHP/">http://example.com/2024/02/12/PHP/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>heclam</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2024-02-12</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2024-09-23</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/php/">php</a></div><div class="a2a_kit a2a_kit_size_32 a2a_default_style"><a class="a2a_dd" target="_blank" rel="noopener" href="https://www.addtoany.com/share"></a><a class="a2a_button_facebook"></a><a class="a2a_button_twitter"></a><a class="a2a_button_telegram"></a><a class="a2a_button_whatsapp"></a><a class="a2a_button_reddit"></a></div><script src="https://static.addtoany.com/menu/page.js" defer></script></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3><div class="buttons is-centered"><a class="button donate" data-type="alipay"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>支付宝</span><span class="qrcode"><img src="/images/alipay.png" alt="支付宝"></span></a><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>微信</span><span class="qrcode"><img src="/images/wechat.png" alt="微信"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2024/02/21/batch%E7%AC%94%E8%AE%B0/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">batch笔记</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2019/09/07/Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/"><span class="level-item">Linux服务器运行环境配置</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card" id="comments"><div class="card-content"><h3 class="title is-5">评论</h3><div id="SOHUCS" sid="2024/02/12/PHP/"></div><script charset="utf-8" src="https://changyan.sohu.com/upload/changyan.js"></script><script>window.changyan.api.config({appid: 'cyufU86pC',conf: 'prod_56203f74e881c954b4dfe34891581972'});</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-3-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar" src="/images/head.jpg" alt="Heclam"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">Heclam</p><p class="is-size-6 is-block">Java、Erlang Programmer</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>China,GuangZhou</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">31</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">13</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">28</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/heclam" target="_blank" rel="me noopener">关注我</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="Github" href="https://github.com/heclam"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="Mail" href="mailto:heclam@163.com"><i class="fa fa-envelope"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="RSS" href="/"><i class="fas fa-rss"></i></a></div></div></div><!--!--><div class="card widget" data-type="links"><div class="card-content"><div class="menu"><h3 class="menu-label">链接</h3><ul class="menu-list"><li><a class="level is-mobile" href="https://wistbean.org/" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">wistbean</span></span><span class="level-right"><span class="level-item tag">wistbean.org</span></span></a></li><li><a class="level is-mobile" href="https://ccyh.xyz/" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">FlyFish</span></span><span class="level-right"><span class="level-item tag">ccyh.xyz</span></span></a></li></ul></div></div></div><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/MySQL/"><span class="level-start"><span class="level-item">MySQL</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/Redis/"><span class="level-start"><span class="level-item">Redis</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/Spring/"><span class="level-start"><span class="level-item">Spring</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/batch/"><span class="level-start"><span class="level-item">batch</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/contab/"><span class="level-start"><span class="level-item">contab</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/erlang/"><span class="level-start"><span class="level-item">erlang</span></span><span class="level-end"><span class="level-item tag">6</span></span></a></li><li><a class="level is-mobile" href="/categories/gameServer/"><span class="level-start"><span class="level-item">gameServer</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/hexo/"><span class="level-start"><span class="level-item">hexo</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/java/"><span class="level-start"><span class="level-item">java</span></span><span class="level-end"><span class="level-item tag">5</span></span></a></li><li><a class="level is-mobile" href="/categories/javaWeb/"><span class="level-start"><span class="level-item">javaWeb</span></span><span class="level-end"><span class="level-item tag">5</span></span></a></li><li><a class="level is-mobile" href="/categories/linux/"><span class="level-start"><span class="level-item">linux</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/markdown/"><span class="level-start"><span class="level-item">markdown</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/php/"><span class="level-start"><span class="level-item">php</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><div class="column-right-shadow is-hidden-widescreen"></div></div><div class="column column-right is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only order-3"><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2024-05-11T06:40:19.000Z">2024-05-11</time></p><p class="title"><a href="/2024/05/11/%E6%B8%B8%E6%88%8F%E8%A3%85%E6%9C%8D%E6%B5%81%E7%A8%8B/">游戏装服流程</a></p><p class="categories"><a href="/categories/gameServer/">gameServer</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2024-05-11T03:19:37.000Z">2024-05-11</time></p><p class="title"><a href="/2024/05/11/Linux%E5%9F%BA%E7%A1%80%E6%9C%8D%E5%8A%A1%E6%90%AD%E5%BB%BA/">linux基础服务搭建</a></p><p class="categories"><a href="/categories/linux/">linux</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2024-03-19T02:30:31.000Z">2024-03-19</time></p><p class="title"><a href="/2024/03/19/Mnesia/">mnesia</a></p><p class="categories"><a href="/categories/erlang/">erlang</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2024-03-18T06:30:41.000Z">2024-03-18</time></p><p class="title"><a href="/2024/03/18/linux%E6%9D%82%E9%A1%B9/">linux杂项</a></p><p class="categories"><a href="/categories/linux/">linux</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2024-03-16T06:30:41.000Z">2024-03-16</time></p><p class="title"><a href="/2024/03/16/crontab/">contab基础用法</a></p><p class="categories"><a href="/categories/contab/">contab</a></p></div></article></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">归档</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2024/05/"><span class="level-start"><span class="level-item">五月 2024</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2024/03/"><span class="level-start"><span class="level-item">三月 2024</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li><li><a class="level is-mobile" href="/archives/2024/02/"><span class="level-start"><span class="level-item">二月 2024</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2019/09/"><span class="level-start"><span class="level-item">九月 2019</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2019/08/"><span class="level-start"><span class="level-item">八月 2019</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/archives/2019/07/"><span class="level-start"><span class="level-item">七月 2019</span></span><span class="level-end"><span class="level-item tag">9</span></span></a></li><li><a class="level is-mobile" href="/archives/2019/06/"><span class="level-start"><span class="level-item">六月 2019</span></span><span class="level-end"><span class="level-item tag">6</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">标签</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/Cookie/"><span class="tag">Cookie</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/JDk/"><span class="tag">JDk</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/JSP/"><span class="tag">JSP</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/MySQL/"><span class="tag">MySQL</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Nginx/"><span class="tag">Nginx</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Redis/"><span class="tag">Redis</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Servlet/"><span class="tag">Servlet</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Session/"><span class="tag">Session</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Spring%E4%BA%8B%E5%8A%A1/"><span class="tag">Spring事务</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Tomcat/"><span class="tag">Tomcat</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ajax/"><span class="tag">ajax</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/batch/"><span class="tag">batch</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/contab/"><span class="tag">contab</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/erlang/"><span class="tag">erlang</span><span class="tag">6</span></a></div><div class="control"><a class="tags has-addons" href="/tags/gameServer/"><span class="tag">gameServer</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/git/"><span class="tag">git</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/hexo/"><span class="tag">hexo</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/java/"><span class="tag">java</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/java%E7%BA%BF%E7%A8%8B/"><span class="tag">java线程</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/linux/"><span class="tag">linux</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/linux-screen/"><span class="tag">linux - screen</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/markdown/"><span class="tag">markdown</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/mnesia/"><span class="tag">mnesia</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/php/"><span class="tag">php</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%96%B0%E6%8A%80%E8%83%BD/"><span class="tag">新技能</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E7%9B%91%E5%90%AC%E5%99%A8/"><span class="tag">监听器</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><span class="tag">设计模式</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%BF%87%E6%BB%A4%E5%99%A8/"><span class="tag">过滤器</span><span class="tag">1</span></a></div></div></div></div></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/images/head.jpg" alt="heclam&#039;s blog" height="28"></a><p class="is-size-7"><span>&copy; 2024 heclam</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><span id="busuanzi_container_site_uv">共<span id="busuanzi_value_site_uv">0</span>个访客</span></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/heclam"><i class="fab fa-github"></i></a></p></div></div><div id="site-runtime"></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script data-pjax src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script data-pjax src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script><script src="/js/pjax.js"></script><!--!--><!--!--><!--!--><script data-pjax src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>
