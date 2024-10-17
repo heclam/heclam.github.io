@@ -3,7 +3,7 @@ version: 5.1.0
 # Icarus theme variant, can be "default" or "cyberpunk"
 variant: default
 # Path or URL to the website's logo
-logo: /images/head.jpg
+logo: /images/head.png
 # Page metadata configurations
 head:
     # URL or path to the website's icon
@@ -239,7 +239,7 @@ widgets:
         # Author's current location
         location: China,GuangZhou
         # URL or path to the avatar image
-        avatar: /images/head.jpg
+        avatar: /images/head.png
         # Whether show the rounded avatar image
         avatar_rounded: false
         # Email address for the Gravatar
