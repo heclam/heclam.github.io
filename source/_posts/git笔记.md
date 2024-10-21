@@ -16,18 +16,21 @@ tags:
 | git add .                 | 这是添加所新建的所有文件到暂存区                             |
 | git  commit -m "提交注释" | 一次性提交多个文件（add进来的文件），将文件提交到本地仓库（暂存区-->本地仓库） |
 | git status                | 可以时刻知道仓库的当前状态                                   |
-| git diff                  | 查看修改的内容（与提交进去的文件相比）                       |
+| git diff xxx.md           | 查看修改的内容（与提交进去的文件相比）                       |
 | git log                   | 查看仓库历史记录 ，命令显示从最近到最远的提交日志            |
+| git reflog                | 查看命令历史                                                 |
 
 <!--more-->
 
 ##### 2、版本回退：
 
-git reset  --hard   
+git reset  --hard  HEAD^
 
 将会重置HEAD返回到另外一个commit,这个是个比较危险的动作，具有破坏性，数据因此可能会丢失，如果想找回原来的数据就使用 git reflog命令
 
-Git中，用HEAD表示是当前的版本，上一个版本就是HEAD^,上上个版本就是HEAD^^
+Git中，用HEAD表示是当前的版本，上一个版本就是HEAD^,上上个版本就是HEAD^^,
+
+当然往上n个版本写n个^比较容易数不过来，所以写成HEAD~n,如HEAD-10
 
 ```shell
 # 回退到上一个版本
@@ -43,15 +46,25 @@ git reset --hard HEAD~10
 
 
 
+`--hard`参数含义：
+
+`--hard`会回退到上个版本的已提交状态
+
+`--soft`会回退到上个版本的未提交状态
+
+`--mixed`会回退到上个版本已添加但未提交的状态
+
+
+
 ##### 3、撤销操作
 
-| 指令                    | 描述                                                         |
-| ----------------------- | ------------------------------------------------------------ |
-| git checkout --file     | 把文件在工作区的修改全部撤销，回到最近一次git commit 或git add 时的状态。 |
-| git reset HEAD  file    | 把暂存区的修改撤销掉，重新放回到工作区中                     |
-| git rm file             | 删除版本库中的文件，比如执行 git rm test.txt ,然后再执行commit操作则成功删除 |
-| git rm dir -r           | 删除版本库中的文件夹                                         |
-| git checkout --test.txt | 撤销删除                                                     |
+| 指令                       | 描述                                                         |
+| -------------------------- | ------------------------------------------------------------ |
+| git checkout \-\- filename | 把文件在工作区的修改全部撤销，回到最近一次git commit 或git add 时的状态。 |
+| git reset HEAD filename    | 把暂存区的修改撤销掉，重新放回到工作区中                     |
+| git rm filename            | 删除版本库中的文件，比如执行 git rm test.txt ,然后再执行commit操作则成功删除 |
+| git rm dir -r              | 删除版本库中的文件夹                                         |
+| git checkout \-\- test.txt | 撤销删除                                                     |
 
 
 
@@ -174,3 +187,9 @@ git push origin --tags
 # 删除已推送到远程库的标签，先从本地删除，再从远程删除
 git tag -d tagname & git push origin :refs/tags/tagname
 ```
+
+
+
+##### 9、忽略特殊文件
+
+Git仓库也可以有多个.gitignore文件，.gitignore文件放在哪个目录下，就对哪个目录（包括子目录）起作用
