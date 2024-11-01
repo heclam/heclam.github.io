@@ -1,6 +1,6 @@
 ---
 layout: article
-title: erlangOtp
+title: erlang Otp
 date: 2024-03-14 14:30:41
 toc: true
 categories:
@@ -30,125 +30,135 @@ OTP(Open Telecom PlatForm) 开放电信平台
 
 ![erlangOtpDir](/images/erlangOtpDir.png)
 
-1. 在ebin中添加**元数据**(文件名`tcp_rpc.app`)  --> `应用名.app`
+创建OPT应用时的主要工作集中于**标准目录结构的创建和应用元数据的编写**。元数据的作用在于让系统获悉应该如何**启动和停止应用**，还可以用于指定应用的依赖项，也就是应用启动前必须预先安装或启动哪些其他应用。
 
-   这个.app文件的作用在于告诉OTP如何启动应用，以及该应用应该如何与系统中的其他应用相融合
+1. 应用元数据
+
+   元数据一般为`<application-name>.app` 文件存放在`server/ebin/`文件夹下
 
    ```erlang
+   %% tcp_rpc.app
    %% _*_ mode: Erlang; fill-column: 75; comment-column: 50; _*_
    
    {application, tcp_rpc,  %% tcp_rpc为应用名称
    	[{description, "RPC server for Erlang and OTP in action"},
    		{vsn, "0.1.0"}, %% 应用版本 主版本号.次版本号.修订版本号
    		{modules, [tr_app,
-   			tr_sup,
-   					tr_server]},% 模块列表
+   				   tr_sup,
+   				   tr_server]},% 模块列表
    		{registered, [tr_sup]},	%% 注册进程名
    		{applications, [kernel, stdlib]}, %% 依赖其他应用的列表
    		{mod, {tr_app, []}}	%% 告知OTP系统应该如何启动应用
    	]}.
    ```
 
+   元数据文件`<application-name>.app` 文件的格式很简明。除去注释，只剩下一个由句号结尾的Erlang项式：三元组 `{application, ..., ...}`, 其中第二个元素是应用名称所对应的原子，此处即是`tcp_rpc`。第三个元素是一个参数列表，其中每一个参数都是`{Key, Value}`对的形式。
+
+   | 参数         | 描述                                                         |
+   | ------------ | ------------------------------------------------------------ |
+   | description  | 针对应用的简短描述                                           |
+   | vsn          | 应用的版本                                                   |
+   | modules      | 应用中的模块列表。模块在列表中的顺序无关紧要                 |
+   | registered   | 在.app文件中罗列出所有进程注册名并不会促使系统执行实际的注册操作，但这可以告知OTP系统哪个进程注册了哪个名字，从而为系统升级等操作提供便利，同时也可以尽早发现重复的注册名并给出警告 |
+   | applications | 必须在该应用启动前先启动的所有应用。应用往往依赖于其他应用。主动应用要求自己所依赖的所有应用在自己的生命周期开始之前先行启动并就绪。列表中各应用的顺序无关紧要 |
+   | mod          | 告知OTP系统应该如何启动应用。该参数的值是一个元组，其内容为一个模块名以及一些可选的启动参数。 这个模块必须实现application行为模式 |
+
 2. 应用行为模式
 
-   每个主动应用都配有一个application行为模式的实现模块。该模块用于实现系统启动逻辑。它至少要负责根监督者的启动，该监督者将成为应用中其他所有进程的鼻祖。
-
-   `src/tr_app.erl`
-
    ```erlang
-   %%%-------------------------------------------------------------------
-   %%% @author Administrator
-   %%% @copyright (C) 2019, <COMPANY>
-   %%% @doc
-   %%%
-   %%% @end
-   %%% Created : 03. 十二月 2019 10:29
-   %%%-------------------------------------------------------------------
-   %% 程序入口
    -module(tr_app).
-   -author("Administrator").
-   %行为模式声明
-   -behaviour(application).
-   %% API
-   -export([	%% 应用行为模式的回调函数
-   	start/2,
-   	stop/1
-   ]).
+   -behaviour(application).	% 行为模式声明
+   
+   % 应用行为模式的回调函数
+   -export([
+            start/2,
+            stop/1
+           ]).
    
    start(_Type, _StartArgs) ->
-   	case tr_sup:start_link() of %% 启动根监督者
-   		{ok, Pid} ->
-   			{ok, Pid};
-   		Other ->
-   			{error, Other}
-   	end.
+       case tr_sup:start_link() of	% 启动根监督者
+           {ok, Pid} -> {ok, Pid};
+           Other ->
+               {error, Other}
+       end.
    
    stop(_State) ->
-   	ok.
+       ok.
    ```
 
-   **应用结构小结**
+   start/2`的输入参数，`Type`一般取值为`normal`,但也可能是`{failover, ...}` 或`{takeover, ...}`, `StartArgs` 则是在元数据文件`<application-name>.app` 文件中给mod的参数
 
-   ​	建立OPT应用要做的3件事
-
-   	1. 遵循标准目录结构
-   	2. 添加用于存放应用元数据的.app文件
-   	3. 创建一个application行为模式实现模块，负责启动应用
-
-   ##### 用监督者实现容错
-
-    	**src/tr_sup.erl**
+3. 监督者行为模式
 
    ```erlang
-   %%%-------------------------------------------------------------------
-   %%% @author Administrator
-   %%% @copyright (C) 2019, <COMPANY>
-   %%% @doc
-   %%%
-   %%% @end
-   %%% Created : 03. 十二月 2019 10:44
-   %%%-------------------------------------------------------------------
-   %% 实现监督者
    -module(tr_sup).
-   -author("Administrator").
    -behaviour(supervisor).
+   
    %% API
    -export([start_link/0]).
-   
+   %% Supervisor callbacks
    -export([init/1]).
    -define(SERVER, ?MODULE).
    
-   % 启动监督者
    start_link() ->
-   	supervisor:start_link({local,?SERVER}, ?MODULE, []).
+       supervisor:start_link({local, ?SERVER}, ?MODULE, []).
    
    init([]) ->
-   	% 指明如何启动和管理子进程
-   	Server = {tr_server, {tr_server, start_link, []},
-   				permanent, 2000, worker, [tr_server]},
-   	Children = [Server],
-   	% 指明监督者的行为
-   	RestartStrategy = {one_for_one, 0,1},
-   	% 返回监督规范
-   	{ok, {RestartStrategy, Children}}.
-   
-   %% 解析
-   % Children是若干个子进程规范组成的一个列表
-   % RestartStrategy是一个三元组{How, Max, Within}
-   
-   % 编写子进程规范
-   % 子进程规范由六个元素组成{ID, Start, Restart, Shutdown, Type, Modules}
-   %   第一个元素ID
-   %   第二项Start,是一个用于启动进程的三元组{Module, Function, Args}
-   %   第三个元素Restart,用于指明进程发生故障时是否需要重启
-   %   第四个元素Shutdown,用于指明如何终止进程
-   %   第五个值Type,用于表示进程是监督者(supervisor)还是工作者(worker)
-   %   第六个选项列出了该进程所依赖的模块
+       Server = {tr_server, {tr_server, start_link, []},
+                permanent, 2000, worker, [tr_server]},
+       Children = [Server],
+       RestartStrategy = {one_for_one, 0, 1},
+       {ok, {RestartStrategy, Children}}.
    ```
 
-   ##### 启动应用
+   > supervisor:start_link({local, ?SERVER}, ?MODULE, [])
+
+   第一个参数是二元组{local, ?SERVER}, 用于让OTP库在本地节点上以?SERVER(如宏定义为tr_sup)为注册名自动注册监督进程
+
+   ##### 3.1、监督者重启策略
+
+   `init/1` 回调函数的返回值的格式为 `{ok, {RestartStrategy, Children}}`, 其中`Children`是若干子进程规范组成的一个列表。
+
+   `RestartStrategy`是一个三元组 `{How, Max, Within}` 
+
+   ##### 3.2、子进程规范
 
    ```erlang
+   Server = {tr_server, {tr_server, start_link, []},
+                permanent, 2000, worker, [tr_server]},
+   ```
+
+   由6个元素组成：`{ID, Start, Restart, Shutdown, Type, Modules}`
+
+   第一个元素ID, 是一个用于在系统内部标识规范的项式。
+
+   第二个元素Start, 是一个用于启动进程的三元组`Module, Function, Arguments`。与调用内置函数`spawn/3` 时是一样的，其中一个元素是模块名，第二个元素是函数名，第三个元素是函数的调用参数列表。
+
+   第三个元素Restart,用于指明子进程发生故障时是否需要重启。此处指定为`permanent`,无论出于任何原因导致进程终止都应重启进程。`temporary` 表示永不重启进程，`transient` 表示仅在进程意外终止时重启进程。
+
+   第四个元素Shutdown, 用于指明如何终止进程。此处取值为一个整数（2000），表示终止进程时采用软关闭策略，给进程留出一段自我了断的时间（以毫秒为单位），如果进程未能在指定时间内自行退出，将被无条件终止。该选项还可以取值为brutal_kill,表示在关闭监督进程时立即终止子进程；以及infinity, 主要用于子进程本身也同为监督者的情况，表示应给予子进程充分的时间自行退出
+
+   第五个元素Type，用于表示进程是监督者（supervisor)还是工作者（worker)
+
+   第六个元素Modules,选项列出了该进程所依赖的模块。这部分信息仅用于在代码热升级时告知系统该以何种顺序升级各个模块。一般来说，只需要列出子进程的主模块
+
+4. 启动应用
+
+   上面的`tr_server.erl` 模块就是一个`gen_server` 行为模式的实现为一个工作进程
+
+   ```erlang
+   # 1、可以先进行代码编译
+   # -o 表示指定编译后的.beam文件存放位置
+   # src/*.erl表示需要编译的源代码
+   erlc -o ebin src/*.erl
+   
+   # 2、代码执行的环境,(-pa 是path add 的缩写，用于添加单个目录到代码路径的最前方)
+   erl -pa ebin
+   
+   # 3、Erlang shell 启动后，只需一个命令便可启动应用:
+   # 以应用名tcp_rpc为参数调用标准库函数 application:start/1
+   application:start(tcp_rpc).
+   
    %%%====================================
    %   这里讲解一下如何运行这个项目
    %     将.beam文件放入ebin文件夹下
@@ -160,79 +170,87 @@ OTP(Open Telecom PlatForm) 开放电信平台
    %%%====================================
    ```
 
-   ##### 生成EDoc文档
+   Erlang会在代码路径中搜索`.beam`文件来加载模块，`application:start/1`函数也会在代码路径中搜索`.app`文件。由于`ebin`目录已经位于代码路径之中，shell便可以顺利找到元数据文件`ebin/tcp_rpc.app`，该文件包含了所需的一切信息（尤其是该调用哪个模块（tr_app)来启用整个应用）
+
+5. 生成EDoc文档
 
    ```erlang
    %% 在项目目录下打开erl,输入
    edoc:application(tcp_rpc, ".", []).
    ```
 
+   
 
+#### 2、应用结构小结
 
-##### 		监督树
+​	建立OPT应用要做的3件事
 
-  1. 如果系统进程内部发生了错误而异常退出，将会出现什么情况？
-
-     ​	如果系统进程发生错误退出了，那么整个应用程序也将终止了，所以就需要监督树来重启
-
-     ​	挂的的系统进程
-
-  2. 
-
-     ```erlang
-     -module(bank_sup).
-     -behaviour(supervisor).
-     -export([start_link/0]).
-     -export([init/1]).
-     
-     % 定义一个启动本监督树的API
-     start_link() ->
-        supervisor:start_link({local, ?MODULE}, ?MODULE, []).
-     
-     init([]) ->
-         % 启动两个子进程
-         BankCenterSpec = {
-             center, % 指定本进程（在子进程中唯一）的名称
-             {bank_center, start_link,[]}, % 进程启动函数：{M,F,A}
-             transient,  % 重启策略： permanent | transient | temporary
-             5000,   % 关闭方式： brutal_kill | init() > 0 | infinity
-             worker, % 进程类型： worker | supervisor
-             [bank_center] % 回调模块名称： [Module] |dynamic
-         },
-         BankCenterSpec2 = {
-             center2,
-             {bank_center2,start_link, []},
-             transient,
-             5000,
-             worker,
-             [bank_center2]
-         },
-         % {ok, {{RestartStrategy, MaxR, MaxT}, [ChildSpec]}}
-         {ok,{{one_for_one, 5, 30}, [BankCenterSpec,BankCenterSpec2]}}.
-     ```
-
-     **重启策略:**
-
-     	permanent : 终止后总是会被重启
-     	transient : 意外终止后会被重启（就是进程退出的Reason不是 normal | shutdown | {shutdown, Term}） 
-     	temporary : 终止后不会被重启 
-     	
-		如果重启策略为permanent，那么发生异常的系统进程就会不断地重启，这可如何是好？
-
-     `{ok, {{RestartStrategy, MaxR, MaxT}, [ChildSpec]}}{ok, {{RestartStrategy, MaxR, MaxT}, [ChildSpec]}}`可以很好的解决这个问题
-     
-     `RestartStrategy `: 重启策略
-     
-     1. `one_for_one`: 当某个进程终止时，只启动这个子进程
-     2. `simple_for_one`: 和`one_for_one`一样，只是子进程是监督树启动后在动态添加的，比如游戏中，一个玩家就是一个进程
-     3. `one_for_all`: 当某个进程终止时，全部的子进程都重新启动
-     4. `rest_for_one`: 但某个进程终止时，之前比它晚启动的进程都将重新启动
-     
-     * 例如`MaxR  = 5` 与`MaxT = 30` 表示在30秒内该进程总允许重启数为5，如果超过了，那么该进程将终止，整个监督树下的进程都将会终止，整个applicaiton也就此停止
+```
+1. 遵循标准目录结构
+2. 添加用于存放应用元数据的.app文件
+3. 创建一个application行为模式实现模块，负责启动应用
+```
 
 
 
-**子规范**
+#### 3、监督树例子
+
+```erlang
+-module(bank_sup).
+-behaviour(supervisor).
+-export([start_link/0]).
+-export([init/1]).
+
+% 定义一个启动本监督树的API
+start_link() ->
+   supervisor:start_link({local, ?MODULE}, ?MODULE, []).
+
+init([]) ->
+    % 启动两个子进程
+    BankCenterSpec = {
+        center, % 指定本进程（在子进程中唯一）的名称
+        {bank_center, start_link,[]}, % 进程启动函数：{M,F,A}
+        transient,  % 重启策略： permanent | transient | temporary
+        5000,   % 关闭方式： brutal_kill | init() > 0 | infinity
+        worker, % 进程类型： worker | supervisor
+        [bank_center] % 回调模块名称： [Module] |dynamic
+    },
+    BankCenterSpec2 = {
+        center2,
+        {bank_center2,start_link, []},
+        transient,
+        5000,
+        worker,
+        [bank_center2]
+    },
+    % {ok, {{RestartStrategy, MaxR, MaxT}, [ChildSpec]}}
+    {ok,{{one_for_one, 5, 30}, [BankCenterSpec,BankCenterSpec2]}}.
+```
+
+##### 重启策略
+
+```
+permanent : 终止后总是会被重启
+transient : 意外终止后会被重启（就是进程退出的Reason不是 normal | shutdown | {shutdown, Term}） 
+temporary : 终止后不会被重启 
+
+如果重启策略为permanent，那么发生异常的系统进程就会不断地重启，这可如何是好？
+```
+
+`{ok, {{RestartStrategy, MaxR, MaxT}, [ChildSpec]}}{ok, {{RestartStrategy, MaxR, MaxT}, [ChildSpec]}}`可以很好的解决这个问题
+
+`RestartStrategy `: 重启策略
+
+1. `one_for_one`: 当某个进程终止时，只启动这个子进程
+2. `simple_for_one`: 和`one_for_one`一样，只是子进程是监督树启动后在动态添加的，比如游戏中，一个玩家就是一个进程
+3. `one_for_all`: 当某个进程终止时，全部的子进程都重新启动
+4. `rest_for_one`: 但某个进程终止时，之前比它晚启动的进程都将重新启动
+
+* 例如`MaxR  = 5` 与`MaxT = 30` 表示在30秒内该进程总允许重启数为5，如果超过了，那么该进程将终止，整个监督树下的进程都将会终止，整个applicaiton也就此停止
+
+
+
+##### 子规范
 
 ```erlang
 {Id, StartFunc, Restart, Shutdown, Type, Modules}
@@ -258,19 +276,9 @@ OTP(Open Telecom PlatForm) 开放电信平台
 * `Type` 指定子进程是`supervisor`还是`worker`
 * `Modules` 是有一个元素的列表[Module],假如子进程时supervisor、gen_server或gen_fsm那么Module是回调模块的名称；假如子进程时gen_event,那么Modules应该是dynamic
 
-#### 2、启动应用
 
-1、编写完成后，首先需要编译src目录下的所有代码，从而在ebin目录下生成对应的.beam文件
 
-在项目目录下,单个文件编译（在cmd命令下）
-erlc -o ./ebin src/tr_app.erl
-
-编译目录下所有的文件:
-erl -0 ebin src/*.erl		# Linux操作系统下
-
-for %f in (src/*.erl) do erlc -o ebin src/%f		# window操作系统
-
-**另外一种编译方式**
+#### 4、另外一种编译方式
 
 在项目根目录下，新建一个Emakefile文件
 
@@ -299,7 +307,7 @@ erl -make
 
 
 
-#### 3、OTP中的缓存系统
+#### 5、OTP中的缓存系统例子
 
 ​												**简易缓存应用中的模块**
 
