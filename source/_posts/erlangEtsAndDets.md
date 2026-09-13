@@ -1,5 +1,4 @@
 ---
-layout: article
 title: erlang Ets and Dets
 date: 2024-03-12 14:30:42
 toc: true

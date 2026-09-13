@@ -1,5 +1,4 @@
 ---
-layout: article
 title: 代理（Proxy）
 date: 2019-07-15 15:01:21
 toc: true

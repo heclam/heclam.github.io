@@ -1,5 +1,4 @@
 ---
-layout: article
 title: erlang套接字编程
 date: 2024-03-12 14:30:43
 toc: true

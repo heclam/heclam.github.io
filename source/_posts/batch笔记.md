@@ -1,5 +1,4 @@
 ---
-layout: article
 title: batch笔记
 date: 2024-02-21 18:30:00
 toc: true

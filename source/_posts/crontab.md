@@ -1,5 +1,4 @@
 ---
-layout: article
 title: contab基础用法
 date: 2024-03-16 14:30:41
 toc: true

@@ -1,5 +1,4 @@
 ---
-layout: article
 title: linux杂项
 date: 2024-03-18 14:30:41
 toc: true

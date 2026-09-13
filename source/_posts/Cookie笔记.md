@@ -1,5 +1,4 @@
 ---
-layout: article
 title: Cookie笔记
 date: 2019-07-08 11:12:20
 toc: true

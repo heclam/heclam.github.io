@@ -1,5 +1,4 @@
 ---
-layout: article
 title: mnesia
 date: 2024-03-19 10:30:31
 toc: true

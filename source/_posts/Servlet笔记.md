@@ -1,5 +1,4 @@
 ---
-layout: article
 title: Servlet笔记
 date: 2019-07-08 10:19:20
 toc: true

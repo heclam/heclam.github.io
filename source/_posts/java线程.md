@@ -1,5 +1,4 @@
 ---
-layout: article
 title: java线程
 date: 2019-07-07 16:11:28
 toc: true

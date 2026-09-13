@@ -1,5 +1,4 @@
 ---
-layout: article
 title: erlang基础
 date: 2024-03-11 14:30:41
 toc: true

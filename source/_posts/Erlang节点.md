@@ -1,5 +1,4 @@
 ---
-layout: article
 title: erlang节点
 date: 2024-03-13 14:30:41
 toc: true

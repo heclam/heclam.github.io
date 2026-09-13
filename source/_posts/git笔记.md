@@ -1,5 +1,4 @@
 ---
-layout: article
 title: git笔记
 date: 2019-06-15 16:02:33
 toc: true

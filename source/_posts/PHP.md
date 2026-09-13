@@ -1,5 +1,4 @@
 ---
-layout: article
 title: php笔记
 date: 2024-02-12 16:40:41
 toc: true

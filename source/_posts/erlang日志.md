@@ -1,5 +1,4 @@
 ---
-layout: article
 title: erlang日志
 date: 2024-03-14 14:30:42
 toc: true

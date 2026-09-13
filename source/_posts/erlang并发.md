@@ -1,5 +1,4 @@
 ---
-layout: article
 title: erlang并发
 date: 2024-03-12 14:30:41
 toc: true

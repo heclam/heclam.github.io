@@ -1,5 +1,4 @@
 ---
-layout: article
 title: JSP笔记
 date: 2019-07-08 17:20:20
 toc: true

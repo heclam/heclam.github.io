@@ -1,5 +1,4 @@
 ---
-layout: article
 title: Linux服务器运行环境配置
 date: 2019-09-07 18:19:37
 toc: true

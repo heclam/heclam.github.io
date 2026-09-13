@@ -1,5 +1,4 @@
 ---
-layout: article
 title: erlang Otp
 date: 2024-03-14 14:30:41
 toc: true

@@ -1,5 +1,4 @@
 ---
-layout: article
 title: linux基础服务搭建
 date: 2024-05-11 11:19:37
 toc: true

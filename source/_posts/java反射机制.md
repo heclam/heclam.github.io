@@ -1,5 +1,4 @@
 ---
-layout: article
 title: java反射机制
 date: 2019-06-26 14:41:36
 toc: true
