@@ -5,7 +5,7 @@ keywords: Erlang,Linux
 author: heclam
 language: zh-CN
 timezone: ''
-url: http://example.com
+url: https://github.com/heclam
 permalink: ':year/:month/:day/:title/'
 permalink_defaults: null
 pretty_urls:
